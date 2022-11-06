@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Title>MoBro Plugin SDK</Title>
+        <Description>SDK to build plugins for MoBro</Description>
+        <Authors>ModBros</Authors>
+        <Company>ModBros OG</Company>
+        <Product>MoBro</Product>
+        <Copyright>(C) ModBros OG 2022</Copyright>
+        <IsPackable>true</IsPackable>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+        <RootNamespace>MoBro.Plugin.SDK</RootNamespace>
+        <VersionPrefix>0.0.1</VersionPrefix>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageId>MoBro.Plugin.SDK</PackageId>
+        <AssemblyName>MoBro.Plugin.SDK</AssemblyName>
+    </PropertyGroup>
+
+</Project>
