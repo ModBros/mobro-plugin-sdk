@@ -13,7 +13,7 @@ public sealed class MetricValue : IMetricValue
   /// <param name="value">The value</param>
   public MetricValue(string id, DateTime timestamp, object? value)
   {
-    Id = id;
+    Id = id ?? throw new ArgumentNullException(nameof(id));
     Timestamp = timestamp;
     Value = value;
   }

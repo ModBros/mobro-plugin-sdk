@@ -1,4 +1,6 @@
-﻿namespace MoBro.Plugin.SDK.Models.Metrics;
+﻿using System;
+
+namespace MoBro.Plugin.SDK.Models.Metrics;
 
 /// <inheritdoc />
 public sealed class Unit : IUnit
@@ -13,11 +15,11 @@ public sealed class Unit : IUnit
   /// <param name="toBaseFormula">The formula to convert this unit back to the base unit of its <see cref="IMetricType"/></param>
   public Unit(string label, string abbreviation, string? description, string fromBaseFormula, string toBaseFormula)
   {
-    Label = label;
-    Abbreviation = abbreviation;
+    Label = label ?? throw new ArgumentNullException(nameof(label));
+    Abbreviation = abbreviation ?? throw new ArgumentNullException(nameof(abbreviation));
     Description = description;
-    FromBaseFormula = fromBaseFormula;
-    ToBaseFormula = toBaseFormula;
+    FromBaseFormula = fromBaseFormula ?? throw new ArgumentNullException(nameof(fromBaseFormula));
+    ToBaseFormula = toBaseFormula ?? throw new ArgumentNullException(nameof(toBaseFormula));
   }
 
   /// <inheritdoc />

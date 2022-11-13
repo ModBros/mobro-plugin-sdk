@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Enums;
@@ -17,8 +18,8 @@ public sealed class MetricType : IMetricType
   /// <param name="valueType">The <see cref="MetricValueType"/></param>
   public MetricType(string id, string label, MetricValueType valueType)
   {
-    Id = id;
-    Label = label;
+    Id = id ?? throw new ArgumentNullException(nameof(id));
+    Label = label ?? throw new ArgumentNullException(nameof(label));
     ValueType = valueType;
   }
 

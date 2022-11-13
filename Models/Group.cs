@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MoBro.Plugin.SDK.Models;
@@ -15,8 +16,8 @@ public sealed class Group : IGroup
   /// <param name="icon">The optional icon id</param>
   public Group(string id, string label, string? description = null, string? icon = null)
   {
-    Id = id;
-    Label = label;
+    Id = id ?? throw new ArgumentNullException(nameof(id));
+    Label = label ?? throw new ArgumentNullException(nameof(label));
     Description = description;
     Icon = icon;
   }

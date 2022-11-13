@@ -16,10 +16,10 @@ public sealed class Metric : IMetric
   /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
   public Metric(string id, string label, string typeId, string categoryId)
   {
-    Id = id;
-    Label = label;
-    TypeId = typeId;
-    CategoryId = categoryId;
+    Id = id ?? throw new ArgumentNullException(nameof(id));
+    Label = label ?? throw new ArgumentNullException(nameof(label));
+    TypeId = typeId ?? throw new ArgumentNullException(nameof(typeId));
+    CategoryId = categoryId ?? throw new ArgumentNullException(nameof(categoryId));
   }
 
   /// <inheritdoc />
