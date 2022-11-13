@@ -6,11 +6,6 @@
 public enum CoreMetricType
 {
   /// <summary>
-  /// Everything that doesn't really fit a type
-  /// </summary>
-  Miscellaneous,
-
-  /// <summary>
   /// Electric current (Ampere)
   /// </summary>
   ElectricCurrent,
