@@ -2,8 +2,8 @@
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
-/// <inheritdoc />
-public sealed class MetricValue : IMetricValue
+/// <inheritdoc cref="MoBro.Plugin.SDK.Models.Metrics.IMetricValue" />
+public readonly record struct MetricValue : IMetricValue
 {
   /// <summary>
   /// Creates a new metric value
@@ -19,11 +19,11 @@ public sealed class MetricValue : IMetricValue
   }
 
   /// <inheritdoc />
-  public string Id { get; set; }
+  public string Id { get; }
 
   /// <inheritdoc />
-  public DateTime Timestamp { get; set; }
+  public DateTime Timestamp { get; }
 
   /// <inheritdoc />
-  public object? Value { get; set; }
+  public object? Value { get; }
 }
