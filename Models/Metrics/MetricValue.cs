@@ -2,8 +2,11 @@
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
-/// <inheritdoc cref="MoBro.Plugin.SDK.Models.Metrics.IMetricValue" />
-public readonly record struct MetricValue : IMetricValue
+/// <summary>
+/// The actual value of a <see cref="IMetric"/>.
+/// The value must conform to the <see cref="IMetricType"/> of the Metric this value is from.
+/// </summary>
+public readonly record struct MetricValue
 {
   /// <summary>
   /// Creates a new metric value
@@ -18,12 +21,18 @@ public readonly record struct MetricValue : IMetricValue
     Value = value;
   }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The id of the metric
+  /// </summary>
   public string Id { get; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The date and time the value was recorded or measured at
+  /// </summary>
   public DateTime Timestamp { get; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The actual value
+  /// </summary>
   public object? Value { get; }
 }

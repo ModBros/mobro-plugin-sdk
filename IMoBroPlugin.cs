@@ -17,9 +17,9 @@ public interface IMoBroPlugin : IDisposable
   /// at any time.
   /// </summary>
   /// <param name="settings">The current plugin settings.</param>
-  /// <param name="mobro">The <see cref="IMoBroService"/> implementation.</param>
+  /// <param name="service">The <see cref="IMoBroService"/> implementation.</param>
   /// <returns></returns>
-  public Task Init(IPluginSettings settings, IMoBroService mobro);
+  public Task Init(IPluginSettings settings, IMoBroService service);
 
   /// <summary>
   /// Called by to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>

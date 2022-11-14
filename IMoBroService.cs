@@ -42,7 +42,7 @@ public interface IMoBroService
   /// <summary>
   /// Push a new value for one or more registered <see cref="IMetric"/>s
   /// </summary>
-  /// <param name="values">The <see cref="IMetricValue"/>s</param>
-  void UpdateMetricValue(params IMetricValue[] values);
+  /// <param name="values">The <see cref="MetricValue"/>s</param>
+  void UpdateMetricValue(params MetricValue[] values);
 
 }
