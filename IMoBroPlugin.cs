@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK;
@@ -12,7 +11,10 @@ namespace MoBro.Plugin.SDK;
 public interface IMoBroPlugin : IDisposable
 {
   /// <summary>
-  /// Called once by the service upon initialization of the plugin.
+  /// Called once by the service upon initialization of the plugin.<br/>
+  /// The passed instances of <see cref="IPluginSettings"/> and <see cref="IMoBro"/> may be stored and used throughout
+  /// the whole lifetime of the plugin to register <see cref="IMoBroItem"/>s, push updated <see cref="IMetricValue"/>s, etc.
+  /// at any time.
   /// </summary>
   /// <param name="settings">The current plugin settings.</param>
   /// <param name="mobro">The <see cref="IMoBro"/> implementation.</param>
@@ -20,12 +22,17 @@ public interface IMoBroPlugin : IDisposable
   public Task Init(IPluginSettings settings, IMoBro mobro);
 
   /// <summary>
-  /// Returns the current values for the requested metrics.
+  /// Called by to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>
+  /// This may be called due to the service switching into idle mode as no client has requested data for a prolonged time.
   /// </summary>
-  /// <param name="ids">The metric ids.</param>
+  /// <remarks>Any data sent while the plugin is 'paused' may be ignored by the service.</remarks>
   /// <returns></returns>
-  public Task<IEnumerable<IMetricValue>> GetMetricValues(IList<string> ids)
-  {
-    return Task.FromResult(Enumerable.Empty<IMetricValue>());
-  }
+  public Task Pause();
+
+  /// <summary>
+  /// Called to signal the plugin to resume monitoring and again start sending metric value updates, etc.<br/>
+  /// Will only be called if the plugin has been paused by a call to <see cref="Pause"/>.
+  /// </summary>
+  /// <returns></returns>
+  public Task Resume();
 }
