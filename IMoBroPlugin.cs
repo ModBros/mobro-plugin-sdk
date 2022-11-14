@@ -12,14 +12,14 @@ public interface IMoBroPlugin : IDisposable
 {
   /// <summary>
   /// Called once by the service upon initialization of the plugin.<br/>
-  /// The passed instances of <see cref="IPluginSettings"/> and <see cref="IMoBro"/> may be stored and used throughout
+  /// The passed instances of <see cref="IPluginSettings"/> and <see cref="IMoBroService"/> may be stored and used throughout
   /// the whole lifetime of the plugin to register <see cref="IMoBroItem"/>s, push updated <see cref="IMetricValue"/>s, etc.
   /// at any time.
   /// </summary>
   /// <param name="settings">The current plugin settings.</param>
-  /// <param name="mobro">The <see cref="IMoBro"/> implementation.</param>
+  /// <param name="mobro">The <see cref="IMoBroService"/> implementation.</param>
   /// <returns></returns>
-  public Task Init(IPluginSettings settings, IMoBro mobro);
+  public Task Init(IPluginSettings settings, IMoBroService mobro);
 
   /// <summary>
   /// Called by to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>

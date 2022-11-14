@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK;
 
@@ -7,21 +8,21 @@ namespace MoBro.Plugin.SDK;
 /// MoBro object passed to the plugin upon initialization.
 /// Allows the plugin to interact with the service (e.g. register new metrics).
 /// </summary>
-public interface IMoBro
+public interface IMoBroService
 {
   /// <summary>
   /// Registers new items with the service.
   /// </summary>
   /// <param name="items">The items to register.</param>
   /// <exception cref="System.ArgumentNullException">The items are null.</exception>
-  void Register(params IMoBroItem[] items);
+  void RegisterItem(params IMoBroItem[] items);
 
   /// <summary>
   /// Unregister items with the service.
   /// </summary>
   /// <param name="ids">The ids of the items to unregister.</param>
   /// <exception cref="System.ArgumentNullException">The ids are null.</exception>
-  void Unregister(params string[] ids);
+  void UnregisterItem(params string[] ids);
 
   /// <summary>
   /// Gets the registered item associated with the specified id.
@@ -36,5 +37,12 @@ public interface IMoBro
   /// <summary>
   /// Clears all currently registered items.
   /// </summary>
-  void Clear();
+  void ClearItemRegister();
+
+  /// <summary>
+  /// Push a new value for one or more registered <see cref="IMetric"/>s
+  /// </summary>
+  /// <param name="values">The <see cref="IMetricValue"/>s</param>
+  void UpdateMetricValue(params IMetricValue[] values);
+
 }
