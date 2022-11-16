@@ -13,7 +13,7 @@
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <RootNamespace>MoBro.Plugin.SDK</RootNamespace>
         <VersionPrefix>0.1.0</VersionPrefix>
-        <VersionSuffix>rc-2</VersionSuffix>
+        <VersionSuffix>rc-4</VersionSuffix>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

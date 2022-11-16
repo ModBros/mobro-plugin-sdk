@@ -22,6 +22,15 @@ public readonly record struct MetricValue
   }
 
   /// <summary>
+  /// Creates a new metric value with the timestamp automatically set to <see cref="DateTime.UtcNow"/>
+  /// </summary>
+  /// <param name="id"></param>
+  /// <param name="value"></param>
+  public MetricValue(string id, object? value) : this(id, DateTime.UtcNow, value)
+  {
+  }
+
+  /// <summary>
   /// The id of the metric
   /// </summary>
   public string Id { get; }

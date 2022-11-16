@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
@@ -15,14 +16,28 @@ public interface IMoBroService
   /// </summary>
   /// <param name="items">The items to register.</param>
   /// <exception cref="System.ArgumentNullException">The items are null.</exception>
-  void RegisterItem(params IMoBroItem[] items);
+  void RegisterItems(IEnumerable<IMoBroItem> items);
+
+  /// <summary>
+  /// Registers a new item with the service.
+  /// </summary>
+  /// <param name="item">The item to register.</param>
+  /// <exception cref="System.ArgumentNullException">The item is null.</exception>
+  void RegisterItem(IMoBroItem item);
 
   /// <summary>
   /// Unregister items with the service.
   /// </summary>
   /// <param name="ids">The ids of the items to unregister.</param>
   /// <exception cref="System.ArgumentNullException">The ids are null.</exception>
-  void UnregisterItem(params string[] ids);
+  void UnregisterItems(IEnumerable<string> ids);
+  
+  /// <summary>
+  /// Unregister a item with the service.
+  /// </summary>
+  /// <param name="id">The id of the item to unregister.</param>
+  /// <exception cref="System.ArgumentNullException">The id is null.</exception>
+  void UnregisterItem(string id);
 
   /// <summary>
   /// Gets the registered item associated with the specified id.
@@ -43,6 +58,11 @@ public interface IMoBroService
   /// Push a new value for one or more registered <see cref="IMetric"/>s
   /// </summary>
   /// <param name="values">The <see cref="MetricValue"/>s</param>
-  void UpdateMetricValue(params MetricValue[] values);
-
+  void UpdateMetricValues(IEnumerable<MetricValue> values);
+  
+  /// <summary>
+  /// Push a new value for one registered <see cref="IMetric"/>
+  /// </summary>
+  /// <param name="value">The <see cref="MetricValue"/></param>
+  void UpdateMetricValue(in MetricValue value);
 }
