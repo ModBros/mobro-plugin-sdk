@@ -42,7 +42,4 @@ public sealed class Metric : IMetric
 
   /// <inheritdoc />
   public string? GroupId { get; set; }
-
-  /// <inheritdoc />
-  public TimeSpan? PollLimit { get; set; }
 }

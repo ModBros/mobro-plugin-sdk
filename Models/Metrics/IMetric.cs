@@ -40,10 +40,4 @@ public interface IMetric : IMoBroItem
   /// An optional group this metric is part of (id of a registered <see cref="IGroup"/>)
   /// </summary>
   public string? GroupId { get; }
-
-  /// <summary>
-  /// An optional poll limit. If specified, the service will wait for at least the configured timespan
-  /// before updating the metric again.
-  /// </summary>
-  public TimeSpan? PollLimit { get; }
 }

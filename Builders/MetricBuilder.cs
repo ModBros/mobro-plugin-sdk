@@ -14,7 +14,7 @@ public sealed class MetricBuilder :
   MetricBuilder.ITypeStage,
   MetricBuilder.ICategoryStage,
   MetricBuilder.IGroupStage,
-  MetricBuilder.IPollingStage
+  MetricBuilder.IUpdateStage
 {
   private string? _id;
   private string? _label;
@@ -23,7 +23,6 @@ public sealed class MetricBuilder :
   private string? _categoryId;
   private string? _groupId;
   private bool _static;
-  private TimeSpan? _pollLimit;
 
   private MetricBuilder()
   {
@@ -92,44 +91,37 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public IPollingStage OfGroup(string? groupId)
+  public IUpdateStage OfGroup(string? groupId)
   {
     _groupId = groupId;
     return this;
   }
 
   /// <inheritdoc />
-  public IPollingStage OfGroup(IGroup group)
+  public IUpdateStage OfGroup(IGroup group)
   {
     _groupId = group.Id;
     return this;
   }
 
   /// <inheritdoc />
-  public IPollingStage OfNoGroup()
+  public IUpdateStage OfNoGroup()
   {
     _groupId = null;
     return this;
   }
 
   /// <inheritdoc />
-  public IPollingStage AsStaticValue(bool @static = true)
+  public IUpdateStage AsStaticValue(bool @static = true)
   {
     _static = @static;
     return this;
   }
 
   /// <inheritdoc />
-  public IPollingStage AsDynamicValue(bool dynamic = true)
+  public IUpdateStage AsDynamicValue(bool dynamic = true)
   {
     _static = !dynamic;
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IPollingStage WithPollLimit(TimeSpan limit)
-  {
-    _pollLimit = limit;
     return this;
   }
 
@@ -145,7 +137,6 @@ public sealed class MetricBuilder :
     {
       Description = _description,
       GroupId = _groupId,
-      PollLimit = _pollLimit,
       IsStatic = _static
     };
   }
@@ -243,7 +234,7 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="groupId">The id of the <see cref="IGroup"/></param>
     /// <returns>The next building stage</returns>
-    public IPollingStage OfGroup(string? groupId);
+    public IUpdateStage OfGroup(string? groupId);
 
     /// <summary>
     /// Sets the <see cref="IGroup"/>
@@ -251,20 +242,20 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="group">The <see cref="IGroup"/></param>
     /// <returns>The next building stage</returns>
-    public IPollingStage OfGroup(IGroup group);
+    public IUpdateStage OfGroup(IGroup group);
 
     /// <summary>
     /// Builds the  <see cref="IMetric"/> without 
     /// a <see cref="IGroup"/>
     /// </summary>
     /// <returns>The next building stage</returns>
-    public IPollingStage OfNoGroup();
+    public IUpdateStage OfNoGroup();
   }
 
   /// <summary>
   /// Building stage of the <see cref="MetricBuilder"/>
   /// </summary>
-  public interface IPollingStage
+  public interface IUpdateStage
   {
     /// <summary>
     /// Marks whether the value of the <see cref="IMetric"/> is static
@@ -272,24 +263,15 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="static">Whether the value is static or not</param>
     /// <returns>The building stage</returns>
-    public IPollingStage AsStaticValue(bool @static = true);
+    public IUpdateStage AsStaticValue(bool @static = true);
 
     /// <summary>
     /// Marks whether the value of the <see cref="IMetric"/> is dynamic
     /// (= the value is not fixed and will change)
     /// </summary>
-    /// <param name="dynamic">Whether the value is dynomic of not</param>
+    /// <param name="dynamic">Whether the value is dynamic of not</param>
     /// <returns>The building stage</returns>
-    public IPollingStage AsDynamicValue(bool dynamic = true);
-
-    /// <summary>
-    /// Sets an optional poll limit for the value of the <see cref="IMetric"/>.
-    /// If specified, the service will wait for at least the configured timespan
-    /// before updating the metric again.
-    /// </summary>
-    /// <param name="limit">The poll limit</param>
-    /// <returns>The building stage</returns>
-    public IPollingStage WithPollLimit(TimeSpan limit);
+    public IUpdateStage AsDynamicValue(bool dynamic = true);
 
     /// <summary>
     /// Builds and creates the <see cref="IMetric"/>.
