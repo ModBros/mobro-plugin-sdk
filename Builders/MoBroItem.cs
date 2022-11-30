@@ -1,4 +1,5 @@
 using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Actions;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Resources;
 
@@ -38,4 +39,10 @@ public static class MoBroItem
   /// </summary>
   /// <returns>An instance of <see cref="TypeBuilder"/></returns>
   public static TypeBuilder.IIdStage CreateMetricType() => TypeBuilder.CreateMetricType();
+
+  /// <summary>
+  /// Builds a new <see cref="IAction"/>
+  /// </summary>
+  /// <returns>An instance of <see cref="ActionBuilder"/></returns>
+  public static ActionBuilder.IIdStage CreateAction() => ActionBuilder.CreateAction();
 }

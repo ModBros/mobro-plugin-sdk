@@ -12,14 +12,14 @@ public interface IMoBroPlugin : IDisposable
 {
   /// <summary>
   /// Called once by the service upon initialization of the plugin.<br/>
-  /// The passed instances of <see cref="IPluginSettings"/> and <see cref="IMoBroService"/> may be stored and used throughout
+  /// The passed instances of <see cref="IMoBroSettings"/> and <see cref="IMoBroService"/> may be stored and used throughout
   /// the whole lifetime of the plugin to register <see cref="IMoBroItem"/>s, push updated <see cref="MetricValue"/>s, etc.
   /// at any time.
   /// </summary>
   /// <remarks>Only one of either <see cref="Init"/> or <see cref="InitAsync"/> needs to be implemented.</remarks>
   /// <param name="settings">The current plugin settings.</param>
   /// <param name="service">The <see cref="IMoBroService"/> implementation.</param>
-  public void Init(IPluginSettings settings, IMoBroService service)
+  public void Init(IMoBroSettings settings, IMoBroService service)
   {
   }
 
@@ -29,7 +29,7 @@ public interface IMoBroPlugin : IDisposable
   /// <remarks>Only one of either <see cref="Init"/> or <see cref="InitAsync"/> needs to be implemented.</remarks>
   /// <param name="settings">The current plugin settings.</param>
   /// <param name="service">The <see cref="IMoBroService"/> implementation.</param>
-  public Task InitAsync(IPluginSettings settings, IMoBroService service) => Task.CompletedTask;
+  public Task InitAsync(IMoBroSettings settings, IMoBroService service) => Task.CompletedTask;
 
   /// <summary>
   /// Called by to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>

@@ -3,9 +3,9 @@
 namespace MoBro.Plugin.SDK;
 
 /// <summary>
-/// The plugin specific settings passed the plugin upon initialization.
+/// Settings passed to the plugin upon initialization or actions upon invocation.
 /// </summary>
-public interface IPluginSettings
+public interface IMoBroSettings
 {
   /// <summary>
   /// Gets the current setting value for a given key.
