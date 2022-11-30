@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MoBro.Plugin.SDK.Models;
 
@@ -35,5 +34,5 @@ public sealed class Group : IGroup
   public string? Icon { get; set; }
 
   /// <inheritdoc />
-  public IEnumerable<IGroup>? SubGroups { get; set; } = Enumerable.Empty<IGroup>();
+  public IEnumerable<IGroup>? SubGroups { get; set; } = new List<IGroup>();
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MoBro.Plugin.SDK.Models;
@@ -31,7 +32,7 @@ public interface IMoBroService
   /// <param name="ids">The ids of the items to unregister.</param>
   /// <exception cref="System.ArgumentNullException">The ids are null.</exception>
   void UnregisterItems(IEnumerable<string> ids);
-  
+
   /// <summary>
   /// Unregister a item with the service.
   /// </summary>
@@ -59,10 +60,25 @@ public interface IMoBroService
   /// </summary>
   /// <param name="values">The <see cref="MetricValue"/>s</param>
   void UpdateMetricValues(IEnumerable<MetricValue> values);
-  
+
   /// <summary>
   /// Push a new value for one registered <see cref="IMetric"/>
   /// </summary>
   /// <param name="value">The <see cref="MetricValue"/></param>
   void UpdateMetricValue(in MetricValue value);
+
+  /// <summary>
+  /// Push a new value for a registered <see cref="IMetric"/>
+  /// </summary>
+  /// <param name="id">The id of the metric</param>
+  /// <param name="value">The new value of the metric</param>
+  /// <param name="timestamp">The date and time the value was recorded or measured at</param>
+  void UpdateMetricValue(string id, object? value, DateTime timestamp);
+
+  /// <summary>
+  /// Push a new value for a registered <see cref="IMetric"/> with the timestamp automatically set to <see cref="DateTime.UtcNow"/>
+  /// </summary>
+  /// <param name="id">The id of the metric</param>
+  /// <param name="value">The new value of the metric</param>
+  void UpdateMetricValue(string id, object? value);
 }

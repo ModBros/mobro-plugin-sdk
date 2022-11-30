@@ -11,10 +11,7 @@ namespace MoBro.Plugin.SDK.Builders;
 public sealed class TypeBuilder :
   TypeBuilder.IIdStage,
   TypeBuilder.ILabelStage,
-  TypeBuilder.IIconStage,
   TypeBuilder.ITypeStage,
-  TypeBuilder.IBaseUnitStage,
-  TypeBuilder.IUnitStage,
   TypeBuilder.IBuildStage
 {
   private string? _id;
@@ -42,7 +39,7 @@ public sealed class TypeBuilder :
   }
 
   /// <inheritdoc />
-  public IIconStage WithLabel(string label, string? description = null)
+  public ITypeStage WithLabel(string label, string? description = null)
   {
     _label = label;
     _description = description;
@@ -50,41 +47,28 @@ public sealed class TypeBuilder :
   }
 
   /// <inheritdoc />
-  public ITypeStage WithIcon(string? iconId)
+  public IBuildStage WithIcon(string? iconId)
   {
     _icon = iconId;
     return this;
   }
 
   /// <inheritdoc />
-  public ITypeStage WithoutIcon()
-  {
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBaseUnitStage OfValueType(MetricValueType type)
+  public IBuildStage OfValueType(MetricValueType type)
   {
     _valueType = type;
     return this;
   }
 
   /// <inheritdoc />
-  public IUnitStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction)
+  public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction)
   {
     _baseUnit = builderFunction.Invoke(UnitBuilder.CreateBaseUnit());
     return this;
   }
 
   /// <inheritdoc />
-  public IBuildStage WithoutUnit()
-  {
-    _baseUnit = null;
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IUnitStage WithUnit(Func<UnitBuilder.IUnitStage, IUnit> builderFunction)
+  public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, IUnit> builderFunction)
   {
     _units.Add(builderFunction.Invoke(UnitBuilder.CreateUnit()));
     return this;
@@ -130,26 +114,7 @@ public sealed class TypeBuilder :
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
     /// <returns>The next building stage</returns>
-    public IIconStage WithLabel(string label, string? description = null);
-  }
-
-  /// <summary>
-  /// Building stage of the <see cref="TypeBuilder"/>
-  /// </summary>
-  public interface IIconStage
-  {
-    /// <summary>
-    /// Sets the icon of the <see cref="IMetricType"/>
-    /// </summary>
-    /// <param name="iconId">The icon id</param>
-    /// <returns>The next building stage</returns>
-    public ITypeStage WithIcon(string? iconId);
-
-    /// <summary>
-    /// Builds the <see cref="IMetricType"/> without an icon
-    /// </summary>
-    /// <returns>The next building stage</returns>
-    public ITypeStage WithoutIcon();
+    public ITypeStage WithLabel(string label, string? description = null);
   }
 
   /// <summary>
@@ -163,48 +128,7 @@ public sealed class TypeBuilder :
     /// </summary>
     /// <param name="type">The <see cref="MetricValueType"/></param>
     /// <returns>The next building stage</returns>
-    public IBaseUnitStage OfValueType(MetricValueType type);
-  }
-
-  /// <summary>
-  /// Building stage of the <see cref="TypeBuilder"/>
-  /// </summary>
-  public interface IBaseUnitStage
-  {
-    /// <summary>
-    /// Builds and sets the base <see cref="IUnit"/>
-    /// for this <see cref="IMetricType"/>
-    /// </summary>
-    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
-    /// <returns>The next building stage</returns>
-    public IUnitStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction);
-
-    /// <summary>
-    /// Builds this <see cref="IMetricType"/> without a unit
-    /// </summary>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithoutUnit();
-  }
-
-  /// <summary>
-  /// Building stage of the <see cref="TypeBuilder"/>
-  /// </summary>
-  public interface IUnitStage
-  {
-    /// <summary>
-    /// Adds an additional <see cref="IUnit"/> to the
-    /// <see cref="IMetricType"/>. This unit has to be derivable by formula from the
-    /// previously defined base unit.
-    /// </summary>
-    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
-    /// <returns>The building stage</returns>
-    public IUnitStage WithUnit(Func<UnitBuilder.IUnitStage, IUnit> builderFunction);
-
-    /// <summary>
-    /// Builds and creates the <see cref="IMetricType"/>
-    /// </summary>
-    /// <returns>The <see cref="IMetricType"/></returns>
-    public IMetricType Build();
+    public IBuildStage OfValueType(MetricValueType type);
   }
 
   /// <summary>
@@ -212,6 +136,30 @@ public sealed class TypeBuilder :
   /// </summary>
   public interface IBuildStage
   {
+    /// <summary>
+    /// Sets the icon of the <see cref="IMetricType"/>
+    /// </summary>
+    /// <param name="iconId">The icon id</param>
+    /// <returns>The next building stage</returns>
+    public IBuildStage WithIcon(string? iconId);
+
+    /// <summary>
+    /// Builds and sets the base <see cref="IUnit"/>
+    /// for this <see cref="IMetricType"/>
+    /// </summary>
+    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
+    /// <returns>The next building stage</returns>
+    public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction);
+
+    /// <summary>
+    /// Adds an additional <see cref="IUnit"/> to the
+    /// <see cref="IMetricType"/>. This unit has to be derivable by formula from the
+    /// previously defined base unit.
+    /// </summary>
+    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
+    /// <returns>The building stage</returns>
+    public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, IUnit> builderFunction);
+
     /// <summary>
     /// Builds and creates the <see cref="IMetricType"/>
     /// </summary>

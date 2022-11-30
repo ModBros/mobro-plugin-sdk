@@ -14,7 +14,7 @@ public sealed class MetricBuilder :
   MetricBuilder.ITypeStage,
   MetricBuilder.ICategoryStage,
   MetricBuilder.IGroupStage,
-  MetricBuilder.IUpdateStage
+  MetricBuilder.IBuildStage
 {
   private string? _id;
   private string? _label;
@@ -91,35 +91,43 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public IUpdateStage OfGroup(string? groupId)
+  public IGroupStage OfNoCategory()
+  {
+    _categoryId = CoreCategory.Miscellaneous.ToString().ToLower();
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IBuildStage OfGroup(string? groupId)
+
   {
     _groupId = groupId;
     return this;
   }
 
   /// <inheritdoc />
-  public IUpdateStage OfGroup(IGroup group)
+  public IBuildStage OfGroup(IGroup group)
   {
     _groupId = group.Id;
     return this;
   }
 
   /// <inheritdoc />
-  public IUpdateStage OfNoGroup()
+  public IBuildStage OfNoGroup()
   {
     _groupId = null;
     return this;
   }
 
   /// <inheritdoc />
-  public IUpdateStage AsStaticValue(bool @static = true)
+  public IBuildStage AsStaticValue(bool @static = true)
   {
     _static = @static;
     return this;
   }
 
   /// <inheritdoc />
-  public IUpdateStage AsDynamicValue(bool dynamic = true)
+  public IBuildStage AsDynamicValue(bool dynamic = true)
   {
     _static = !dynamic;
     return this;
@@ -221,6 +229,13 @@ public sealed class MetricBuilder :
     /// <param name="category">The <see cref="ICategory"/></param>
     /// <returns>The next building stage</returns>
     public IGroupStage OfCategory(ICategory category);
+
+    /// <summary>
+    /// Sets the <see cref="ICategory"/> of this <see cref="IMetric"/> to the default value of
+    /// <see cref="CoreCategory.Miscellaneous"/>
+    /// </summary>
+    /// <returns>The next building stage</returns>
+    public IGroupStage OfNoCategory();
   }
 
   /// <summary>
@@ -234,7 +249,7 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="groupId">The id of the <see cref="IGroup"/></param>
     /// <returns>The next building stage</returns>
-    public IUpdateStage OfGroup(string? groupId);
+    public IBuildStage OfGroup(string? groupId);
 
     /// <summary>
     /// Sets the <see cref="IGroup"/>
@@ -242,20 +257,20 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="group">The <see cref="IGroup"/></param>
     /// <returns>The next building stage</returns>
-    public IUpdateStage OfGroup(IGroup group);
+    public IBuildStage OfGroup(IGroup group);
 
     /// <summary>
     /// Builds the  <see cref="IMetric"/> without 
     /// a <see cref="IGroup"/>
     /// </summary>
     /// <returns>The next building stage</returns>
-    public IUpdateStage OfNoGroup();
+    public IBuildStage OfNoGroup();
   }
 
   /// <summary>
   /// Building stage of the <see cref="MetricBuilder"/>
   /// </summary>
-  public interface IUpdateStage
+  public interface IBuildStage
   {
     /// <summary>
     /// Marks whether the value of the <see cref="IMetric"/> is static
@@ -263,15 +278,15 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="static">Whether the value is static or not</param>
     /// <returns>The building stage</returns>
-    public IUpdateStage AsStaticValue(bool @static = true);
+    public IBuildStage AsStaticValue(bool @static = true);
 
     /// <summary>
     /// Marks whether the value of the <see cref="IMetric"/> is dynamic
     /// (= the value is not fixed and will change)
     /// </summary>
-    /// <param name="dynamic">Whether the value is dynamic of not</param>
+    /// <param name="dynamic">Whether the value is dynamic or not</param>
     /// <returns>The building stage</returns>
-    public IUpdateStage AsDynamicValue(bool dynamic = true);
+    public IBuildStage AsDynamicValue(bool dynamic = true);
 
     /// <summary>
     /// Builds and creates the <see cref="IMetric"/>.

@@ -10,8 +10,7 @@ namespace MoBro.Plugin.SDK.Builders;
 public sealed class CategoryBuilder :
   CategoryBuilder.IIdStage,
   CategoryBuilder.ILabelStage,
-  CategoryBuilder.IIconStage,
-  CategoryBuilder.ISubCategoryStage
+  CategoryBuilder.IBuildStage
 {
   private string? _id;
   private string? _label;
@@ -36,7 +35,7 @@ public sealed class CategoryBuilder :
   }
 
   /// <inheritdoc />
-  public IIconStage WithLabel(string label, string? description = null)
+  public IBuildStage WithLabel(string label, string? description = null)
   {
     _label = label;
     _description = description;
@@ -45,21 +44,14 @@ public sealed class CategoryBuilder :
 
 
   /// <inheritdoc />
-  public ISubCategoryStage WithIcon(string? iconId)
+  public IBuildStage WithIcon(string? iconId)
   {
     _icon = iconId;
     return this;
   }
 
   /// <inheritdoc />
-  public ISubCategoryStage WithoutIcon()
-  {
-    _icon = null;
-    return this;
-  }
-
-  /// <inheritdoc />
-  public ISubCategoryStage WithSubCategory(Func<IIdStage, ICategory> builder)
+  public IBuildStage WithSubCategory(Func<IIdStage, ICategory> builder)
   {
     _subCategories.Add(builder.Invoke(new CategoryBuilder()));
     return this;
@@ -103,39 +95,27 @@ public sealed class CategoryBuilder :
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
     /// <returns>The next building stage</returns>
-    IIconStage WithLabel(string label, string? description = null);
+    IBuildStage WithLabel(string label, string? description = null);
   }
 
   /// <summary>
   /// Building stage of the <see cref="CategoryBuilder"/>
   /// </summary>
-  public interface IIconStage
-  {
-    /// <summary>
-    /// Sets the icon of the <see cref="ICategory"/>
-    /// </summary>
-    /// <param name="iconId">The icon id</param>
-    /// <returns>The next building stage</returns>
-    ISubCategoryStage WithIcon(string? iconId);
-
-    /// <summary>
-    /// Builds the <see cref="ICategory"/> without an icon
-    /// </summary>
-    /// <returns>The next building stage</returns>
-    ISubCategoryStage WithoutIcon();
-  }
-
-  /// <summary>
-  /// Building stage of the <see cref="CategoryBuilder"/>
-  /// </summary>
-  public interface ISubCategoryStage
+  public interface IBuildStage
   {
     /// <summary>
     /// Adds a subcategory to the <see cref="ICategory"/>
     /// </summary>
     /// <param name="builder">The builder function for the subcategory</param>
     /// <returns>The building stage</returns>
-    ISubCategoryStage WithSubCategory(Func<IIdStage, ICategory> builder);
+    IBuildStage WithSubCategory(Func<IIdStage, ICategory> builder);
+    
+    /// <summary>
+    /// Sets the icon of the <see cref="ICategory"/>
+    /// </summary>
+    /// <param name="iconId">The icon id</param>
+    /// <returns>The next building stage</returns>
+    IBuildStage WithIcon(string? iconId);
 
     /// <summary>
     /// Completes and builds the <see cref="ICategory"/>

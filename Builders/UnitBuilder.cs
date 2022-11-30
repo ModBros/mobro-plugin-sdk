@@ -7,7 +7,7 @@ namespace MoBro.Plugin.SDK.Builders;
 /// Builder to create a new <see cref="IUnit"/>
 /// </summary>
 public sealed class UnitBuilder :
-  UnitBuilder.IUnitStage,
+  UnitBuilder.IDerivedUnitStage,
   UnitBuilder.ILabelStage,
   UnitBuilder.IAbbreviationStage,
   UnitBuilder.IBuildStage
@@ -27,7 +27,7 @@ public sealed class UnitBuilder :
     return new UnitBuilder();
   }
 
-  internal static IUnitStage CreateUnit()
+  internal static IDerivedUnitStage CreateUnit()
   {
     return new UnitBuilder();
   }
@@ -70,7 +70,7 @@ public sealed class UnitBuilder :
   /// <summary>
   /// Building stage of the <see cref="UnitBuilder"/>
   /// </summary>
-  public interface IUnitStage
+  public interface IDerivedUnitStage
   {
     /// <summary>
     /// Sets the formulas to derive (and convert back) this unit from the base unit of its

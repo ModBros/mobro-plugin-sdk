@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Enums;
 
@@ -42,5 +41,5 @@ public sealed class MetricType : IMetricType
   public IUnit? BaseUnit { get; set; }
 
   /// <inheritdoc />
-  public IEnumerable<IUnit>? Units { get; set; } = Enumerable.Empty<IUnit>();
+  public IEnumerable<IUnit>? Units { get; set; } = new List<IUnit>();
 }

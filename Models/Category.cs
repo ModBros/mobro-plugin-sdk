@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MoBro.Plugin.SDK.Models;
 
@@ -35,5 +34,5 @@ public sealed class Category : ICategory
   public string? Icon { get; set; }
 
   /// <inheritdoc />
-  public IEnumerable<ICategory>? SubCategories { get; set; } = Enumerable.Empty<ICategory>();
+  public IEnumerable<ICategory>? SubCategories { get; set; } = new List<ICategory>();
 }

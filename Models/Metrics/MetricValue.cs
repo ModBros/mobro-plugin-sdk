@@ -13,7 +13,7 @@ public readonly record struct MetricValue
   /// </summary>
   /// <param name="id">The id of the metric this value belongs to</param>
   /// <param name="timestamp">The date and time the value was recorded or measured at</param>
-  /// <param name="value">The value</param>
+  /// <param name="value">The new value of the metric</param>
   public MetricValue(string id, DateTime timestamp, object? value)
   {
     Id = id ?? throw new ArgumentNullException(nameof(id));

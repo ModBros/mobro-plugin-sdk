@@ -10,8 +10,7 @@ namespace MoBro.Plugin.SDK.Builders;
 public sealed class GroupBuilder :
   GroupBuilder.IIdStage,
   GroupBuilder.ILabelStage,
-  GroupBuilder.IIconStage,
-  GroupBuilder.ISubGroupStage
+  GroupBuilder.IBuildStage
 {
   private string? _id;
   private string? _label;
@@ -36,7 +35,7 @@ public sealed class GroupBuilder :
   }
 
   /// <inheritdoc />
-  public IIconStage WithLabel(string label, string? description = null)
+  public IBuildStage WithLabel(string label, string? description = null)
   {
     _label = label;
     _description = description;
@@ -44,21 +43,14 @@ public sealed class GroupBuilder :
   }
 
   /// <inheritdoc />
-  public ISubGroupStage WithIcon(string? iconId)
+  public IBuildStage WithIcon(string? iconId)
   {
     _icon = iconId;
     return this;
   }
 
   /// <inheritdoc />
-  public ISubGroupStage WithoutIcon()
-  {
-    _icon = null;
-    return this;
-  }
-
-  /// <inheritdoc />
-  public ISubGroupStage WithSubGroup(Func<IIdStage, IGroup> builder)
+  public IBuildStage WithSubGroup(Func<IIdStage, IGroup> builder)
   {
     _subGroups.Add(builder.Invoke(new GroupBuilder()));
     return this;
@@ -102,39 +94,27 @@ public sealed class GroupBuilder :
     /// <param name="label">The label</param>
     /// <param name="description">the optional textual description</param>
     /// <returns>The next building stage</returns>
-    IIconStage WithLabel(string label, string? description = null);
+    IBuildStage WithLabel(string label, string? description = null);
   }
 
   /// <summary>
   /// Building stage of the <see cref="GroupBuilder"/>
   /// </summary>
-  public interface IIconStage
-  {
-    /// <summary>
-    /// Sets the icon of the <see cref="IGroup"/>
-    /// </summary>
-    /// <param name="iconId">The icon id</param>
-    /// <returns>The next building stage</returns>
-    ISubGroupStage WithIcon(string? iconId);
-
-    /// <summary>
-    /// Builds the <see cref="IGroup"/> without an icon
-    /// </summary>
-    /// <returns>The next building stage</returns>
-    ISubGroupStage WithoutIcon();
-  }
-
-  /// <summary>
-  /// Building stage of the <see cref="GroupBuilder"/>
-  /// </summary>
-  public interface ISubGroupStage
+  public interface IBuildStage
   {
     /// <summary>
     /// Adds a subgroup to the <see cref="IGroup"/>
     /// </summary>
     /// <param name="builder">The builder function for the subgroup</param>
     /// <returns>The building stage</returns>
-    ISubGroupStage WithSubGroup(Func<IIdStage, IGroup> builder);
+    IBuildStage WithSubGroup(Func<IIdStage, IGroup> builder);
+
+    /// <summary>
+    /// Sets the icon of the <see cref="IGroup"/>
+    /// </summary>
+    /// <param name="iconId">The icon id</param>
+    /// <returns>The next building stage</returns>
+    IBuildStage WithIcon(string? iconId);
 
     /// <summary>
     /// Completes and builds the <see cref="IGroup"/>
