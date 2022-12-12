@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Actions;
+using MoBro.Plugin.SDK.Models.Settings;
 using Action = System.Action;
 
 namespace MoBro.Plugin.SDK.Builders;
@@ -25,6 +27,7 @@ public sealed class ActionBuilder :
   private string? _groupId;
   private Func<IMoBroSettings, Task<object?>>? _handler;
   private bool _returnsResult;
+  private readonly List<SettingsFieldBase> _settings = new();
 
   private ActionBuilder()
   {
@@ -38,6 +41,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public ILabelStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -45,15 +49,16 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public ICategoryStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
   }
 
   /// <inheritdoc />
-  public IGroupStage OfCategory(string categoryId)
+  public IGroupStage OfCategory(string? categoryId)
   {
-    _categoryId = categoryId;
+    _categoryId = categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower();
     return this;
   }
 
@@ -67,6 +72,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IGroupStage OfCategory(ICategory category)
   {
+    ArgumentNullException.ThrowIfNull(category);
     _categoryId = category.Id;
     return this;
   }
@@ -88,6 +94,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IHandlerStage OfGroup(IGroup group)
   {
+    ArgumentNullException.ThrowIfNull(group);
     _groupId = group.Id;
     return this;
   }
@@ -102,6 +109,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithHandler(Action<IMoBroSettings> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = false;
     _handler = p =>
     {
@@ -114,6 +122,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithHandler(Action handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = false;
     _handler = _ =>
     {
@@ -126,6 +135,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithHandler(Func<IMoBroSettings, object?> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = true;
     _handler = p => Task.FromResult(handler.Invoke(p));
     return this;
@@ -134,6 +144,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithHandler(Func<object?> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = true;
     _handler = _ => Task.FromResult(handler.Invoke());
     return this;
@@ -142,6 +153,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithAsyncHandler(Func<Task> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = false;
     _handler = async _ =>
     {
@@ -154,6 +166,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = false;
     _handler = async p =>
     {
@@ -166,6 +179,7 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithAsyncHandler(Func<Task<object?>> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = true;
     _handler = _ => handler.Invoke();
     return this;
@@ -174,8 +188,17 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task<object?>> handler)
   {
+    ArgumentNullException.ThrowIfNull(handler);
     _returnsResult = true;
     _handler = handler;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IBuildStage WithSetting(Func<SettingsBuilder.INameStage, SettingsFieldBase> builderFunction)
+  {
+    ArgumentNullException.ThrowIfNull(builderFunction);
+    _settings.Add(builderFunction.Invoke(SettingsBuilder.CreateSetting()));
     return this;
   }
 
@@ -183,15 +206,16 @@ public sealed class ActionBuilder :
   public IAction Build()
   {
     return new Models.Actions.Action(
-      _id ?? throw new InvalidOperationException("Action id must not be null"),
-      _label ?? throw new InvalidOperationException("Action label must not be null"),
+      _id ?? throw new ArgumentNullException(nameof(_id)),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
       _categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower(),
       _handler ?? (_ => Task.FromResult<object?>(null))
     )
     {
       Description = _description,
       GroupId = _groupId,
-      ReturnsResult = _returnsResult
+      ReturnsResult = _returnsResult,
+      Settings = _settings
     };
   }
 
@@ -232,7 +256,7 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
     /// <returns>The next building stage</returns>
-    public IGroupStage OfCategory(string categoryId);
+    public IGroupStage OfCategory(string? categoryId);
 
     /// <summary>
     /// Sets the <see cref="ICategory"/> this <see cref="IAction"/> belongs to
@@ -352,6 +376,13 @@ public sealed class ActionBuilder :
   /// </summary>
   public interface IBuildStage
   {
+    /// <summary>
+    /// Adds a setting to the action
+    /// </summary>
+    /// <param name="builderFunction">The builder function for the setting</param>
+    /// <returns>The building stage</returns>
+    IBuildStage WithSetting(Func<SettingsBuilder.INameStage, SettingsFieldBase> builderFunction);
+
     /// <summary>
     /// Builds and creates the <see cref="IAction"/>.
     /// </summary>

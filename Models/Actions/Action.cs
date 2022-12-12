@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Builders;
+using MoBro.Plugin.SDK.Models.Settings;
 
 namespace MoBro.Plugin.SDK.Models.Actions;
 
@@ -43,4 +45,7 @@ public sealed class Action : IAction
 
   /// <inheritdoc />
   public Func<IMoBroSettings, Task<object?>> Handler { get; set; }
+
+  /// <inheritdoc />
+  public IEnumerable<SettingsFieldBase> Settings { get; set; } = new List<SettingsFieldBase>();
 }

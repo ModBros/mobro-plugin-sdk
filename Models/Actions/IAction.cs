@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using MoBro.Plugin.SDK.Models.Settings;
 
 namespace MoBro.Plugin.SDK.Models.Actions;
 
@@ -38,4 +40,9 @@ public interface IAction : IMoBroItem
   /// The handler that will be called whenever this action is invoked
   /// </summary>
   public Func<IMoBroSettings, Task<object?>> Handler { get; }
+
+  /// <summary>
+  /// Settings exposed by this specific action
+  /// </summary>
+  public IEnumerable<SettingsFieldBase> Settings { get; }
 }
