@@ -34,6 +34,7 @@ public sealed class TypeBuilder :
   /// <inheritdoc />
   public ILabelStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -41,6 +42,7 @@ public sealed class TypeBuilder :
   /// <inheritdoc />
   public ITypeStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
@@ -63,6 +65,7 @@ public sealed class TypeBuilder :
   /// <inheritdoc />
   public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction)
   {
+    ArgumentNullException.ThrowIfNull(builderFunction);
     _baseUnit = builderFunction.Invoke(UnitBuilder.CreateBaseUnit());
     return this;
   }
@@ -70,6 +73,7 @@ public sealed class TypeBuilder :
   /// <inheritdoc />
   public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, IUnit> builderFunction)
   {
+    ArgumentNullException.ThrowIfNull(builderFunction);
     _units.Add(builderFunction.Invoke(UnitBuilder.CreateUnit()));
     return this;
   }
@@ -78,9 +82,9 @@ public sealed class TypeBuilder :
   public IMetricType Build()
   {
     return new MetricType(
-      _id ?? throw new InvalidOperationException("MetricType id must not be null"),
-      _label ?? throw new InvalidOperationException("MetricType label must not be null"),
-      _valueType ?? throw new InvalidOperationException("ValueType of MetricType must not be null")
+      _id ?? throw new ArgumentNullException(nameof(_id)),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
+      _valueType ?? throw new ArgumentNullException(nameof(_valueType))
     )
     {
       Description = _description,

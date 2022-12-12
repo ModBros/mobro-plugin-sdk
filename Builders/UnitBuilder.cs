@@ -35,6 +35,8 @@ public sealed class UnitBuilder :
   /// <inheritdoc />
   public ILabelStage WithConversionFormula(string fromBaseFormula, string toBaseFormula)
   {
+    ArgumentNullException.ThrowIfNull(fromBaseFormula);
+    ArgumentNullException.ThrowIfNull(toBaseFormula);
     _fromBaseFormula = fromBaseFormula;
     _toBaseFormula = toBaseFormula;
     return this;
@@ -43,6 +45,7 @@ public sealed class UnitBuilder :
   /// <inheritdoc />
   public IAbbreviationStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
@@ -51,6 +54,7 @@ public sealed class UnitBuilder :
   /// <inheritdoc />
   public IBuildStage WithAbbreviation(string abbreviation)
   {
+    ArgumentNullException.ThrowIfNull(abbreviation);
     _abbreviation = abbreviation;
     return this;
   }
@@ -59,11 +63,11 @@ public sealed class UnitBuilder :
   public IUnit Build()
   {
     return new Unit(
-      _label ?? throw new InvalidOperationException("Unit label must not be null"),
-      _abbreviation ?? throw new InvalidOperationException("Unit abbreviation must not be null"),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
+      _abbreviation ?? throw new ArgumentNullException(nameof(_abbreviation)),
       _description,
-      _fromBaseFormula ?? throw new InvalidOperationException("FromBaseFormula must not be null"),
-      _toBaseFormula ?? throw new InvalidOperationException("ToBaseFormula must not be null")
+      _fromBaseFormula ?? throw new ArgumentNullException(nameof(_fromBaseFormula)),
+      _toBaseFormula ?? throw new ArgumentNullException(nameof(_toBaseFormula))
     );
   }
 

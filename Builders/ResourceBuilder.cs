@@ -33,6 +33,7 @@ public sealed class ResourceBuilder :
   /// <inheritdoc />
   public IAltStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -66,6 +67,7 @@ public sealed class ResourceBuilder :
   /// <inheritdoc />
   public IImageStage FromRelativePath(string relativePath)
   {
+    ArgumentNullException.ThrowIfNull(relativePath);
     _imageRelativePath = relativePath;
     return this;
   }
@@ -73,6 +75,7 @@ public sealed class ResourceBuilder :
   /// <inheritdoc />
   public IImageStage FromAbsolutePath(string absolutePath)
   {
+    ArgumentNullException.ThrowIfNull(absolutePath);
     _imageRelativePath = Path.GetRelativePath(Directory.GetCurrentDirectory(), absolutePath);
     return this;
   }
@@ -81,9 +84,9 @@ public sealed class ResourceBuilder :
   public IImage Build()
   {
     return new Image(
-      _id ?? throw new InvalidOperationException("Image id must not be null"),
+      _id ?? throw new ArgumentNullException(nameof(_id)),
       _alt,
-      _imageRelativePath ?? throw new InvalidOperationException("Image path must not be null")
+      _imageRelativePath ?? throw new ArgumentNullException(nameof(_imageRelativePath))
     );
   }
 

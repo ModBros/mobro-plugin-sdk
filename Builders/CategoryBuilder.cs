@@ -30,6 +30,7 @@ public sealed class CategoryBuilder :
   /// <inheritdoc />
   public ILabelStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -37,6 +38,7 @@ public sealed class CategoryBuilder :
   /// <inheritdoc />
   public IBuildStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
@@ -61,8 +63,8 @@ public sealed class CategoryBuilder :
   public ICategory Build()
   {
     return new Category(
-      _id ?? throw new InvalidOperationException("Category id must not be null"),
-      _label ?? throw new InvalidOperationException("Category label must not be null"),
+      _id ?? throw new ArgumentNullException(nameof(_id)),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
       _description,
       _icon
     )

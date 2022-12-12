@@ -36,6 +36,7 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public ILabelStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -43,6 +44,7 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public ITypeStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
@@ -51,6 +53,7 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public ICategoryStage OfType(string typeId)
   {
+    ArgumentNullException.ThrowIfNull(typeId);
     _typeId = typeId;
     return this;
   }
@@ -65,14 +68,15 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public ICategoryStage OfType(IMetricType type)
   {
+    ArgumentNullException.ThrowIfNull(type);
     _typeId = type.Id;
     return this;
   }
 
   /// <inheritdoc />
-  public IGroupStage OfCategory(string categoryId)
+  public IGroupStage OfCategory(string? categoryId)
   {
-    _categoryId = categoryId;
+    _categoryId = categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower();
     return this;
   }
 
@@ -86,6 +90,7 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public IGroupStage OfCategory(ICategory category)
   {
+    ArgumentNullException.ThrowIfNull(category);
     _categoryId = category.Id;
     return this;
   }
@@ -99,7 +104,6 @@ public sealed class MetricBuilder :
 
   /// <inheritdoc />
   public IBuildStage OfGroup(string? groupId)
-
   {
     _groupId = groupId;
     return this;
@@ -137,10 +141,10 @@ public sealed class MetricBuilder :
   public IMetric Build()
   {
     return new Metric(
-      _id ?? throw new InvalidOperationException("Metric id must not be null"),
-      _label ?? throw new InvalidOperationException("Metric label must not be null"),
-      _typeId ?? throw new InvalidOperationException("Metric type must not be null"),
-      _categoryId ?? throw new InvalidOperationException("Category must not be null")
+      _id ?? throw new ArgumentNullException(nameof(_id)),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
+      _typeId ?? throw new ArgumentNullException(nameof(_typeId)),
+      _categoryId ?? throw new ArgumentNullException(nameof(_categoryId))
     )
     {
       Description = _description,
@@ -214,7 +218,7 @@ public sealed class MetricBuilder :
     /// </summary>
     /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
     /// <returns>The next building stage</returns>
-    public IGroupStage OfCategory(string categoryId);
+    public IGroupStage OfCategory(string? categoryId);
 
     /// <summary>
     /// Sets the <see cref="ICategory"/> this <see cref="IMetric"/> belongs to

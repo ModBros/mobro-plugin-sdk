@@ -30,6 +30,7 @@ public sealed class GroupBuilder :
   /// <inheritdoc />
   public ILabelStage WithId(string id)
   {
+    ArgumentNullException.ThrowIfNull(id);
     _id = id;
     return this;
   }
@@ -37,6 +38,7 @@ public sealed class GroupBuilder :
   /// <inheritdoc />
   public IBuildStage WithLabel(string label, string? description = null)
   {
+    ArgumentNullException.ThrowIfNull(label);
     _label = label;
     _description = description;
     return this;
@@ -60,8 +62,8 @@ public sealed class GroupBuilder :
   public IGroup Build()
   {
     return new Group(
-      _id ?? throw new InvalidOperationException("Group id must not be null"),
-      _label ?? throw new InvalidOperationException("Group label must not be null"),
+      _id ?? throw new ArgumentNullException(nameof(_id)),
+      _label ?? throw new ArgumentNullException(nameof(_label)),
       _description,
       _icon
     )
