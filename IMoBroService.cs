@@ -8,7 +8,7 @@ namespace MoBro.Plugin.SDK;
 
 /// <summary>
 /// MoBro object passed to the plugin upon initialization.
-/// Allows the plugin to interact with the service (e.g. register new metrics).
+/// Allows the plugin to interact with the service (e.g. register new metrics, push updated metrics values,...).
 /// </summary>
 public interface IMoBroService
 {

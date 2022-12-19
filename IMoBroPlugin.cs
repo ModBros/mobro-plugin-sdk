@@ -1,35 +1,27 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MoBro.Plugin.SDK.Models;
-using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK;
 
 /// <summary>
-/// A MoBro plugin. This interface has to be implemented in order for a plugin to be loadable by the MoBro service.
+/// A MoBro plugin. This interface must be implemented by a plugin in order for it to be loadable by MoBro.  <br/>
+/// An instance of <see cref="IMoBroSettings"/> and/or <see cref="IMoBroService"/> may be injected via the plugins
+/// constructor and then used throughout its lifetime.
 /// </summary>
 public interface IMoBroPlugin : IDisposable
 {
   /// <summary>
-  /// Called once by the service upon initialization of the plugin.<br/>
-  /// The passed instances of <see cref="IMoBroSettings"/> and <see cref="IMoBroService"/> may be stored and used throughout
-  /// the whole lifetime of the plugin to register <see cref="IMoBroItem"/>s, push updated <see cref="MetricValue"/>s, etc.
-  /// at any time.
+  /// Called once upon initialization of the plugin. Any (potentially longer running) initialization code that should
+  /// be run after the constructor is called can be placed here.
   /// </summary>
-  /// <remarks>Only one of either <see cref="Init"/> or <see cref="InitAsync"/> needs to be implemented.</remarks>
-  /// <param name="settings">The current plugin settings.</param>
-  /// <param name="service">The <see cref="IMoBroService"/> implementation.</param>
-  public void Init(IMoBroSettings settings, IMoBroService service)
+  public void Init()
   {
   }
 
   /// <summary>
   /// Same as <see cref="Init"/>, just async.
   /// </summary>
-  /// <remarks>Only one of either <see cref="Init"/> or <see cref="InitAsync"/> needs to be implemented.</remarks>
-  /// <param name="settings">The current plugin settings.</param>
-  /// <param name="service">The <see cref="IMoBroService"/> implementation.</param>
-  public Task InitAsync(IMoBroSettings settings, IMoBroService service) => Task.CompletedTask;
+  public Task InitAsync() => Task.CompletedTask;
 
   /// <summary>
   /// Called by to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>
