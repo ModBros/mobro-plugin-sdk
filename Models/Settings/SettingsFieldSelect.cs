@@ -27,7 +27,7 @@ public class SettingsFieldSelect : SettingsFieldBase
   /// <param name="description">An optional description of the field</param>
   /// <param name="required">Whether the field is required</param>
   public SettingsFieldSelect(string name, string label, string? description, bool required) :
-    base(SettingsFieldType.Select, name, label, description, required)
+    base(name, label, description, required)
   {
   }
 

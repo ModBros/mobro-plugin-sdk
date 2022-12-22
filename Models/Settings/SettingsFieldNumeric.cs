@@ -28,7 +28,7 @@ public class SettingsFieldNumeric : SettingsFieldBase
   /// <param name="description">An optional description of the field</param>
   /// <param name="required">Whether the field is required</param>
   public SettingsFieldNumeric(string name, string label, string? description, bool required) :
-    base(SettingsFieldType.Number, name, label, description, required)
+    base(name, label, description, required)
   {
   }
 }

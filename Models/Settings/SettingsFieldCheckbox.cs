@@ -18,7 +18,7 @@ public class SettingsFieldCheckbox : SettingsFieldBase
   /// <param name="description">An optional description of the field</param>
   /// <param name="required">Whether the field is required</param>
   public SettingsFieldCheckbox(string name, string label, string? description, bool required) :
-    base(SettingsFieldType.Checkbox, name, label, description, required)
+    base(name, label, description, required)
   {
   }
 }

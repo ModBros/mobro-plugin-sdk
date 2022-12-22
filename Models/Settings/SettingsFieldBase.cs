@@ -6,16 +6,17 @@ namespace MoBro.Plugin.SDK.Models.Settings;
 /// <summary>
 /// Abstract base class for all setting fields
 /// </summary>
-[JsonConverter(typeof(SettingsFieldConverter))]
+[JsonPolymorphic(
+  TypeDiscriminatorPropertyName = "type",
+  UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
+  IgnoreUnrecognizedTypeDiscriminators = false
+)]
+[JsonDerivedType(typeof(SettingsFieldCheckbox), typeDiscriminator: "checkbox")]
+[JsonDerivedType(typeof(SettingsFieldNumeric), typeDiscriminator: "numeric")]
+[JsonDerivedType(typeof(SettingsFieldSelect), typeDiscriminator: "select")]
+[JsonDerivedType(typeof(SettingsFieldString), typeDiscriminator: "string")]
 public abstract class SettingsFieldBase
 {
-  /// <summary>
-  /// The type of the setting field
-  /// </summary>
-  [Required]
-  [JsonConverter(typeof(JsonStringEnumConverter))]
-  public SettingsFieldType Type { get; }
-
   /// <summary>
   /// The name (key) of the field
   /// </summary>
@@ -43,9 +44,8 @@ public abstract class SettingsFieldBase
   /// </summary>
   public bool Required { get; }
 
-  private protected SettingsFieldBase(SettingsFieldType type, string name, string label, string? description, bool required)
+  private protected SettingsFieldBase(string name, string label, string? description, bool required)
   {
-    Type = type;
     Name = name;
     Label = label;
     Description = description;
