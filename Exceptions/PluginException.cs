@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MoBro.Plugin.SDK.Exceptions;
 
@@ -7,6 +8,12 @@ namespace MoBro.Plugin.SDK.Exceptions;
 /// </summary>
 public class PluginException : Exception
 {
+  /// <summary>
+  /// Additional exception details.
+  /// Content depends on the specific exception.
+  /// </summary>
+  public IDictionary<string, string> Details { get; } = new Dictionary<string, string>();
+
   /// <inheritdoc />
   public PluginException(string? message) : base(message)
   {
@@ -15,5 +22,16 @@ public class PluginException : Exception
   /// <inheritdoc />
   public PluginException(string? message, Exception? innerException) : base(message, innerException)
   {
+  }
+
+  /// <summary>
+  /// Add an additional detail to the exception
+  /// </summary>
+  /// <param name="key">The key</param>
+  /// <param name="detail">The detail value</param>
+  protected void AddDetail(string? key, string? detail)
+  {
+    if (key == null || detail == null) return;
+    Details[key] = detail;
   }
 }

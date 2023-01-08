@@ -16,4 +16,19 @@ public sealed class PluginSettingsException : PluginException
   public PluginSettingsException(string? message, Exception? innerException) : base(message, innerException)
   {
   }
+
+  /// <summary>
+  /// Creates a new PluginSettingsException
+  /// </summary>
+  /// <param name="field">The key of the setting field causing the error</param>
+  /// <param name="message">The message</param>
+  /// <param name="innerException">The inner exception</param>
+  public PluginSettingsException(string? field, string? message, Exception? innerException) : base(message,
+    innerException)
+  {
+    if (field != null)
+    {
+      AddDetail("field", field);
+    }
+  }
 }
