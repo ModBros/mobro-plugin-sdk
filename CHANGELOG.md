@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for basic actions
 * Pause and resume functions in the MoBroPlugin interface
+* Allow to pass additional error details in plugin exceptions
+* Option to actively notify service of an unrecoverable error
 
 ### Changed
 
@@ -20,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Removed core metric type 'miscellaneous'
 * Adjustments to the MoBroPlugin and MoBroService interfaces
 * Adjustments to the MoBro item builders
+* Upgraded to .NET 7
 
 ## 0.0.1 - 2022-10-17
 

@@ -81,4 +81,18 @@ public interface IMoBroService
   /// <param name="id">The id of the metric</param>
   /// <param name="value">The new value of the metric</param>
   void UpdateMetricValue(string id, object? value);
+
+  /// <summary>
+  /// Notifies the service that an unrecoverable error has occured.
+  /// This will cause the service to terminate the plugin.
+  /// </summary>
+  /// <param name="message">The error message</param>
+  void NotifyError(string message);
+
+  /// <summary>
+  /// Notifies the service that an unrecoverable error has occured.
+  /// This will cause the service to terminate the plugin.
+  /// </summary>
+  /// <param name="exception">The occurred exception</param>
+  void NotifyError(Exception exception);
 }
