@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Pause and resume functions in the MoBroPlugin interface
 * Allow to pass additional error details in plugin exceptions
 * Option to actively notify service of an unrecoverable error
+* Scheduler for recurring tasks
 
 ### Changed
 

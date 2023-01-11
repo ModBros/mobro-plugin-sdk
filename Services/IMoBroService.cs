@@ -4,11 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
 
-namespace MoBro.Plugin.SDK;
+namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
-/// MoBro object passed to the plugin upon initialization.
-/// Allows the plugin to interact with the service (e.g. register new metrics, push updated metrics values,...).
+/// Allows the plugin to interact with the service (e.g. register items, push updated metrics values,...).
 /// </summary>
 public interface IMoBroService
 {
@@ -17,28 +16,28 @@ public interface IMoBroService
   /// </summary>
   /// <param name="items">The items to register.</param>
   /// <exception cref="System.ArgumentNullException">The items are null.</exception>
-  void RegisterItems(IEnumerable<IMoBroItem> items);
+  void Register(IEnumerable<IMoBroItem> items);
 
   /// <summary>
   /// Registers a new item with the service.
   /// </summary>
   /// <param name="item">The item to register.</param>
   /// <exception cref="System.ArgumentNullException">The item is null.</exception>
-  void RegisterItem(IMoBroItem item);
+  void Register(IMoBroItem item);
 
   /// <summary>
   /// Unregister items with the service.
   /// </summary>
   /// <param name="ids">The ids of the items to unregister.</param>
   /// <exception cref="System.ArgumentNullException">The ids are null.</exception>
-  void UnregisterItems(IEnumerable<string> ids);
+  void Unregister(IEnumerable<string> ids);
 
   /// <summary>
   /// Unregister a item with the service.
   /// </summary>
   /// <param name="id">The id of the item to unregister.</param>
   /// <exception cref="System.ArgumentNullException">The id is null.</exception>
-  void UnregisterItem(string id);
+  void Unregister(string id);
 
   /// <summary>
   /// Gets the registered item associated with the specified id.
@@ -48,12 +47,12 @@ public interface IMoBroService
   /// <typeparam name="T">The type of the item</typeparam>
   /// <returns>true if an item with the given id and type is registered; otherwise false</returns>
   /// <exception cref="System.ArgumentNullException">The id is null.</exception>
-  bool TryGetItem<T>(string id, [MaybeNullWhen(false)] out T item) where T : IMoBroItem;
+  bool TryGet<T>(string id, [MaybeNullWhen(false)] out T item) where T : IMoBroItem;
 
   /// <summary>
   /// Clears all currently registered items.
   /// </summary>
-  void ClearItemRegister();
+  void ClearRegistration();
 
   /// <summary>
   /// Push a new value for one or more registered <see cref="IMetric"/>s
@@ -87,12 +86,12 @@ public interface IMoBroService
   /// This will cause the service to terminate the plugin.
   /// </summary>
   /// <param name="message">The error message</param>
-  void NotifyError(string message);
+  void Error(string message);
 
   /// <summary>
   /// Notifies the service that an unrecoverable error has occured.
   /// This will cause the service to terminate the plugin.
   /// </summary>
   /// <param name="exception">The occurred exception</param>
-  void NotifyError(Exception exception);
+  void Error(Exception exception);
 }

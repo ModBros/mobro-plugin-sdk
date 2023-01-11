@@ -1,6 +1,6 @@
 ﻿using MoBro.Plugin.SDK.Exceptions;
 
-namespace MoBro.Plugin.SDK;
+namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
 /// Settings passed to the plugin upon initialization or actions upon invocation.
