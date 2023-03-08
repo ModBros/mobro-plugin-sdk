@@ -12,7 +12,7 @@ namespace MoBro.Plugin.SDK.Models.Settings;
   IgnoreUnrecognizedTypeDiscriminators = false
 )]
 [JsonDerivedType(typeof(SettingsFieldCheckbox), typeDiscriminator: "checkbox")]
-[JsonDerivedType(typeof(SettingsFieldNumeric), typeDiscriminator: "numeric")]
+[JsonDerivedType(typeof(SettingsFieldNumber), typeDiscriminator: "number")]
 [JsonDerivedType(typeof(SettingsFieldSelect), typeDiscriminator: "select")]
 [JsonDerivedType(typeof(SettingsFieldString), typeDiscriminator: "string")]
 public abstract class SettingsFieldBase

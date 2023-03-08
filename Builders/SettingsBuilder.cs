@@ -71,7 +71,7 @@ public sealed class SettingsBuilder :
   }
 
   /// <inheritdoc />
-  public ITypeNumericStage OfTypeNumeric() => this;
+  public ITypeNumericStage OfTypeNumber() => this;
 
   /// <inheritdoc />
   public ITypeCheckboxStage OfTypeCheckbox() => this;
@@ -104,9 +104,9 @@ public sealed class SettingsBuilder :
   }
 
   /// <inheritdoc />
-  SettingsFieldNumeric ITypeNumericStage.Build()
+  SettingsFieldNumber ITypeNumericStage.Build()
   {
-    return new SettingsFieldNumeric(
+    return new SettingsFieldNumber(
       _name ?? throw new ArgumentNullException(nameof(_name)),
       _label ?? throw new ArgumentNullException(nameof(_label)),
       _description,
@@ -248,10 +248,10 @@ public sealed class SettingsBuilder :
     public IBuildStage Required(bool required);
 
     /// <summary>
-    /// Continue building a <see cref="SettingsFieldNumeric"/> 
+    /// Continue building a <see cref="SettingsFieldNumber"/> 
     /// </summary>
     /// <returns>The next building stage</returns>
-    public ITypeNumericStage OfTypeNumeric();
+    public ITypeNumericStage OfTypeNumber();
 
     /// <summary>
     /// Continue building a <see cref="SettingsFieldCheckbox"/> 
@@ -299,10 +299,10 @@ public sealed class SettingsBuilder :
     public ITypeNumericStage WithMax(double? maxValue);
 
     /// <summary>
-    /// Builds and creates the <see cref="SettingsFieldNumeric"/>
+    /// Builds and creates the <see cref="SettingsFieldNumber"/>
     /// </summary>
-    /// <returns>The <see cref="SettingsFieldNumeric"/></returns>
-    public SettingsFieldNumeric Build();
+    /// <returns>The <see cref="SettingsFieldNumber"/></returns>
+    public SettingsFieldNumber Build();
   }
 
   /// <summary>

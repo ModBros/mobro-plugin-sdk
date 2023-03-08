@@ -3,7 +3,7 @@
 /// <summary>
 /// A numeric settings field
 /// </summary>
-public class SettingsFieldNumeric : SettingsFieldBase
+public class SettingsFieldNumber : SettingsFieldBase
 {
   /// <summary>
   /// The default value of the field
@@ -21,13 +21,13 @@ public class SettingsFieldNumeric : SettingsFieldBase
   public double? Max { get; set; }
 
   /// <summary>
-  /// Creates a new <see cref="SettingsFieldNumeric"/>
+  /// Creates a new <see cref="SettingsFieldNumber"/>
   /// </summary>
   /// <param name="name">The name (key) of field</param>
   /// <param name="label">The visible label of the field</param>
   /// <param name="description">An optional description of the field</param>
   /// <param name="required">Whether the field is required</param>
-  public SettingsFieldNumeric(string name, string label, string? description, bool required) :
+  public SettingsFieldNumber(string name, string label, string? description, bool required) :
     base(name, label, description, required)
   {
   }
