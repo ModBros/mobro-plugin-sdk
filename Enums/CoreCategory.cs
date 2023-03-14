@@ -61,7 +61,12 @@ public enum CoreCategory
   Weather,
 
   /// <summary>
-  /// Media related items (Currently playing song, music controls,...)
+  /// Audio related items (volume,...)
+  /// </summary>
+  Audio,
+
+  /// <summary>
+  /// Media related items (currently playing media item, music controls,...)
   /// </summary>
   Media,
 
