@@ -133,5 +133,10 @@ public enum CoreMetricType
   /// <summary>
   /// An image (file)
   /// </summary>
-  Image
+  Image,
+
+  /// <summary>
+  /// An angle (degrees) 
+  /// </summary> 
+  Angle, 
 }
