@@ -19,6 +19,7 @@
         <PackageId>MoBro.Plugin.SDK</PackageId>
         <AssemblyName>MoBro.Plugin.SDK</AssemblyName>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <PackageIcon>mobro.ico</PackageIcon>
     </PropertyGroup>
 
 </Project>

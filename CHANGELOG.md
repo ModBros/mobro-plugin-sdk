@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Json schema for 'mobro_plugin_config.json'
+* NuGet package icon
 
 ## 0.1.7 -2023-03-31
 
