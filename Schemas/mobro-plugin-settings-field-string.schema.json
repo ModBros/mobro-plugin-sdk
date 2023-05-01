@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "FieldString",
+  "type": "object",
+  "extends": [
+    {
+      "$ref": "mobro-plugin-settings-field-base.schema.json"
+    }
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "string"
+      ]
+    },
+    "defaultValue": {
+      "type": "string"
+    },
+    "regex": {
+      "type": "string",
+      "description": "Regex to validate against"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}
+

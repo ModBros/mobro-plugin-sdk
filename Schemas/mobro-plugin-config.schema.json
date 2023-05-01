@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "PluginConfig",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[\\w-]+$",
+      "description": "The globally unique name (=id) of the plugin."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Visible human readable name of the plugin. Defaults to 'name' if not set."
+    },
+    "author": {
+      "type": "string",
+      "description": "The name of the author of this plugin.",
+      "default": "Unknown"
+    },
+    "description": {
+      "type": "string",
+      "description": "A short textual description for the plugin."
+    },
+    "assembly": {
+      "type": "string",
+      "description": "The .dll file to load.",
+      "default": "Program.dll"
+    },
+    "localization": {
+      "type": "string",
+      "description": "The relative path to the folder containing the localization files."
+    },
+    "settings": {
+      "$ref": "mobro-plugin-settings.schema.json",
+      "description": "The setting fields for this plugin."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

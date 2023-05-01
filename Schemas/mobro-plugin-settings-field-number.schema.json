@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "FieldNumber",
+  "type": "object",
+  "extends": [
+    {
+      "$ref": "mobro-plugin-settings-field-base.schema.json"
+    }
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "number"
+      ]
+    },
+    "defaultValue": {
+      "type": "number"
+    },
+    "min": {
+      "type": "number"
+    },
+    "max": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}
+

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "FieldBase",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of this settings field."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the settings field. Has to be unique for all fields of this array.",
+      "pattern": "^[\\w-]+$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "label": {
+      "type": "string",
+      "description": "Human readable label for this settings field.",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "description": {
+      "type": "string",
+      "description": "A hint what this settings field does."
+    },
+    "defaultValue": {
+      "description": "The default value of the settings field."
+    },
+    "required": {
+      "type": "boolean",
+      "description": "Whether this settings field is required.",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "label",
+    "type"
+  ]
+}
