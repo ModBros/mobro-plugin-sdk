@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Json schema for 'mobro_plugin_config.json'
 * NuGet package icon
+* Plugin wrapper to locally test and debug plugins without the need for the actual MoBro service
 
 ## 0.1.7 -2023-03-31
 

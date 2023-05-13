@@ -22,4 +22,23 @@
         <PackageIcon>mobro.png</PackageIcon>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+        <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+        <PackageReference Include="Quartz" Version="3.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="mobro.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Validators" />
+    </ItemGroup>
+
 </Project>

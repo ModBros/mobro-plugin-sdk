@@ -27,7 +27,7 @@
     "assembly": {
       "type": "string",
       "description": "The .dll file to load.",
-      "default": "Program.dll"
+      "default": "Plugin.dll"
     },
     "localization": {
       "type": "string",
