@@ -96,7 +96,7 @@ public class MoBroPluginBuilder
         .MinimumLevel.Override("System", LogEventLevel.Warning)
         .MinimumLevel.Override("Quartz", LogEventLevel.Warning)
         .MinimumLevel.Override("Serilog", LogEventLevel.Warning)
-        .WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss.fff} [{Level:u2}] {Message:lj}{NewLine}{Exception}")
+        .WriteTo.Console(outputTemplate: "{Timestamp:HH:mm:ss.fff} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
         .CreateLogger();
 
       _logger = LoggerFactory
