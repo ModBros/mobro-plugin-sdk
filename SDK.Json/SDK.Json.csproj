@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Title>MoBro Plugin SDK Json</Title>
+        <Description>Json schemas for configuration files of the MoBro Plugin SDK</Description>
+        <Authors>ModBros</Authors>
+        <Company>ModBros OG</Company>
+        <Product>MoBro</Product>
+        <Copyright>(C) ModBros OG 2023</Copyright>
+        <IsPackable>false</IsPackable>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+
+</Project>

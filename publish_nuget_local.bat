@@ -1,8 +1,11 @@
-﻿REM clean the build dir first
-dotnet clean --configuration Release .
+﻿REM clean the build dirs first
+dotnet clean --configuration Release .\SDK.Domain\
+dotnet clean --configuration Release .\SDK\
 
-REM build the SDK project
-dotnet build --framework net7.0 --runtime win-x64 --no-self-contained --configuration Release .
+REM build the SDK projects
+dotnet build --framework net7.0 --runtime win-x64 --no-self-contained --configuration Release .\SDK.Domain\
+dotnet build --framework net7.0 --runtime win-x64 --no-self-contained --configuration Release .\SDK\
 
 REM publish to local self hosted BaGet
-dotnet nuget push -s https://baget.modbros.net/v3/index.json -k %1 .\bin\Release\*.nupkg --skip-duplicate
+dotnet nuget push -s https://baget.modbros.net/v3/index.json -k %1 .\SDK.Domain\bin\Release\*.nupkg --skip-duplicate
+dotnet nuget push -s https://baget.modbros.net/v3/index.json -k %1 .\SDK\bin\Release\*.nupkg --skip-duplicate

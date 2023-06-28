@@ -6,7 +6,7 @@ using Serilog;
 using Serilog.Events;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace MoBro.Plugin.SDK.Testing;
+namespace MoBro.Plugin.SDK;
 
 /// <summary>
 /// Builder to create a local <see cref="IMoBroPlugin"/> instance for testing.

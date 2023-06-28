@@ -31,12 +31,12 @@ public enum MetricValueType
   DateTime,
 
   /// <summary>
-  /// An ISO 8601 date or C# DateOnly object
+  /// An ISO 8601 date string or C# DateOnly object
   /// </summary>
   DateOnly,
 
   /// <summary>
-  /// An ISO 8601 time or C# TimeOnly object
+  /// An ISO 8601 time string or C# TimeOnly object
   /// </summary>
   TimeOnly,
 

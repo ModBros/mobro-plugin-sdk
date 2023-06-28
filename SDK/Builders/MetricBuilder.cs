@@ -195,7 +195,7 @@ public sealed class MetricBuilder :
     /// <summary>
     /// Sets the type of the <see cref="IMetric"/> to a core type
     /// </summary>
-    /// <param name="coreType">The CoreType</param>
+    /// <param name="coreType">The <see cref="CoreMetricType"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(CoreMetricType coreType);
 

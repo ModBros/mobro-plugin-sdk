@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using MoBro.Plugin.SDK.Services;
 using Quartz;
 using Quartz.Impl;
 
-namespace MoBro.Plugin.SDK.Testing.Services;
+namespace MoBro.Plugin.SDK.Services;
 
 internal sealed class MoBroScheduler : IMoBroScheduler
 {

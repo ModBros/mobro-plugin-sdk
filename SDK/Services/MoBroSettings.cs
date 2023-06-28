@@ -4,9 +4,8 @@ using System.Collections.Immutable;
 using System.Globalization;
 using Ardalis.GuardClauses;
 using MoBro.Plugin.SDK.Exceptions;
-using MoBro.Plugin.SDK.Services;
 
-namespace MoBro.Plugin.SDK.Testing.Services;
+namespace MoBro.Plugin.SDK.Services;
 
 internal sealed class MoBroSettings : IMoBroSettings
 {

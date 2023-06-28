@@ -6,10 +6,9 @@ using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Services;
-using MoBro.Plugin.SDK.Testing.Services;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace MoBro.Plugin.SDK.Testing;
+namespace MoBro.Plugin.SDK;
 
 /// <summary>
 /// Wrapper around a <see cref="IMoBroPlugin"/> to locally run and test a plugin without having to start up the actual

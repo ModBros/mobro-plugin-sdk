@@ -12,14 +12,15 @@
         <LangVersion>11</LangVersion>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <RootNamespace>MoBro.Plugin.SDK</RootNamespace>
-        <VersionPrefix>0.1.9</VersionPrefix>
+        <VersionPrefix>0.2.0</VersionPrefix>
+        <VersionSuffix>rc-5</VersionSuffix>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>MoBro.Plugin.SDK</PackageId>
         <AssemblyName>MoBro.Plugin.SDK</AssemblyName>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <PackageIcon>mobro.png</PackageIcon>
+        <!--        <PackageIcon>mobro.png</PackageIcon>-->
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,14 +28,15 @@
         <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
         <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
-        <PackageReference Include="Quartz" Version="3.6.2" />
+        <PackageReference Include="Quartz" Version="3.6.3" />
+        <PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="mobro.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
+        <ProjectReference Include="..\SDK.Domain\SDK.Domain.csproj" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>

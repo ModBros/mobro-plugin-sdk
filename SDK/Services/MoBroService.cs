@@ -5,11 +5,11 @@ using System.Linq;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Exceptions;
+using MoBro.Plugin.SDK.Extensions;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
-using MoBro.Plugin.SDK.Services;
 
-namespace MoBro.Plugin.SDK.Testing.Services;
+namespace MoBro.Plugin.SDK.Services;
 
 internal sealed class MoBroService : IMoBroService
 {
@@ -26,14 +26,14 @@ internal sealed class MoBroService : IMoBroService
   {
     foreach (var item in Guard.Against.Null(items))
     {
-      _items[item.Id] = item;
+      _items[item.Id] = item.Validate(this);
       _logger.LogDebug("Registered Item: {ItemId}", item.Id);
     }
   }
 
   public void Register(IMoBroItem item)
   {
-    _items[item.Id] = Guard.Against.Null(item);
+    _items[item.Id] = Guard.Against.Null(item).Validate(this);
     _logger.LogDebug("Registered Item: {ItemId}", item.Id);
   }
 
@@ -75,27 +75,24 @@ internal sealed class MoBroService : IMoBroService
   {
     foreach (var v in Guard.Against.Null(values))
     {
-      _logger.LogDebug("Value of metric {MetricId} updated to: {MetricValue}", v.Id, v.Value);
+      UpdateMetricValue(v);
     }
   }
 
   public void UpdateMetricValue(in MetricValue value)
   {
-    Guard.Against.Null(value);
+    Guard.Against.Null(value).Validate(this);
     _logger.LogDebug("Value of metric {MetricId} updated to: {MetricValue}", value.Id, value.Value);
   }
 
   public void UpdateMetricValue(string id, object? value, DateTime timestamp)
   {
-    Guard.Against.NullOrEmpty(id);
-    Guard.Against.Null(timestamp);
-    _logger.LogDebug("Value of metric {MetricId} updated to: {MetricValue}", id, value);
+    UpdateMetricValue(new MetricValue(Guard.Against.NullOrEmpty(id), Guard.Against.Null(timestamp), value));
   }
 
   public void UpdateMetricValue(string id, object? value)
   {
-    Guard.Against.NullOrEmpty(id);
-    _logger.LogDebug("Value of metric {MetricId} updated to: {MetricValue}", id, value);
+    UpdateMetricValue(new MetricValue(Guard.Against.NullOrEmpty(id), value));
   }
 
   public void Error(string message)

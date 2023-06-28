@@ -1,7 +1,9 @@
 ﻿namespace MoBro.Plugin.SDK.Enums;
 
 /// <summary>
-/// Global metric types provided by the service. These are available across all plugins.
+/// Global metric types provided by the service for the most common types of values.
+/// These are already well defined with their respective base and convertable units. Metric values must be provided in
+/// the base unit as outlined in this file.
 /// </summary>
 public enum CoreMetricType
 {
@@ -31,7 +33,7 @@ public enum CoreMetricType
   Data,
 
   /// <summary>
-  /// The amount of time elapsed between two events
+  /// The amount of time elapsed between two events (ISO 8601 duration string or C# TimeSpan object)
   /// </summary>
   Duration,
 
@@ -91,7 +93,7 @@ public enum CoreMetricType
   VolumeFlow,
 
   /// <summary>
-  /// A date and time
+  /// A date and time (ISO 8601 date + time string or C# DateTime/DateTimeOffset object)
   /// </summary>
   DateTime,
 
@@ -116,27 +118,27 @@ public enum CoreMetricType
   Area,
 
   /// <summary>
-  /// A date without the time component
+  /// A date without the time component (ISO 8601 date string or C# DateOnly object)
   /// </summary>
   Date,
 
   /// <summary>
-  /// A time without the date component
+  /// A time without the date component (ISO 8601 time string or C# TimeOnly object)
   /// </summary>
   Time,
 
   /// <summary>
-  /// An icon
+  /// An icon (id of a registered resource)
   /// </summary>
   Icon,
 
   /// <summary>
-  /// An image (file)
+  /// An image (id of a registered resource)
   /// </summary>
   Image,
 
   /// <summary>
   /// An angle (degrees) 
   /// </summary> 
-  Angle, 
+  Angle,
 }
