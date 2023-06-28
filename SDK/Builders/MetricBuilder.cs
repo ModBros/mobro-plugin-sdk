@@ -64,6 +64,13 @@ public sealed class MetricBuilder :
     _typeId = coreType.ToString().ToLower();
     return this;
   }
+  
+  /// <inheritdoc />
+  public ICategoryStage OfType(CoreMetricTypeCurrency currency)
+  {
+    _typeId = currency.ToString().ToLower();
+    return this;
+  }
 
   /// <inheritdoc />
   public ICategoryStage OfType(IMetricType type)
@@ -198,6 +205,13 @@ public sealed class MetricBuilder :
     /// <param name="coreType">The <see cref="CoreMetricType"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(CoreMetricType coreType);
+    
+    /// <summary>
+    /// Sets the type of the <see cref="IMetric"/> to a core currency type
+    /// </summary>
+    /// <param name="currency">The <see cref="CoreMetricTypeCurrency"/></param>
+    /// <returns>The next building stage</returns>
+    public ICategoryStage OfType(CoreMetricTypeCurrency currency);
 
     /// <summary>
     /// Sets the type of the <see cref="IMetric"/> to a

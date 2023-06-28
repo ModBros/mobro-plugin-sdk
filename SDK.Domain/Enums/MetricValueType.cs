@@ -43,5 +43,10 @@ public enum MetricValueType
   /// <summary>
   /// The id of a registered external resource (icon, image..)
   /// </summary>
-  Resource
+  Resource,
+
+  /// <summary>
+  /// A numeric value representing a currency amount
+  /// </summary>
+  Currency
 }
