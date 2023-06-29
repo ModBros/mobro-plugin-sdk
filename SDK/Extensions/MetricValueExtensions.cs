@@ -60,6 +60,9 @@ internal static class MetricValueExtensions
       throw new PluginException($"Unknown type '{metric.TypeId}' for metric {metricValue.Id}");
     }
 
+    // no additional validation for null values
+    if (metricValue.Value is null) return;
+
     // specific validation based on value type
     switch (valueType)
     {

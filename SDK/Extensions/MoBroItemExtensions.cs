@@ -148,6 +148,11 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Cannot overwrite core MetricType '{type.Id}'");
     }
 
+    if (type.Id.Length == 3 && Enum.TryParse<CoreMetricTypeCurrency>(type.Id, true, out _))
+    {
+      throw new PluginException($"Cannot overwrite core MetricType currency '{type.Id}'");
+    }
+
     if (!string.IsNullOrEmpty(type.Icon) && !itemRegister.TryGet<IIcon>(type.Icon, out _))
     {
       throw new PluginException($"MetricType '{type.Id}' references not registered Icon '{type.Icon}'");
@@ -197,8 +202,7 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Empty label for Metric '{metric.Id}'");
     }
 
-    if (!itemRegister.TryGet<IMetricType>(metric.TypeId, out _) &&
-        !Enum.TryParse<CoreMetricType>(metric.TypeId, true, out _))
+    if (!itemRegister.TryGet<IMetricType>(metric.TypeId, out _) && !IsCoreType(metric.TypeId))
     {
       throw new PluginException($"Metric '{metric.Id}' references not registered type '{metric.TypeId}'");
     }
@@ -263,5 +267,11 @@ internal static class MoBroItemExtensions
     {
       throw new PluginException($"Action '{action.Id}' has no registered handler");
     }
+  }
+
+  private static bool IsCoreType(string id)
+  {
+    return Enum.TryParse<CoreMetricType>(id, true, out _) ||
+           (id.Length == 3 && Enum.TryParse<CoreMetricTypeCurrency>(id, true, out _));
   }
 }

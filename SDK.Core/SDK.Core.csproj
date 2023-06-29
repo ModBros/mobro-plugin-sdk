@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Title>MoBro Plugin SDK Domain</Title>
+        <Title>MoBro Plugin SDK Core</Title>
+        <Description>Core part of the MoBro plugin SDK</Description>
         <Authors>ModBros</Authors>
         <Company>ModBros OG</Company>
         <Product>MoBro</Product>
@@ -12,12 +13,12 @@
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <RootNamespace>MoBro.Plugin.SDK</RootNamespace>
         <VersionPrefix>0.2.0</VersionPrefix>
-        <VersionSuffix>rc-5</VersionSuffix>
+        <VersionSuffix>rc-7</VersionSuffix>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageId>MoBro.Plugin.SDK.Domain</PackageId>
-        <AssemblyName>MoBro.Plugin.SDK.Domain</AssemblyName>
+        <PackageId>MoBro.Plugin.SDK.Core</PackageId>
+        <AssemblyName>MoBro.Plugin.SDK.Core</AssemblyName>
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
