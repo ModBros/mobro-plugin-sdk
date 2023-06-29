@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.2.0 - Unreleased
+
+### Added
+
+* Allow to use DateTimeOffset for MetricValue
+* Validation for metric values and plugin items when running locally
+* Mapping function from CoreMetricType to the associated MetricValueType
+* New 'Currency' MetricValueType
+* New core metric types for currencies
+
+### Changed
+
+* Adjusted default logging template for console
+* Split project up into separate SDK and SDK.Core projects
+* Moved unit test previously located in the MoBro service repository
+
+### Fixed
+
+* Corrected property name for default value of setting fields
+
 ## 0.1.9 - 2023-05-14
 
 ### Added
