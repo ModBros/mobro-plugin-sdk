@@ -20,6 +20,14 @@
         <PackageId>MoBro.Plugin.SDK.Core</PackageId>
         <AssemblyName>MoBro.Plugin.SDK.Core</AssemblyName>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <PackageIcon>mobro.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\mobro.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 
 </Project>
