@@ -11,7 +11,7 @@ public class SettingsFieldSelect : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
-  public string? Default { get; set; }
+  public string? DefaultValue { get; set; }
 
   /// <summary>
   /// The available options for this field

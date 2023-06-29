@@ -8,7 +8,7 @@ public class SettingsFieldCheckbox : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
-  public bool? Default { get; set; }
+  public bool? DefaultValue { get; set; }
 
   /// <summary>
   /// Creates a new <see cref="SettingsFieldCheckbox"/>

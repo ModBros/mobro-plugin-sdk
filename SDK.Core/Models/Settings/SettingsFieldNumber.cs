@@ -8,7 +8,7 @@ public class SettingsFieldNumber : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
-  public double? Default { get; set; }
+  public double? DefaultValue { get; set; }
 
   /// <summary>
   /// The minimum value of the field

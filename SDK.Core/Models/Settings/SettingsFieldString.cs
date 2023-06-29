@@ -8,7 +8,7 @@ public class SettingsFieldString : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
-  public string? Default { get; set; }
+  public string? DefaultValue { get; set; }
 
   /// <summary>
   /// A optional regex to validate the field

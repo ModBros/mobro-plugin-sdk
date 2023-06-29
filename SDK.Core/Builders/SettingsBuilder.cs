@@ -113,7 +113,7 @@ public sealed class SettingsBuilder :
       _required
     )
     {
-      Default = (double?)_defaultValue,
+      DefaultValue = (double?)_defaultValue,
       Min = _numericMin,
       Max = _numericMax
     };
@@ -143,7 +143,7 @@ public sealed class SettingsBuilder :
       _required
     )
     {
-      Default = (string?)_defaultValue,
+      DefaultValue = (string?)_defaultValue,
       Regex = _stringRegex
     };
   }
@@ -165,7 +165,7 @@ public sealed class SettingsBuilder :
       _required
     )
     {
-      Default = (bool?)_defaultValue,
+      DefaultValue = (bool?)_defaultValue,
     };
   }
 
@@ -197,7 +197,7 @@ public sealed class SettingsBuilder :
       _required
     )
     {
-      Default = (string?)_defaultValue,
+      DefaultValue = (string?)_defaultValue,
       Options = _selectOptions ?? new List<SettingsFieldSelectOption>(0)
     };
   }
