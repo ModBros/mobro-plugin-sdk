@@ -6,7 +6,7 @@ namespace MoBro.Plugin.SDK.Models.Settings;
 /// <summary>
 /// A select settings field
 /// </summary>
-public class SettingsFieldSelect : SettingsFieldBase
+public sealed class SettingsFieldSelect : SettingsFieldBase
 {
   /// <summary>
   /// The default value of the field

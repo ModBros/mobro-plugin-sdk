@@ -4,7 +4,7 @@ using MoBro.Plugin.SDK.Enums;
 namespace MoBro.Plugin.SDK.Models.Resources;
 
 /// <inheritdoc />
-public class Icon : IIcon
+public sealed class Icon : IIcon
 {
   /// <summary>
   /// Creates a new icon

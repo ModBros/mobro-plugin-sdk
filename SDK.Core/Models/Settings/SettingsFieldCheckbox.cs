@@ -3,7 +3,7 @@
 /// <summary>
 /// A checkbox settings field
 /// </summary>
-public class SettingsFieldCheckbox : SettingsFieldBase
+public sealed class SettingsFieldCheckbox : SettingsFieldBase
 {
   /// <summary>
   /// The default value of the field

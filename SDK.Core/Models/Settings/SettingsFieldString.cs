@@ -3,7 +3,7 @@
 /// <summary>
 /// A textual settings field
 /// </summary>
-public class SettingsFieldString : SettingsFieldBase
+public sealed class SettingsFieldString : SettingsFieldBase
 {
   /// <summary>
   /// The default value of the field

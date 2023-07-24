@@ -1,7 +1,7 @@
 namespace MoBro.Plugin.SDK.Models.Resources;
 
 /// <inheritdoc />
-public class Image : IImage
+public sealed class Image : IImage
 {
   /// <summary>
   /// Creates a new image
