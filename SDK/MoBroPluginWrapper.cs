@@ -108,7 +108,7 @@ public sealed class MoBroPluginWrapper : IDisposable
     {
       _logger.LogInformation("Stopping and disposing current plugin instance");
       _moBroScheduler.Clear();
-      _plugin.Dispose();
+      (_plugin as IDisposable)?.Dispose();
       _moBroService.ClearRegistration();
     }
 
@@ -162,6 +162,6 @@ public sealed class MoBroPluginWrapper : IDisposable
 
   public void Dispose()
   {
-    _plugin?.Dispose();
+    (_plugin as IDisposable)?.Dispose();
   }
 }

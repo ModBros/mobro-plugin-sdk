@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace MoBro.Plugin.SDK;
 
 /// <summary>
 /// A MoBro plugin. This interface must be implemented by a plugin in order for it to be loadable by MoBro.
 /// </summary>
-public interface IMoBroPlugin : IDisposable
+public interface IMoBroPlugin
 {
   /// <summary>
   /// Called once upon initialization of the plugin. Any (potentially longer running) initialization code that should
