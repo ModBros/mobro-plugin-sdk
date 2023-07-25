@@ -3,14 +3,14 @@ using System;
 namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
-/// Scheduler implementation that can be used for recurring tasks (like polling values) by the plugin.<br/>
-/// Tasks will be put on halt whenever <see cref="IMoBroPlugin.Pause"/> is called on the plugin and automatically resumed
-/// once <see cref="IMoBroPlugin.Resume"/> is called.
+/// Scheduler that can be used for recurring tasks (e.g. polling sensor values).<br/>
+/// Tasks will be put on halt whenever <see cref="IMoBroPlugin.Pause"/> is invoked on the plugin and automatically resumed
+/// once <see cref="IMoBroPlugin.Resume"/> is invoked.
 /// </summary>
 public interface IMoBroScheduler
 {
   /// <summary>
-  /// Schedules a one-off task that will be called once.
+  /// Schedules a one-off task that will only be called once.
   /// </summary>
   /// <param name="action">The action to execute</param>
   /// <param name="delay">The delay before the execution</param>

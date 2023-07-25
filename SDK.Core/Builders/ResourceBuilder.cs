@@ -81,7 +81,7 @@ public sealed class ResourceBuilder :
   }
 
   /// <inheritdoc />
-  public IImage Build()
+  public Image Build()
   {
     return new Image(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -109,7 +109,7 @@ public sealed class ResourceBuilder :
   }
 
   /// <inheritdoc />
-  IIcon IIconStage.Build()
+  Icon IIconStage.Build()
   {
     return new Icon(
       _id ?? throw new InvalidOperationException("Icon id must not be null"),
@@ -156,13 +156,13 @@ public sealed class ResourceBuilder :
   public interface ITypeStage
   {
     /// <summary>
-    /// Build an <see cref="IIcon"></see> resource
+    /// Build an <see cref="Icon"></see> resource
     /// </summary>
     /// <returns>The next building stage</returns>
     IIconStage Icon();
 
     /// <summary>
-    /// Build an <see cref="IImage"></see> resource
+    /// Build an <see cref="Image"></see> resource
     /// </summary>
     /// <returns>The next building stage</returns>
     IImageStage Image();
@@ -188,10 +188,10 @@ public sealed class ResourceBuilder :
     IImageStage FromAbsolutePath(string absolutePath);
 
     /// <summary>
-    /// Completes and builds the <see cref="IImage"/>
+    /// Completes and builds the <see cref="Image"/>
     /// </summary>
-    /// <returns>The <see cref="IImage"/></returns>
-    IImage Build();
+    /// <returns>The <see cref="Image"/></returns>
+    Image Build();
   }
 
   /// <summary>
@@ -222,9 +222,9 @@ public sealed class ResourceBuilder :
     IIconStage AddFromAbsolutePath(string absolutePath, IconSize size = IconSize.Default);
 
     /// <summary>
-    /// Completes and builds the <see cref="IIcon"/>
+    /// Completes and builds the <see cref="Icon"/>
     /// </summary>
-    /// <returns>The <see cref="IIcon"/></returns>
-    IIcon Build();
+    /// <returns>The <see cref="Icon"/></returns>
+    Icon Build();
   }
 }

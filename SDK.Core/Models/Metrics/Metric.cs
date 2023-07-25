@@ -1,9 +1,16 @@
 ﻿using System;
+using MoBro.Plugin.SDK.Builders;
+using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
-/// <inheritdoc />
-public sealed class Metric : IMetric
+/// <summary>
+/// A metric represents a single data value provided by a plugin that will be monitored by the service.
+/// A metric must be of a registered <see cref="MetricType"/> and its value must conform to the
+/// <see cref="MetricValueType"/> defined in that type.
+/// A metric is always assigned to a <see cref="Category"/>
+/// </summary>
+public sealed class Metric : IMoBroItem
 {
   /// <summary>
   /// Creates a new metric.
@@ -11,8 +18,8 @@ public sealed class Metric : IMetric
   /// </summary>
   /// <param name="id">The id (must be unique within the scope of the plugin)</param>
   /// <param name="label">The label</param>
-  /// <param name="typeId">The id of the <see cref="IMetricType"/></param>
-  /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
+  /// <param name="typeId">The id of the <see cref="MetricType"/></param>
+  /// <param name="categoryId">The id of the <see cref="Category"/></param>
   public Metric(string id, string label, string typeId, string categoryId)
   {
     Id = id ?? throw new ArgumentNullException(nameof(id));
@@ -24,21 +31,33 @@ public sealed class Metric : IMetric
   /// <inheritdoc />
   public string Id { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The textual name of the metric
+  /// </summary>
   public string Label { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The type of this metric (id of a registered <see cref="MetricType"/>)
+  /// </summary>
   public string TypeId { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The category this metric is assigned to (id of a registered <see cref="Category"/>)
+  /// </summary>
   public string CategoryId { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// Whether this metric is static or not. (static = the value is fixed and will not change)
+  /// </summary>
   public bool IsStatic { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional textual description
+  /// </summary>
   public string? Description { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional group this metric is part of (id of a registered <see cref="Group"/>)
+  /// </summary>
   public string? GroupId { get; set; }
 }

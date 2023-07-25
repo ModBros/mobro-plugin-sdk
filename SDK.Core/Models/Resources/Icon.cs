@@ -3,8 +3,12 @@ using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Resources;
 
-/// <inheritdoc />
-public sealed class Icon : IIcon
+/// <summary>
+/// A small graphic image.
+/// In contrast to <see cref="Image"/> an icon can be comprised of multiple files (png, jpeg, ...) for different sizes.
+/// </summary>
+/// <remarks>For the best visual result always provide a single SVG whenever possible.</remarks>
+public sealed class Icon : IResource 
 {
   /// <summary>
   /// Creates a new icon
@@ -39,6 +43,8 @@ public sealed class Icon : IIcon
   /// <inheritdoc />
   public string? Alt { get; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The relative paths to the files for all supported icon sizes.
+  /// </summary>
   public IDictionary<IconSize, string> RelativeFilePaths { get; }
 }

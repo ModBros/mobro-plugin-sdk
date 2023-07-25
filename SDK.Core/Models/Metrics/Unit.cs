@@ -2,8 +2,11 @@
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
-/// <inheritdoc />
-public sealed class Unit : IUnit
+/// <summary>
+/// A unit to present the value of a <see cref="Metric"/> in (e.g. degrees Celsius for temperature).
+/// A unit always belongs to a specific <see cref="MetricType"/>.
+/// </summary>
+public sealed class Unit
 {
   /// <summary>
   /// Creates a new unit
@@ -11,8 +14,8 @@ public sealed class Unit : IUnit
   /// <param name="label">The label</param>
   /// <param name="abbreviation">The unit abbreviation</param>
   /// <param name="description">The optional textual description</param>
-  /// <param name="fromBaseFormula">The formula to derive this unit from the base unit of its <see cref="IMetricType"/></param>
-  /// <param name="toBaseFormula">The formula to convert this unit back to the base unit of its <see cref="IMetricType"/></param>
+  /// <param name="fromBaseFormula">The formula to derive this unit from the base unit of its <see cref="MetricType"/></param>
+  /// <param name="toBaseFormula">The formula to convert this unit back to the base unit of its <see cref="MetricType"/></param>
   public Unit(string label, string abbreviation, string? description, string fromBaseFormula, string toBaseFormula)
   {
     Label = label ?? throw new ArgumentNullException(nameof(label));
@@ -22,18 +25,28 @@ public sealed class Unit : IUnit
     ToBaseFormula = toBaseFormula ?? throw new ArgumentNullException(nameof(toBaseFormula));
   }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The name of the unit
+  /// </summary>
   public string Label { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The units abbreviation
+  /// </summary>
   public string Abbreviation { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional textual description
+  /// </summary>
   public string? Description { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The formula to apply to derive this unit from the base unit of its <see cref="MetricType"/>. (e.g.: x*10)
+  /// </summary>
   public string FromBaseFormula { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The formula to apply to convert this unit into the base unit of its <see cref="MetricType"/>. (e.g.: x/10)
+  /// </summary>
   public string ToBaseFormula { get; set; }
 }

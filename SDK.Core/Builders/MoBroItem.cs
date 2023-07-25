@@ -11,13 +11,13 @@ namespace MoBro.Plugin.SDK.Builders;
 public static class MoBroItem
 {
   /// <summary>
-  /// Builds a new <see cref="ICategory"/>
+  /// Builds a new <see cref="Category"/>
   /// </summary>
   /// <returns>An instance of <see cref="CategoryBuilder"/></returns>
   public static CategoryBuilder.IIdStage CreateCategory() => CategoryBuilder.CreateCategory();
 
   /// <summary>
-  /// Builds a new <see cref="IGroup"/>
+  /// Builds a new <see cref="Group"/>
   /// </summary>
   /// <returns>An instance of <see cref="GroupBuilder"/></returns>
   public static GroupBuilder.IIdStage CreateGroup() => GroupBuilder.CreateGroup();
@@ -29,19 +29,19 @@ public static class MoBroItem
   public static ResourceBuilder.IIdStage CreateResource() => ResourceBuilder.CreateResource();
 
   /// <summary>
-  /// Builds a new <see cref="IMetric"/>
+  /// Builds a new <see cref="Metric"/>
   /// </summary>
   /// <returns>An instance of <see cref="MetricBuilder"/></returns>
   public static MetricBuilder.IIdStage CreateMetric() => MetricBuilder.CreateMetric();
 
   /// <summary>
-  /// Builds a new <see cref="IMetricType"/>
+  /// Builds a new <see cref="MetricType"/>
   /// </summary>
   /// <returns>An instance of <see cref="TypeBuilder"/></returns>
   public static TypeBuilder.IIdStage CreateMetricType() => TypeBuilder.CreateMetricType();
 
   /// <summary>
-  /// Builds a new <see cref="IAction"/>
+  /// Builds a new <see cref="Action"/>
   /// </summary>
   /// <returns>An instance of <see cref="ActionBuilder"/></returns>
   public static ActionBuilder.IIdStage CreateAction() => ActionBuilder.CreateAction();

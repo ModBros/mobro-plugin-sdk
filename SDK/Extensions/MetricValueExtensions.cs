@@ -36,14 +36,14 @@ internal static class MetricValueExtensions
     }
 
     // check whether metric is registered
-    if (!mobroService.TryGet(metricValue.Id, out IMetric metric))
+    if (!mobroService.TryGet(metricValue.Id, out Metric metric))
     {
       throw new PluginException($"Unexpected metric value. Metric with id {metricValue.Id} not registered");
     }
 
     // get ValueType of metric
     MetricValueType valueType;
-    if (mobroService.TryGet(metric.TypeId, out IMetricType type))
+    if (mobroService.TryGet(metric.TypeId, out MetricType type))
     {
       valueType = type.ValueType;
     }

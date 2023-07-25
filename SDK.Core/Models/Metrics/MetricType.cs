@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
-/// <inheritdoc />
-public sealed class MetricType : IMetricType
+/// <summary>
+/// The type of a <see cref="Metric"/>.
+/// Defines the <see cref="MetricValueType"/> the metrics value must conform to and the applicable
+/// <see cref="Unit"/>s.
+/// </summary>
+public sealed class MetricType : IMoBroItem 
 {
   /// <summary>
   /// Creates a new metric type.
@@ -24,21 +29,33 @@ public sealed class MetricType : IMetricType
   /// <inheritdoc />
   public string Id { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The textual name of the type
+  /// </summary>
   public string Label { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The <see cref="MetricValueType"/> a value of this type must conform to
+  /// </summary>
   public MetricValueType ValueType { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional textual description
+  /// </summary>
   public string? Description { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional icon id
+  /// </summary>
   public string? Icon { get; set; }
 
-  /// <inheritdoc />
-  public IUnit? BaseUnit { get; set; }
+  /// <summary>
+  /// The optional base <see cref="Unit"/> in which values of this type must be returned in
+  /// </summary>
+  public Unit? BaseUnit { get; set; }
 
-  /// <inheritdoc />
-  public IEnumerable<IUnit>? Units { get; set; } = new List<IUnit>();
+  /// <summary>
+  /// A list of <see cref="Unit"/>s the <see cref="BaseUnit"/> can be converted to.
+  /// </summary>
+  public IEnumerable<Unit>? Units { get; set; } = new List<Unit>();
 }

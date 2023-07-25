@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace MoBro.Plugin.SDK.Models;
 
-/// <inheritdoc />
-public sealed class Category : ICategory
+/// <summary>
+/// Categorizes items of the same kind (E.g. all CPU related metrics)
+/// </summary>
+public sealed class Category : IMoBroItem
 {
   /// <summary>
   /// Creates a new category with the given properties
@@ -24,15 +26,23 @@ public sealed class Category : ICategory
   /// <inheritdoc />
   public string Id { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The visible category label
+  /// </summary>
   public string Label { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional further description
+  /// </summary>
   public string? Description { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional icon id
+  /// </summary>
   public string? Icon { get; set; }
 
-  /// <inheritdoc />
-  public IEnumerable<ICategory>? SubCategories { get; set; } = new List<ICategory>();
+  /// <summary>
+  /// Optional sub categories
+  /// </summary>
+  public IEnumerable<Category>? SubCategories { get; set; } = new List<Category>();
 }

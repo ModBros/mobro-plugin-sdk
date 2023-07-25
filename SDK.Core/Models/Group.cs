@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace MoBro.Plugin.SDK.Models;
 
-/// <inheritdoc />
-public sealed class Group : IGroup
+/// <summary>
+/// Groups items of a common context (E.g. all metrics of the primary GPU) 
+/// </summary>
+/// <remarks>
+/// A group may contain items from different categories
+/// </remarks>
+public sealed class Group : IMoBroItem 
 {
   /// <summary>
   /// Creates a new group with the given properties
@@ -24,15 +29,23 @@ public sealed class Group : IGroup
   /// <inheritdoc />
   public string Id { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The visible category label
+  /// </summary>
   public string Label { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional further description
+  /// </summary>
   public string? Description { get; set; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// An optional icon (relative path to the icon file)
+  /// </summary>
   public string? Icon { get; set; }
 
-  /// <inheritdoc />
-  public IEnumerable<IGroup>? SubGroups { get; set; } = new List<IGroup>();
+  /// <summary>
+  /// Optional sub groups
+  /// </summary>
+  public IEnumerable<Group>? SubGroups { get; set; } = new List<Group>();
 }

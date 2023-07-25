@@ -4,7 +4,7 @@ using MoBro.Plugin.SDK.Models.Metrics;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="IUnit"/>
+/// Builder to create a new <see cref="Unit"/>
 /// </summary>
 public sealed class UnitBuilder :
   UnitBuilder.IDerivedUnitStage,
@@ -60,7 +60,7 @@ public sealed class UnitBuilder :
   }
 
   /// <inheritdoc />
-  public IUnit Build()
+  public Unit Build()
   {
     return new Unit(
       _label ?? throw new ArgumentNullException(nameof(_label)),
@@ -78,7 +78,7 @@ public sealed class UnitBuilder :
   {
     /// <summary>
     /// Sets the formulas to derive (and convert back) this unit from the base unit of its
-    /// <see cref="IMetricType"/>
+    /// <see cref="MetricType"/>
     /// </summary>
     /// <param name="fromBaseFormula">The formula to derive the unit from the base unit</param>
     /// <param name="toBaseFormula">The formula to convert this unit back into the base unit</param>
@@ -92,7 +92,7 @@ public sealed class UnitBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally a description of the <see cref="IUnit"/>
+    /// Sets the label and optionally a description of the <see cref="Unit"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
@@ -106,7 +106,7 @@ public sealed class UnitBuilder :
   public interface IAbbreviationStage
   {
     /// <summary>
-    /// Sets the abbreviation for the <see cref="IUnit"/>
+    /// Sets the abbreviation for the <see cref="Unit"/>
     /// </summary>
     /// <param name="abbreviation">The abbreviation</param>
     /// <returns>The next building stage</returns>
@@ -119,9 +119,9 @@ public sealed class UnitBuilder :
   public interface IBuildStage
   {
     /// <summary>
-    /// Builds and creates the <see cref="IUnit"/>
+    /// Builds and creates the <see cref="Unit"/>
     /// </summary>
-    /// <returns>The <see cref="IUnit"/></returns>
-    public IUnit Build();
+    /// <returns>The <see cref="Unit"/></returns>
+    public Unit Build();
   }
 }

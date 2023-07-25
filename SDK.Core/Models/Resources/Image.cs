@@ -1,7 +1,10 @@
 namespace MoBro.Plugin.SDK.Models.Resources;
 
-/// <inheritdoc />
-public sealed class Image : IImage
+/// <summary>
+/// A larger image or picture.
+/// In contrast to <see cref="Icon"/>, an image is only one single file and hence does not support different sizes.
+/// </summary>
+public sealed class Image : IResource 
 {
   /// <summary>
   /// Creates a new image
@@ -22,6 +25,8 @@ public sealed class Image : IImage
   /// <inheritdoc />
   public string? Alt { get; }
 
-  /// <inheritdoc />
+  /// <summary>
+  /// The relative path to the image file.
+  /// </summary>
   public string RelativeFilePath { get; }
 }

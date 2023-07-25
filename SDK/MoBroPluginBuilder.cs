@@ -11,7 +11,7 @@ namespace MoBro.Plugin.SDK;
 /// <summary>
 /// Builder to create a local <see cref="IMoBroPlugin"/> instance for testing.
 /// </summary>
-public class MoBroPluginBuilder
+public sealed class MoBroPluginBuilder
 {
   private readonly Type _pluginType;
   private readonly IDictionary<string, string> _settings = new Dictionary<string, string>();

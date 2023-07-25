@@ -5,7 +5,7 @@ using MoBro.Plugin.SDK.Models;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="ICategory"/>
+/// Builder to create a new <see cref="Category"/>
 /// </summary>
 public sealed class CategoryBuilder :
   CategoryBuilder.IIdStage,
@@ -16,7 +16,7 @@ public sealed class CategoryBuilder :
   private string? _label;
   private string? _description;
   private string? _icon;
-  private readonly List<ICategory> _subCategories = new();
+  private readonly List<Category> _subCategories = new();
 
   private CategoryBuilder()
   {
@@ -53,14 +53,14 @@ public sealed class CategoryBuilder :
   }
 
   /// <inheritdoc />
-  public IBuildStage WithSubCategory(Func<IIdStage, ICategory> builder)
+  public IBuildStage WithSubCategory(Func<IIdStage, Category> builder)
   {
     _subCategories.Add(builder.Invoke(new CategoryBuilder()));
     return this;
   }
 
   /// <inheritdoc />
-  public ICategory Build()
+  public Category Build()
   {
     return new Category(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -79,7 +79,7 @@ public sealed class CategoryBuilder :
   public interface IIdStage
   {
     /// <summary>
-    /// Sets the id of the <see cref="ICategory"/>
+    /// Sets the id of the <see cref="Category"/>
     /// </summary>
     /// <param name="id">The id (must be unique within the scope of the plugin)</param>
     /// <returns>The next building stage</returns>
@@ -92,7 +92,7 @@ public sealed class CategoryBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally the description of the <see cref="ICategory"/>
+    /// Sets the label and optionally the description of the <see cref="Category"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
@@ -106,23 +106,23 @@ public sealed class CategoryBuilder :
   public interface IBuildStage
   {
     /// <summary>
-    /// Adds a subcategory to the <see cref="ICategory"/>
+    /// Adds a subcategory to the <see cref="Category"/>
     /// </summary>
     /// <param name="builder">The builder function for the subcategory</param>
     /// <returns>The building stage</returns>
-    IBuildStage WithSubCategory(Func<IIdStage, ICategory> builder);
+    IBuildStage WithSubCategory(Func<IIdStage, Category> builder);
     
     /// <summary>
-    /// Sets the icon of the <see cref="ICategory"/>
+    /// Sets the icon of the <see cref="Category"/>
     /// </summary>
     /// <param name="iconId">The icon id</param>
     /// <returns>The next building stage</returns>
     IBuildStage WithIcon(string? iconId);
 
     /// <summary>
-    /// Completes and builds the <see cref="ICategory"/>
+    /// Completes and builds the <see cref="Category"/>
     /// </summary>
-    /// <returns>The <see cref="ICategory"/></returns>
-    ICategory Build();
+    /// <returns>The <see cref="Category"/></returns>
+    Category Build();
   }
 }

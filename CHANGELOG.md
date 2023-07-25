@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+* Added function to IMoBroService to get the current value of a metric
+
 ### Changed
 
 * Seal all model classes
+* Removed interfaces for certain model classes
 
 ## 0.2.0 - 2023-07-03
 

@@ -14,7 +14,7 @@ namespace MoBro.Plugin.SDK;
 /// Wrapper around a <see cref="IMoBroPlugin"/> to locally run and test a plugin without having to start up the actual
 /// MoBro service.
 /// </summary>
-public class MoBroPluginWrapper : IDisposable
+public sealed class MoBroPluginWrapper : IDisposable
 {
   private readonly Type _pluginType;
   private readonly MoBroService _moBroService;

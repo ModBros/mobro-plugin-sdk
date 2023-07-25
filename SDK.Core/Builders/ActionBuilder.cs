@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Models;
-using MoBro.Plugin.SDK.Models.Actions;
 using MoBro.Plugin.SDK.Models.Settings;
 using MoBro.Plugin.SDK.Services;
 using Action = System.Action;
@@ -11,7 +10,7 @@ using Action = System.Action;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="IAction"/>
+/// Builder to create a new <see cref="Models.Actions.Action"/>
 /// </summary>
 public sealed class ActionBuilder :
   ActionBuilder.IIdStage,
@@ -71,7 +70,7 @@ public sealed class ActionBuilder :
   }
 
   /// <inheritdoc />
-  public IGroupStage OfCategory(ICategory category)
+  public IGroupStage OfCategory(Category category)
   {
     ArgumentNullException.ThrowIfNull(category);
     _categoryId = category.Id;
@@ -93,7 +92,7 @@ public sealed class ActionBuilder :
   }
 
   /// <inheritdoc />
-  public IHandlerStage OfGroup(IGroup group)
+  public IHandlerStage OfGroup(Group group)
   {
     ArgumentNullException.ThrowIfNull(group);
     _groupId = group.Id;
@@ -204,7 +203,7 @@ public sealed class ActionBuilder :
   }
 
   /// <inheritdoc />
-  public IAction Build()
+  public Models.Actions.Action Build()
   {
     return new Models.Actions.Action(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -226,7 +225,7 @@ public sealed class ActionBuilder :
   public interface IIdStage
   {
     /// <summary>
-    /// Sets the id of the <see cref="IAction"/>
+    /// Sets the id of the <see cref="Models.Actions.Action"/>
     /// </summary>
     /// <param name="id">The id (must be unique within the scope of the plugin)</param>
     /// <returns>The next building stage</returns>
@@ -239,7 +238,7 @@ public sealed class ActionBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally a description of the <see cref="IAction"/>
+    /// Sets the label and optionally a description of the <see cref="Models.Actions.Action"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
@@ -253,28 +252,28 @@ public sealed class ActionBuilder :
   public interface ICategoryStage
   {
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IAction"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Models.Actions.Action"/> belongs to
     /// </summary>
-    /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
+    /// <param name="categoryId">The id of the <see cref="Category"/></param>
     /// <returns>The next building stage</returns>
     public IGroupStage OfCategory(string? categoryId);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IAction"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Models.Actions.Action"/> belongs to
     /// </summary>
     /// <param name="coreCategory">The <see cref="CoreCategory"/></param>
     /// <returns>The next building stage</returns>
     public IGroupStage OfCategory(CoreCategory coreCategory);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IAction"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Models.Actions.Action"/> belongs to
     /// </summary>
-    /// <param name="category">The <see cref="ICategory"/></param>
+    /// <param name="category">The <see cref="Category"/></param>
     /// <returns>The next building stage</returns>
-    public IGroupStage OfCategory(ICategory category);
+    public IGroupStage OfCategory(Category category);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> of this <see cref="IAction"/> to the default value of
+    /// Sets the <see cref="Category"/> of this <see cref="Models.Actions.Action"/> to the default value of
     /// <see cref="CoreCategory.Miscellaneous"/>
     /// </summary>
     /// <returns>The next building stage</returns>
@@ -287,24 +286,24 @@ public sealed class ActionBuilder :
   public interface IGroupStage
   {
     /// <summary>
-    /// Sets the <see cref="IGroup"/> this <see cref="IAction"/> belongs to. A null value indicates 'no group' and
+    /// Sets the <see cref="Group"/> this <see cref="Models.Actions.Action"/> belongs to. A null value indicates 'no group' and
     /// is the same as calling <see cref="OfNoGroup()"/>
     /// </summary>
-    /// <param name="groupId">The id of the <see cref="IGroup"/></param>
+    /// <param name="groupId">The id of the <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
     public IHandlerStage OfGroup(string? groupId);
 
     /// <summary>
-    /// Sets the <see cref="IGroup"/>
-    /// this <see cref="IAction"/> belongs to
+    /// Sets the <see cref="Group"/>
+    /// this <see cref="Models.Actions.Action"/> belongs to
     /// </summary>
-    /// <param name="group">The <see cref="IGroup"/></param>
+    /// <param name="group">The <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
-    public IHandlerStage OfGroup(IGroup group);
+    public IHandlerStage OfGroup(Group group);
 
     /// <summary>
-    /// Builds the  <see cref="IAction"/> without 
-    /// a <see cref="IGroup"/>
+    /// Builds the  <see cref="Models.Actions.Action"/> without 
+    /// a <see cref="Group"/>
     /// </summary>
     /// <returns>The next building stage</returns>
     public IHandlerStage OfNoGroup();
@@ -385,9 +384,9 @@ public sealed class ActionBuilder :
     IBuildStage WithSetting(Func<SettingsBuilder.INameStage, SettingsFieldBase> builderFunction);
 
     /// <summary>
-    /// Builds and creates the <see cref="IAction"/>.
+    /// Builds and creates the <see cref="Models.Actions.Action"/>.
     /// </summary>
-    /// <returns>The <see cref="IAction"/></returns>
-    public IAction Build();
+    /// <returns>The <see cref="Models.Actions.Action"/></returns>
+    public Models.Actions.Action Build();
   }
 }

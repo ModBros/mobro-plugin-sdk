@@ -6,7 +6,7 @@ using MoBro.Plugin.SDK.Models.Metrics;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="IMetricType"/>
+/// Builder to create a new <see cref="MetricType"/>
 /// </summary>
 public sealed class TypeBuilder :
   TypeBuilder.IIdStage,
@@ -19,8 +19,8 @@ public sealed class TypeBuilder :
   private MetricValueType? _valueType;
   private string? _description;
   private string? _icon;
-  private IUnit? _baseUnit;
-  private List<IUnit> _units = new();
+  private Unit? _baseUnit;
+  private List<Unit> _units = new();
 
   private TypeBuilder()
   {
@@ -63,7 +63,7 @@ public sealed class TypeBuilder :
   }
 
   /// <inheritdoc />
-  public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction)
+  public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, Unit> builderFunction)
   {
     ArgumentNullException.ThrowIfNull(builderFunction);
     _baseUnit = builderFunction.Invoke(UnitBuilder.CreateBaseUnit());
@@ -71,7 +71,7 @@ public sealed class TypeBuilder :
   }
 
   /// <inheritdoc />
-  public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, IUnit> builderFunction)
+  public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, Unit> builderFunction)
   {
     ArgumentNullException.ThrowIfNull(builderFunction);
     _units.Add(builderFunction.Invoke(UnitBuilder.CreateUnit()));
@@ -79,7 +79,7 @@ public sealed class TypeBuilder :
   }
 
   /// <inheritdoc cref="IBuildStage.Build" />
-  public IMetricType Build()
+  public MetricType Build()
   {
     return new MetricType(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -100,7 +100,7 @@ public sealed class TypeBuilder :
   public interface IIdStage
   {
     /// <summary>
-    /// Sets the id of the <see cref="IMetricType"/>
+    /// Sets the id of the <see cref="MetricType"/>
     /// </summary>
     /// <param name="id">The id (must be unique within the scope of the plugin)</param>
     /// <returns>The next building stage</returns>
@@ -113,7 +113,7 @@ public sealed class TypeBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally a description of the <see cref="IMetricType"/>
+    /// Sets the label and optionally a description of the <see cref="MetricType"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
@@ -128,7 +128,7 @@ public sealed class TypeBuilder :
   {
     /// <summary>
     /// Sets the <see cref="MetricValueType"/> of this
-    /// <see cref="IMetricType"/>
+    /// <see cref="MetricType"/>
     /// </summary>
     /// <param name="type">The <see cref="MetricValueType"/></param>
     /// <returns>The next building stage</returns>
@@ -141,33 +141,33 @@ public sealed class TypeBuilder :
   public interface IBuildStage
   {
     /// <summary>
-    /// Sets the icon of the <see cref="IMetricType"/>
+    /// Sets the icon of the <see cref="MetricType"/>
     /// </summary>
     /// <param name="iconId">The icon id</param>
     /// <returns>The next building stage</returns>
     public IBuildStage WithIcon(string? iconId);
 
     /// <summary>
-    /// Builds and sets the base <see cref="IUnit"/>
-    /// for this <see cref="IMetricType"/>
+    /// Builds and sets the base <see cref="Unit"/>
+    /// for this <see cref="MetricType"/>
     /// </summary>
-    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
+    /// <param name="builderFunction">The builder function for the <see cref="Unit"/></param>
     /// <returns>The next building stage</returns>
-    public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, IUnit> builderFunction);
+    public IBuildStage WithBaseUnit(Func<UnitBuilder.ILabelStage, Unit> builderFunction);
 
     /// <summary>
-    /// Adds an additional <see cref="IUnit"/> to the
-    /// <see cref="IMetricType"/>. This unit has to be derivable by formula from the
+    /// Adds an additional <see cref="Unit"/> to the
+    /// <see cref="MetricType"/>. This unit has to be derivable by formula from the
     /// previously defined base unit.
     /// </summary>
-    /// <param name="builderFunction">The builder function for the <see cref="IUnit"/></param>
+    /// <param name="builderFunction">The builder function for the <see cref="Unit"/></param>
     /// <returns>The building stage</returns>
-    public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, IUnit> builderFunction);
+    public IBuildStage WithDerivedUnit(Func<UnitBuilder.IDerivedUnitStage, Unit> builderFunction);
 
     /// <summary>
-    /// Builds and creates the <see cref="IMetricType"/>
+    /// Builds and creates the <see cref="MetricType"/>
     /// </summary>
-    /// <returns>The <see cref="IMetricType"/></returns>
-    public IMetricType Build();
+    /// <returns>The <see cref="MetricType"/></returns>
+    public MetricType Build();
   }
 }

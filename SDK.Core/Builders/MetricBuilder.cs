@@ -6,7 +6,7 @@ using MoBro.Plugin.SDK.Models.Metrics;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="IMetric"/>
+/// Builder to create a new <see cref="Metric"/>
 /// </summary>
 public sealed class MetricBuilder :
   MetricBuilder.IIdStage,
@@ -73,7 +73,7 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public ICategoryStage OfType(IMetricType type)
+  public ICategoryStage OfType(MetricType type)
   {
     ArgumentNullException.ThrowIfNull(type);
     _typeId = type.Id;
@@ -95,7 +95,7 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public IGroupStage OfCategory(ICategory category)
+  public IGroupStage OfCategory(Category category)
   {
     ArgumentNullException.ThrowIfNull(category);
     _categoryId = category.Id;
@@ -117,7 +117,7 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public IBuildStage OfGroup(IGroup group)
+  public IBuildStage OfGroup(Group group)
   {
     _groupId = group.Id;
     return this;
@@ -145,7 +145,7 @@ public sealed class MetricBuilder :
   }
 
   /// <inheritdoc />
-  public IMetric Build()
+  public Metric Build()
   {
     return new Metric(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -166,7 +166,7 @@ public sealed class MetricBuilder :
   public interface IIdStage
   {
     /// <summary>
-    /// Sets the id of the <see cref="IMetric"/>
+    /// Sets the id of the <see cref="Metric"/>
     /// </summary>
     /// <param name="id">The id (must be unique within the scope of the plugin)</param>
     /// <returns>The next building stage</returns>
@@ -179,7 +179,7 @@ public sealed class MetricBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally a description of the <see cref="IMetric"/>
+    /// Sets the label and optionally a description of the <see cref="Metric"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">The optional textual description</param>
@@ -193,33 +193,33 @@ public sealed class MetricBuilder :
   public interface ITypeStage
   {
     /// <summary>
-    /// Sets the type of the <see cref="IMetric"/> by id
+    /// Sets the type of the <see cref="Metric"/> by id
     /// </summary>
-    /// <param name="typeId">The id of the <see cref="IMetricType"/></param>
+    /// <param name="typeId">The id of the <see cref="MetricType"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(string typeId);
 
     /// <summary>
-    /// Sets the type of the <see cref="IMetric"/> to a core type
+    /// Sets the type of the <see cref="Metric"/> to a core type
     /// </summary>
     /// <param name="coreType">The <see cref="CoreMetricType"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(CoreMetricType coreType);
     
     /// <summary>
-    /// Sets the type of the <see cref="IMetric"/> to a core currency type
+    /// Sets the type of the <see cref="Metric"/> to a core currency type
     /// </summary>
     /// <param name="currency">The <see cref="CoreMetricTypeCurrency"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(CoreMetricTypeCurrency currency);
 
     /// <summary>
-    /// Sets the type of the <see cref="IMetric"/> to a
-    /// <see cref="IMetricType"/>
+    /// Sets the type of the <see cref="Metric"/> to a
+    /// <see cref="MetricType"/>
     /// </summary>
-    /// <param name="type">The <see cref="IMetricType"/></param>
+    /// <param name="type">The <see cref="MetricType"/></param>
     /// <returns>The next building stage</returns>
-    public ICategoryStage OfType(IMetricType type);
+    public ICategoryStage OfType(MetricType type);
   }
 
   /// <summary>
@@ -228,28 +228,28 @@ public sealed class MetricBuilder :
   public interface ICategoryStage
   {
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IMetric"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Metric"/> belongs to
     /// </summary>
-    /// <param name="categoryId">The id of the <see cref="ICategory"/></param>
+    /// <param name="categoryId">The id of the <see cref="Category"/></param>
     /// <returns>The next building stage</returns>
     public IGroupStage OfCategory(string? categoryId);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IMetric"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Metric"/> belongs to
     /// </summary>
     /// <param name="coreCategory">The <see cref="CoreCategory"/></param>
     /// <returns>The next building stage</returns>
     public IGroupStage OfCategory(CoreCategory coreCategory);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> this <see cref="IMetric"/> belongs to
+    /// Sets the <see cref="Category"/> this <see cref="Metric"/> belongs to
     /// </summary>
-    /// <param name="category">The <see cref="ICategory"/></param>
+    /// <param name="category">The <see cref="Category"/></param>
     /// <returns>The next building stage</returns>
-    public IGroupStage OfCategory(ICategory category);
+    public IGroupStage OfCategory(Category category);
 
     /// <summary>
-    /// Sets the <see cref="ICategory"/> of this <see cref="IMetric"/> to the default value of
+    /// Sets the <see cref="Category"/> of this <see cref="Metric"/> to the default value of
     /// <see cref="CoreCategory.Miscellaneous"/>
     /// </summary>
     /// <returns>The next building stage</returns>
@@ -262,24 +262,24 @@ public sealed class MetricBuilder :
   public interface IGroupStage
   {
     /// <summary>
-    /// Sets the <see cref="IGroup"/> this <see cref="IMetric"/> belongs to. A null value indicates 'no group' and
+    /// Sets the <see cref="Group"/> this <see cref="Metric"/> belongs to. A null value indicates 'no group' and
     /// is the same as calling <see cref="OfNoGroup()"/>
     /// </summary>
-    /// <param name="groupId">The id of the <see cref="IGroup"/></param>
+    /// <param name="groupId">The id of the <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
     public IBuildStage OfGroup(string? groupId);
 
     /// <summary>
-    /// Sets the <see cref="IGroup"/>
-    /// this <see cref="IMetric"/> belongs to
+    /// Sets the <see cref="Group"/>
+    /// this <see cref="Metric"/> belongs to
     /// </summary>
-    /// <param name="group">The <see cref="IGroup"/></param>
+    /// <param name="group">The <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
-    public IBuildStage OfGroup(IGroup group);
+    public IBuildStage OfGroup(Group group);
 
     /// <summary>
-    /// Builds the  <see cref="IMetric"/> without 
-    /// a <see cref="IGroup"/>
+    /// Builds the  <see cref="Metric"/> without 
+    /// a <see cref="Group"/>
     /// </summary>
     /// <returns>The next building stage</returns>
     public IBuildStage OfNoGroup();
@@ -291,7 +291,7 @@ public sealed class MetricBuilder :
   public interface IBuildStage
   {
     /// <summary>
-    /// Marks whether the value of the <see cref="IMetric"/> is static
+    /// Marks whether the value of the <see cref="Metric"/> is static
     /// (= the value is fixed and does not change)
     /// </summary>
     /// <param name="static">Whether the value is static or not</param>
@@ -299,7 +299,7 @@ public sealed class MetricBuilder :
     public IBuildStage AsStaticValue(bool @static = true);
 
     /// <summary>
-    /// Marks whether the value of the <see cref="IMetric"/> is dynamic
+    /// Marks whether the value of the <see cref="Metric"/> is dynamic
     /// (= the value is not fixed and will change)
     /// </summary>
     /// <param name="dynamic">Whether the value is dynamic or not</param>
@@ -307,9 +307,9 @@ public sealed class MetricBuilder :
     public IBuildStage AsDynamicValue(bool dynamic = true);
 
     /// <summary>
-    /// Builds and creates the <see cref="IMetric"/>.
+    /// Builds and creates the <see cref="Metric"/>.
     /// </summary>
-    /// <returns>The <see cref="IMetric"/></returns>
-    public IMetric Build();
+    /// <returns>The <see cref="Metric"/></returns>
+    public Metric Build();
   }
 }

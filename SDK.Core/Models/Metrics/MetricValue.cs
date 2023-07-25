@@ -3,8 +3,8 @@
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
 /// <summary>
-/// The actual value of a <see cref="IMetric"/>.
-/// The value must conform to the <see cref="IMetricType"/> of the <see cref="IMetric"/> this value belongs to.
+/// The actual value of a <see cref="Metric"/>.
+/// The value must conform to the <see cref="MetricType"/> of the <see cref="Metric"/> this value belongs to.
 /// </summary>
 public readonly record struct MetricValue
 {

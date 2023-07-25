@@ -5,7 +5,7 @@ using MoBro.Plugin.SDK.Models;
 namespace MoBro.Plugin.SDK.Builders;
 
 /// <summary>
-/// Builder to create a new <see cref="IGroup"/>
+/// Builder to create a new <see cref="Group"/>
 /// </summary>
 public sealed class GroupBuilder :
   GroupBuilder.IIdStage,
@@ -16,7 +16,7 @@ public sealed class GroupBuilder :
   private string? _label;
   private string? _description;
   private string? _icon;
-  private readonly List<IGroup> _subGroups = new();
+  private readonly List<Group> _subGroups = new();
 
   private GroupBuilder()
   {
@@ -52,14 +52,14 @@ public sealed class GroupBuilder :
   }
 
   /// <inheritdoc />
-  public IBuildStage WithSubGroup(Func<IIdStage, IGroup> builder)
+  public IBuildStage WithSubGroup(Func<IIdStage, Group> builder)
   {
     _subGroups.Add(builder.Invoke(new GroupBuilder()));
     return this;
   }
 
   /// <inheritdoc />
-  public IGroup Build()
+  public Group Build()
   {
     return new Group(
       _id ?? throw new ArgumentNullException(nameof(_id)),
@@ -78,7 +78,7 @@ public sealed class GroupBuilder :
   public interface IIdStage
   {
     /// <summary>
-    /// Sets the id of the <see cref="IGroup"/>
+    /// Sets the id of the <see cref="Group"/>
     /// </summary>
     /// <param name="id">The id (must be unique within the scope of the plugin(.)</param>
     /// <returns>The next building stage</returns>
@@ -91,7 +91,7 @@ public sealed class GroupBuilder :
   public interface ILabelStage
   {
     /// <summary>
-    /// Sets the label and optionally the description of the <see cref="IGroup"/>
+    /// Sets the label and optionally the description of the <see cref="Group"/>
     /// </summary>
     /// <param name="label">The label</param>
     /// <param name="description">the optional textual description</param>
@@ -105,23 +105,23 @@ public sealed class GroupBuilder :
   public interface IBuildStage
   {
     /// <summary>
-    /// Adds a subgroup to the <see cref="IGroup"/>
+    /// Adds a subgroup to the <see cref="Group"/>
     /// </summary>
     /// <param name="builder">The builder function for the subgroup</param>
     /// <returns>The building stage</returns>
-    IBuildStage WithSubGroup(Func<IIdStage, IGroup> builder);
+    IBuildStage WithSubGroup(Func<IIdStage, Group> builder);
 
     /// <summary>
-    /// Sets the icon of the <see cref="IGroup"/>
+    /// Sets the icon of the <see cref="Group"/>
     /// </summary>
     /// <param name="iconId">The icon id</param>
     /// <returns>The next building stage</returns>
     IBuildStage WithIcon(string? iconId);
 
     /// <summary>
-    /// Completes and builds the <see cref="IGroup"/>
+    /// Completes and builds the <see cref="Group"/>
     /// </summary>
-    /// <returns>The <see cref="IGroup"/></returns>
-    IGroup Build();
+    /// <returns>The <see cref="Group"/></returns>
+    Group Build();
   }
 }

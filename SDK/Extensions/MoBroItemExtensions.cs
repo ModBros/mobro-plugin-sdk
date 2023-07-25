@@ -5,10 +5,11 @@ using System.Text.RegularExpressions;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
-using MoBro.Plugin.SDK.Models.Actions;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Resources;
 using MoBro.Plugin.SDK.Services;
+using Action = MoBro.Plugin.SDK.Models.Actions.Action;
+using Group = MoBro.Plugin.SDK.Models.Group;
 
 namespace MoBro.Plugin.SDK.Extensions;
 
@@ -35,22 +36,22 @@ internal static class MoBroItemExtensions
 
     switch (item)
     {
-      case ICategory category:
+      case Category category:
         ValidateCategory(category, mobroService);
         break;
-      case IGroup group:
+      case Group group:
         ValidateGroup(group, mobroService);
         break;
       case IResource resource:
         ValidateResource(resource);
         break;
-      case IMetricType type:
+      case MetricType type:
         ValidateMetricType(type, mobroService);
         break;
-      case IMetric metric:
+      case Metric metric:
         ValidateMetric(metric, mobroService);
         break;
-      case IAction action:
+      case Action action:
         ValidateAction(action, mobroService);
         break;
       default: throw new PluginException("Unknown item type");
@@ -59,7 +60,7 @@ internal static class MoBroItemExtensions
     return item;
   }
 
-  private static void ValidateCategory(ICategory category, IMoBroService itemRegister)
+  private static void ValidateCategory(Category category, IMoBroService itemRegister)
   {
     if (string.IsNullOrEmpty(category.Label))
     {
@@ -76,20 +77,20 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Cannot overwrite core category '{category.Id}'");
     }
 
-    if (!string.IsNullOrEmpty(category.Icon) && !itemRegister.TryGet<IIcon>(category.Icon, out _))
+    if (!string.IsNullOrEmpty(category.Icon) && !itemRegister.TryGet<Icon>(category.Icon, out _))
     {
       throw new PluginException($"Category '{category.Id}' references not registered Icon '{category.Icon}'");
     }
   }
 
-  private static void ValidateGroup(IGroup group, IMoBroService itemRegister)
+  private static void ValidateGroup(Group group, IMoBroService itemRegister)
   {
     if (string.IsNullOrEmpty(group.Label))
     {
       throw new PluginException($"Empty label for group '{group.Id}'");
     }
 
-    if (!string.IsNullOrEmpty(group.Icon) && !itemRegister.TryGet<IIcon>(group.Icon, out _))
+    if (!string.IsNullOrEmpty(group.Icon) && !itemRegister.TryGet<Icon>(group.Icon, out _))
     {
       throw new PluginException($"Group '{group.Id}' references not registered Icon '{group.Icon}'");
     }
@@ -99,7 +100,7 @@ internal static class MoBroItemExtensions
   {
     switch (resource)
     {
-      case IImage image:
+      case Image image:
         if (string.IsNullOrEmpty(image.RelativeFilePath))
         {
           throw new PluginException($"Empty path for Image Resource '{resource.Id}'");
@@ -112,7 +113,7 @@ internal static class MoBroItemExtensions
 
         break;
 
-      case IIcon icon:
+      case Icon icon:
 
         if (icon.RelativeFilePaths == null || !icon.RelativeFilePaths.Any())
         {
@@ -136,7 +137,7 @@ internal static class MoBroItemExtensions
     }
   }
 
-  private static void ValidateMetricType(IMetricType type, IMoBroService itemRegister)
+  private static void ValidateMetricType(MetricType type, IMoBroService itemRegister)
   {
     if (string.IsNullOrEmpty(type.Label))
     {
@@ -153,7 +154,7 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Cannot overwrite core MetricType currency '{type.Id}'");
     }
 
-    if (!string.IsNullOrEmpty(type.Icon) && !itemRegister.TryGet<IIcon>(type.Icon, out _))
+    if (!string.IsNullOrEmpty(type.Icon) && !itemRegister.TryGet<Icon>(type.Icon, out _))
     {
       throw new PluginException($"MetricType '{type.Id}' references not registered Icon '{type.Icon}'");
     }
@@ -172,7 +173,7 @@ internal static class MoBroItemExtensions
     }
   }
 
-  private static void ValidateUnit(IUnit unit, string typeId)
+  private static void ValidateUnit(Unit unit, string typeId)
   {
     if (string.IsNullOrWhiteSpace(unit.Label))
     {
@@ -195,14 +196,14 @@ internal static class MoBroItemExtensions
     }
   }
 
-  private static void ValidateMetric(IMetric metric, IMoBroService itemRegister)
+  private static void ValidateMetric(Metric metric, IMoBroService itemRegister)
   {
     if (string.IsNullOrEmpty(metric.Label))
     {
       throw new PluginException($"Empty label for Metric '{metric.Id}'");
     }
 
-    if (!itemRegister.TryGet<IMetricType>(metric.TypeId, out _) && !IsCoreType(metric.TypeId))
+    if (!itemRegister.TryGet<MetricType>(metric.TypeId, out _) && !IsCoreType(metric.TypeId))
     {
       throw new PluginException($"Metric '{metric.Id}' references not registered type '{metric.TypeId}'");
     }
@@ -212,7 +213,7 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Metric '{metric.Id}' references not invalid category id '{metric.CategoryId}'");
     }
 
-    if (!itemRegister.TryGet<ICategory>(metric.CategoryId, out _) &&
+    if (!itemRegister.TryGet<Category>(metric.CategoryId, out _) &&
         !Enum.TryParse<CoreCategory>(metric.CategoryId, true, out _))
     {
       throw new PluginException($"Metric '{metric.Id}' references not registered category '{metric.CategoryId}'");
@@ -225,14 +226,14 @@ internal static class MoBroItemExtensions
         throw new PluginException($"Metric '{metric.Id}' references invalid group id '{metric.GroupId}'");
       }
 
-      if (!itemRegister.TryGet<IGroup>(metric.GroupId, out _))
+      if (!itemRegister.TryGet<Group>(metric.GroupId, out _))
       {
         throw new PluginException($"Metric '{metric.Id}' references not registered group '{metric.GroupId}'");
       }
     }
   }
 
-  private static void ValidateAction(IAction action, IMoBroService itemRegister)
+  private static void ValidateAction(Action action, IMoBroService itemRegister)
   {
     if (string.IsNullOrEmpty(action.Label))
     {
@@ -244,7 +245,7 @@ internal static class MoBroItemExtensions
       throw new PluginException($"Action '{action.Id}' references not invalid category id '{action.CategoryId}'");
     }
 
-    if (!itemRegister.TryGet<ICategory>(action.CategoryId, out _) &&
+    if (!itemRegister.TryGet<Category>(action.CategoryId, out _) &&
         !Enum.TryParse<CoreCategory>(action.CategoryId, true, out _))
     {
       throw new PluginException($"Action '{action.Id}' references not registered category '{action.CategoryId}'");
@@ -257,7 +258,7 @@ internal static class MoBroItemExtensions
         throw new PluginException($"Action '{action.Id}' references invalid group id '{action.GroupId}'");
       }
 
-      if (!itemRegister.TryGet<IGroup>(action.GroupId, out _))
+      if (!itemRegister.TryGet<Group>(action.GroupId, out _))
       {
         throw new PluginException($"Action '{action.Id}' references not registered group '{action.GroupId}'");
       }

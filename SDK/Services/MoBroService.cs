@@ -15,40 +15,41 @@ internal sealed class MoBroService : IMoBroService
 {
   private readonly ILogger _logger;
   private readonly IDictionary<string, IMoBroItem> _items;
+  private readonly IDictionary<string, MetricValue> _metricValues;
 
   public MoBroService(ILogger logger)
   {
     _logger = logger;
     _items = new Dictionary<string, IMoBroItem>();
+    _metricValues = new Dictionary<string, MetricValue>();
   }
 
   public void Register(IEnumerable<IMoBroItem> items)
   {
     foreach (var item in Guard.Against.Null(items))
     {
-      _items[item.Id] = item.Validate(this);
-      _logger.LogDebug("Registered Item: {ItemId}", item.Id);
+      Register(item);
     }
   }
 
   public void Register(IMoBroItem item)
   {
     _items[item.Id] = Guard.Against.Null(item).Validate(this);
-    _logger.LogDebug("Registered Item: {ItemId}", item.Id);
+    _logger.LogDebug("Registered {ItemType}: {ItemId}", item.GetType().Name, item.Id);
   }
 
   public void Unregister(IEnumerable<string> ids)
   {
     foreach (var id in Guard.Against.Null(ids))
     {
-      _items.Remove(id);
-      _logger.LogDebug("Unregistered Item: {ItemId}", id);
+      Unregister(id);
     }
   }
 
   public void Unregister(string id)
   {
     _items.Remove(Guard.Against.NullOrEmpty(id));
+    _metricValues.Remove(id);
     _logger.LogDebug("Unregistered Item: {ItemId}", id);
   }
 
@@ -82,6 +83,7 @@ internal sealed class MoBroService : IMoBroService
   public void UpdateMetricValue(in MetricValue value)
   {
     Guard.Against.Null(value).Validate(this);
+    _metricValues[value.Id] = value;
     _logger.LogDebug("Value of metric {MetricId} updated to: {MetricValue}", value.Id, value.Value);
   }
 
@@ -93,6 +95,11 @@ internal sealed class MoBroService : IMoBroService
   public void UpdateMetricValue(string id, object? value)
   {
     UpdateMetricValue(new MetricValue(Guard.Against.NullOrEmpty(id), value));
+  }
+
+  public MetricValue GetMetricValue(string id)
+  {
+    return _metricValues.TryGetValue(Guard.Against.NullOrEmpty(id), out var knownValue) ? knownValue : default;
   }
 
   public void Error(string message)
