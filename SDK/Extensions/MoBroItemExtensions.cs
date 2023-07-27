@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Categories;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Resources;
 using MoBro.Plugin.SDK.Services;
 using Action = MoBro.Plugin.SDK.Models.Actions.Action;
-using Group = MoBro.Plugin.SDK.Models.Group;
+using Group = MoBro.Plugin.SDK.Models.Categories.Group;
 
 namespace MoBro.Plugin.SDK.Extensions;
 

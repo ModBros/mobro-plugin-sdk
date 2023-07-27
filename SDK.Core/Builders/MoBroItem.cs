@@ -1,5 +1,6 @@
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Actions;
+using MoBro.Plugin.SDK.Models.Categories;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Resources;
 

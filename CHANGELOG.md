@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Seal all model classes
 * Removed interfaces for certain model classes
 * Removed IDisposable interface from IMoBroPlugin
+* Moved Category and Group models to separate folder
 
 ## 0.2.0 - 2023-07-03
 

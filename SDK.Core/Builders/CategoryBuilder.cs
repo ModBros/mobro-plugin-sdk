@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Categories;
 
 namespace MoBro.Plugin.SDK.Builders;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using MoBro.Plugin.SDK.Enums;
-using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Categories;
 using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK.Builders;

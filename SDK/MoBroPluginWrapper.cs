@@ -160,6 +160,7 @@ public sealed class MoBroPluginWrapper : IDisposable
     return (IMoBroPlugin)instance;
   }
 
+  /// <inheritdoc />
   public void Dispose()
   {
     (_plugin as IDisposable)?.Dispose();
