@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Title>MoBro Plugin SDK</Title>
-        <Description>SDK.Core + additional developer tools to run and test plugins locally</Description>
+        <Description>SDK to develop plugins for MoBro</Description>
         <Authors>ModBros</Authors>
         <Company>ModBros OG</Company>
         <Product>MoBro</Product>
@@ -20,6 +20,9 @@
         <AssemblyName>MoBro.Plugin.SDK</AssemblyName>
         <InvariantGlobalization>true</InvariantGlobalization>
         <PackageIcon>mobro.png</PackageIcon>
+        <PackageProjectUrl>https://developer.mobro.app/plugins/intro</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/ModBros/mobro-plugin-sdk</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>

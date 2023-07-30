@@ -1,8 +1,8 @@
 # mobro-plugin-sdk
 
 [![Nuget](https://img.shields.io/nuget/v/MoBro.Plugin.SDK?style=flat-square)](https://www.nuget.org/packages/MoBro.Plugin.SDK)
-[![Nuget](https://img.shields.io/nuget/dt/MoBro.Plugin.SDK?style=flat-square)](https://www.nuget.org/packages/MoBro.Plugin.SDK)
 ![GitHub](https://img.shields.io/github/license/ModBros/mobro-plugin-sdk)
+[![MoBro](https://img.shields.io/badge/-MoBro-red.svg)](https://mobro.app)
 [![Discord](https://img.shields.io/discord/620204412706750466.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square)](https://discord.com/invite/DSNX4ds)
 
 This is the official repository of the MoBro Plugin SDK.  
