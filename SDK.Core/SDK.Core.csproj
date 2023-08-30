@@ -23,6 +23,7 @@
         <PackageProjectUrl>https://developer.mobro.app/plugins/intro</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ModBros/mobro-plugin-sdk</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageTags>MoBro</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
