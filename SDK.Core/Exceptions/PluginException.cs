@@ -29,9 +29,11 @@ public class PluginException : Exception
   /// </summary>
   /// <param name="key">The key</param>
   /// <param name="detail">The detail value</param>
-  protected void AddDetail(string? key, string? detail)
+  /// <returns>The exception</returns>
+  public PluginException AddDetail(string? key, string? detail)
   {
-    if (key == null || detail == null) return;
+    if (key == null || detail == null) return this;
     Details[key] = detail;
+    return this;
   }
 }
