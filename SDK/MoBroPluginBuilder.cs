@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
+using MoBro.Plugin.SDK.Services;
 using Serilog;
 using Serilog.Events;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -15,6 +16,7 @@ public sealed class MoBroPluginBuilder
 {
   private readonly Type _pluginType;
   private readonly IDictionary<string, string> _settings = new Dictionary<string, string>();
+  private string _storageDir = "./data";
   private LogEventLevel _logLevel = LogEventLevel.Debug;
   private ILogger? _logger;
 
@@ -83,6 +85,17 @@ public sealed class MoBroPluginBuilder
   }
 
   /// <summary>
+  /// Sets a custom storage directory for the <see cref="IMoBroPersistence"/> service. (Default: './data')
+  /// </summary>
+  /// <param name="path">The path to the directory</param>
+  /// <returns>The builder</returns>
+  public MoBroPluginBuilder WithStorageDirectory(string path)
+  {
+    _storageDir = path;
+    return this;
+  }
+
+  /// <summary>
   /// Creates a <see cref="MoBroPluginWrapper"/> and inits the <see cref="IMoBroPlugin"/>
   /// </summary>
   /// <returns>The <see cref="MoBroPluginWrapper"/></returns>
@@ -104,6 +117,6 @@ public sealed class MoBroPluginBuilder
         .CreateLogger<MoBroPluginWrapper>();
     }
 
-    return new MoBroPluginWrapper(_pluginType, _settings, _logger);
+    return new MoBroPluginWrapper(_pluginType, _settings, _storageDir, _logger);
   }
 }

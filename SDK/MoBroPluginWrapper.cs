@@ -18,20 +18,22 @@ public sealed class MoBroPluginWrapper : IDisposable
 {
   private readonly Type _pluginType;
   private readonly MoBroService _moBroService;
-  private readonly MoBroScheduler _moBroScheduler;
+  private readonly Lazy<MoBroScheduler> _moBroScheduler;
   private readonly ILogger _logger;
 
   private IDictionary<string, string> _settings;
+  private string _storageDir;
   private IMoBroPlugin? _plugin;
   private bool _paused;
 
-  internal MoBroPluginWrapper(Type pluginType, IDictionary<string, string> settings, ILogger logger)
+  internal MoBroPluginWrapper(Type pluginType, IDictionary<string, string> settings, string storageDir, ILogger logger)
   {
     _pluginType = pluginType;
     _settings = settings;
+    _storageDir = storageDir;
     _logger = logger;
     _moBroService = new MoBroService(_logger);
-    _moBroScheduler = new MoBroScheduler(_logger, _moBroService.Error);
+    _moBroScheduler = new Lazy<MoBroScheduler>(() => new MoBroScheduler(_logger, _moBroService.Error));
     _paused = false;
 
     Init();
@@ -53,7 +55,7 @@ public sealed class MoBroPluginWrapper : IDisposable
 
     _paused = true;
     _logger.LogDebug("'Pause' called");
-    _moBroScheduler.Pause();
+    if (_moBroScheduler.IsValueCreated) _moBroScheduler.Value.Pause();
     _plugin?.Pause();
   }
 
@@ -67,7 +69,7 @@ public sealed class MoBroPluginWrapper : IDisposable
 
     _paused = false;
     _logger.LogDebug("'Resume' called");
-    _moBroScheduler.Resume();
+    if (_moBroScheduler.IsValueCreated) _moBroScheduler.Value.Resume();
     _plugin?.Resume();
   }
 
@@ -107,7 +109,7 @@ public sealed class MoBroPluginWrapper : IDisposable
     if (_plugin != null)
     {
       _logger.LogInformation("Stopping and disposing current plugin instance");
-      _moBroScheduler.Clear();
+      if (_moBroScheduler.IsValueCreated) _moBroScheduler.Value.Clear();
       (_plugin as IDisposable)?.Dispose();
       _moBroService.ClearRegistration();
     }
@@ -135,7 +137,8 @@ public sealed class MoBroPluginWrapper : IDisposable
       {
         "MoBro.Plugin.SDK.Services.IMoBroSettings" => new MoBroSettings(_settings),
         "MoBro.Plugin.SDK.Services.IMoBroService" => _moBroService,
-        "MoBro.Plugin.SDK.Services.IMoBroScheduler" => _moBroScheduler,
+        "MoBro.Plugin.SDK.Services.IMoBroScheduler" => _moBroScheduler.Value,
+        "MoBro.Plugin.SDK.Services.IMoBroPersistence" => new MoBroPersistence(_storageDir, _logger),
         "Microsoft.Extensions.Logging.ILogger" => _logger,
         _ => throw new PluginException("Unknown constructor parameter, can not instantiate plugin")
       };
