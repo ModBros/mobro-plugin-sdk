@@ -14,9 +14,8 @@ public interface IMoBroSettings
   /// <typeparam name="T">The type to get the settings value in (e.g. bool).</typeparam>
   /// <returns>The current value of the setting.</returns>
   /// <exception cref="System.ArgumentNullException">The key is null.</exception>
-  /// <exception cref="PluginSettingsException">The setting does not exists or is not set.</exception>
-  /// <exception cref="PluginException">An error occured while parsing the settings value.</exception>
-  /// 
+  /// <exception cref="PluginSettingsException">The setting does not exist or is not set.</exception>
+  /// <exception cref="PluginException">An error occurred while parsing the settings value.</exception>
   T GetValue<T>(string key);
 
   /// <summary>

@@ -53,6 +53,18 @@ internal sealed class MoBroService : IMoBroService
     _logger.LogDebug("Unregistered Item: {ItemId}", id);
   }
 
+  public IEnumerable<IMoBroItem> GetAll()
+  {
+    return _items.Values;
+  }
+
+  public IEnumerable<T> GetAll<T>() where T : IMoBroItem
+  {
+    return _items.Values
+      .Where(i => i.GetType().IsAssignableTo(typeof(T)))
+      .Cast<T>();
+  }
+
   public bool TryGet<T>(string id, [MaybeNullWhen(false)] out T item) where T : IMoBroItem
   {
     if (_items.TryGetValue(Guard.Against.NullOrEmpty(id), out var knownItem) &&
@@ -97,14 +109,19 @@ internal sealed class MoBroService : IMoBroService
     UpdateMetricValue(new MetricValue(Guard.Against.NullOrEmpty(id), value));
   }
 
-  public MetricValue GetMetricValue(string id)
+  public IEnumerable<MetricValue> GetMetricValues()
   {
-    return _metricValues.TryGetValue(Guard.Against.NullOrEmpty(id), out var knownValue) ? knownValue : default;
+    return _metricValues.Values;
+  }
+
+  public MetricValue? GetMetricValue(string id)
+  {
+    return _metricValues.TryGetValue(Guard.Against.NullOrEmpty(id), out var knownValue) ? knownValue : null;
   }
 
   public void Error(string message)
   {
-    Guard.Against.NullOrEmpty(message);
+    Guard.Against.NullOrWhiteSpace(message);
     _logger.LogError("Plugin error: {PluginError}", message);
     throw new PluginException("An unexpected plugin error occurred: " + message);
   }

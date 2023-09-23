@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Impl;
@@ -23,6 +24,9 @@ internal sealed class MoBroScheduler : IMoBroScheduler
 
   public void OneOff(Action action, TimeSpan delay)
   {
+    Guard.Against.Null(action);
+    Guard.Against.Null(delay);
+
     _logger.LogDebug("Scheduling 'one-off' job with delay of {Delay}", delay);
     EnsureStarted().GetAwaiter().GetResult();
 
@@ -37,6 +41,10 @@ internal sealed class MoBroScheduler : IMoBroScheduler
 
   public void Interval(Action action, TimeSpan interval, TimeSpan delay)
   {
+    Guard.Against.Null(action);
+    Guard.Against.Null(interval);
+    Guard.Against.Null(delay);
+
     _logger.LogDebug("Scheduling 'interval' job for interval {Interval} with a delay of {Delay}", interval, delay);
     EnsureStarted().GetAwaiter().GetResult();
 
@@ -56,6 +64,11 @@ internal sealed class MoBroScheduler : IMoBroScheduler
 
   public void Cron(Action action, string cron, TimeZoneInfo timeZone, TimeSpan delay)
   {
+    Guard.Against.Null(action);
+    Guard.Against.NullOrWhiteSpace(cron);
+    Guard.Against.Null(timeZone);
+    Guard.Against.Null(delay);
+
     _logger.LogDebug("Scheduling 'cron' job for {Cron} with a delay of {Delay}", cron, delay);
     EnsureStarted().GetAwaiter().GetResult();
 

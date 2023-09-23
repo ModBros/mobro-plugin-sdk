@@ -4,9 +4,9 @@
         <Title>MoBro Plugin SDK</Title>
         <Description>SDK to develop plugins for MoBro</Description>
         <Authors>ModBros</Authors>
-        <Company>ModBros OG</Company>
+        <Company>ModBros KG</Company>
         <Product>MoBro</Product>
-        <Copyright>(C) ModBros OG 2023</Copyright>
+        <Copyright>(C) ModBros KG 2023</Copyright>
         <IsPackable>true</IsPackable>
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>11</LangVersion>
@@ -30,7 +30,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
         <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
-        <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1"/>
+        <PackageReference Include="Ardalis.GuardClauses" Version="4.1.1" />
         <PackageReference Include="Quartz" Version="3.6.3"/>
         <PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
             <PrivateAssets>all</PrivateAssets>

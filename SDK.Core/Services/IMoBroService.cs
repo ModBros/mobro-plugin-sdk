@@ -40,6 +40,19 @@ public interface IMoBroService
   void Unregister(string id);
 
   /// <summary>
+  /// Gets all registered items 
+  /// </summary>
+  /// <returns>All registered items</returns>
+  IEnumerable<IMoBroItem> GetAll();
+
+  /// <summary>
+  /// Gets all registered items of a given type
+  /// </summary>
+  /// <typeparam name="T">The type of the item</typeparam>
+  /// <returns>All registered items of the given type</returns>
+  IEnumerable<T> GetAll<T>() where T : IMoBroItem;
+
+  /// <summary>
   /// Gets the registered item associated with the specified id.
   /// </summary>
   /// <param name="id">The id of the item to get</param>
@@ -82,12 +95,18 @@ public interface IMoBroService
   void UpdateMetricValue(string id, object? value);
 
   /// <summary>
+  /// Gets all current metric values. 
+  /// </summary>
+  /// <returns>All current metric values</returns>
+  IEnumerable<MetricValue> GetMetricValues();
+
+  /// <summary>
   /// Gets the current value assigned to the metric with the specified id.
   /// </summary>
   /// <param name="id">The id of the metric to get the value for</param>
-  /// <returns>The <see cref="MetricValue"/> currently assigned to the metric.</returns>
+  /// <returns>The <see cref="MetricValue"/> currently assigned to the metric. 'null' if no value has been assigned.</returns>
   /// <exception cref="System.ArgumentNullException">The id is null.</exception>
-  MetricValue GetMetricValue(string id);
+  MetricValue? GetMetricValue(string id);
 
   /// <summary>
   /// Notifies the service that an unrecoverable error has occurred.
