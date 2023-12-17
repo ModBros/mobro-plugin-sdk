@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Services;
@@ -16,7 +17,7 @@ public sealed class MoBroPluginBuilder
 {
   private readonly Type _pluginType;
   private readonly IDictionary<string, string> _settings = new Dictionary<string, string>();
-  private string _storageDir = "./data";
+  private string _storageDir = Path.Join(Directory.GetCurrentDirectory(), "data");
   private LogEventLevel _logLevel = LogEventLevel.Debug;
   private ILogger? _logger;
 
@@ -85,7 +86,7 @@ public sealed class MoBroPluginBuilder
   }
 
   /// <summary>
-  /// Sets a custom storage directory for the <see cref="IMoBroPersistence"/> service. (Default: './data')
+  /// Sets a custom storage directory for the <see cref="IMoBroPersistenceManager"/> service. (Default: './data')
   /// </summary>
   /// <param name="path">The path to the directory</param>
   /// <returns>The builder</returns>

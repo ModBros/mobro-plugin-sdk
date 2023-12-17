@@ -1,10 +1,10 @@
 ﻿namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
-/// Provides and easy way for the plugin to persist data to disk.
-/// Data therefore remaining accessible between plugin restarts.
+/// Provides and easy way for the plugin to persist arbitrary data to disk.
+/// Persisted data remains accessible between plugin starts.
 /// </summary>
-public interface IMoBroPersistence
+public interface IMoBroPersistenceManager
 {
   /// <summary>
   /// Stores data with the specified key.
@@ -12,7 +12,7 @@ public interface IMoBroPersistence
   /// <typeparam name="T">The type of data to store.</typeparam>
   /// <param name="key">The unique key to identify the data.</param>
   /// <param name="data">The data to be stored.</param>
-  void Put<T>(string key, T data);
+  void Put<T>(string key, T data) where T : class;
 
   /// <summary>
   /// Retrieves data associated with the specified key.
@@ -20,7 +20,7 @@ public interface IMoBroPersistence
   /// <typeparam name="T">The type of data to retrieve.</typeparam>
   /// <param name="key">The key to identify the data.</param>
   /// <returns>The stored data, or default(T) if the key is not found or the object is not of type T.</returns>
-  T? Get<T>(string key);
+  T? Get<T>(string key) where T : class;
 
   /// <summary>
   /// Removes data associated with the specified key.

@@ -21,8 +21,8 @@ public sealed class MoBroPluginWrapper : IDisposable
   private readonly Lazy<MoBroScheduler> _moBroScheduler;
   private readonly ILogger _logger;
 
+  private readonly string _storageDir;
   private IDictionary<string, string> _settings;
-  private string _storageDir;
   private IMoBroPlugin? _plugin;
   private bool _paused;
 
@@ -138,7 +138,7 @@ public sealed class MoBroPluginWrapper : IDisposable
         "MoBro.Plugin.SDK.Services.IMoBroSettings" => new MoBroSettings(_settings),
         "MoBro.Plugin.SDK.Services.IMoBroService" => _moBroService,
         "MoBro.Plugin.SDK.Services.IMoBroScheduler" => _moBroScheduler.Value,
-        "MoBro.Plugin.SDK.Services.IMoBroPersistence" => new MoBroPersistence(_storageDir, _logger),
+        "MoBro.Plugin.SDK.Services.IMoBroPersistenceManager" => new MoBroPersistenceManager(_storageDir, _logger),
         "Microsoft.Extensions.Logging.ILogger" => _logger,
         _ => throw new PluginException("Unknown constructor parameter, can not instantiate plugin")
       };
