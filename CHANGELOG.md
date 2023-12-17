@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Added function to IMoBroService to get all currently registered items
 * Added additional guard clauses
-* Added IMoBroPersistence service
+* Added IMoBroPersistenceManager service
+* Added IMoBroFileManager
 
 ### Changed
 

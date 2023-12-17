@@ -1,8 +1,8 @@
 ﻿namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
-/// Provides and easy way for the plugin to persist arbitrary data to disk.
-/// Persisted data remains accessible between plugin starts.
+/// Provides and easy way for the plugin to serialize and persist arbitrary objects to disk.
+/// Objects are persisted to the plugins data directory and remain accessible between plugin starts.
 /// </summary>
 public interface IMoBroPersistenceManager
 {

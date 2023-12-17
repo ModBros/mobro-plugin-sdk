@@ -139,6 +139,7 @@ public sealed class MoBroPluginWrapper : IDisposable
         "MoBro.Plugin.SDK.Services.IMoBroService" => _moBroService,
         "MoBro.Plugin.SDK.Services.IMoBroScheduler" => _moBroScheduler.Value,
         "MoBro.Plugin.SDK.Services.IMoBroPersistenceManager" => new MoBroPersistenceManager(_storageDir, _logger),
+        "MoBro.Plugin.SDK.Services.IMoBroFileManager" => new MoBroFileManager(_storageDir, _logger),
         "Microsoft.Extensions.Logging.ILogger" => _logger,
         _ => throw new PluginException("Unknown constructor parameter, can not instantiate plugin")
       };
