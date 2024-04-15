@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Services;
+using Action = MoBro.Plugin.SDK.Models.Actions.Action;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace MoBro.Plugin.SDK;
@@ -102,6 +104,26 @@ public sealed class MoBroPluginWrapper : IDisposable
   public IEnumerable<T> GetRegisteredItems<T>() where T : IMoBroItem
   {
     return _moBroService.GetItems<T>();
+  }
+
+  /// <summary>
+  /// Invokes an action with the specified id and settings.
+  /// </summary>
+  /// <param name="actionId">The ID of the action to invoke.</param>
+  /// <param name="settings">The settings to pass to the action (optional).</param>
+  public void InvokeAction(string actionId, IDictionary<string, string>? settings = null)
+  {
+    var action = _moBroService
+      .GetItems<Action>()
+      .FirstOrDefault(a => a.Id == actionId);
+    if (action == null)
+    {
+      _logger.LogWarning("Action {ActionId} does not exist. Can not invoke", actionId);
+      return;
+    }
+
+    _logger.LogDebug("Invoking action: {ActionId}", action.Id);
+    action.Handler.Invoke(new MoBroSettings(settings));
   }
 
   private void Init()
