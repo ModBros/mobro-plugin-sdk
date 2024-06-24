@@ -6,9 +6,9 @@
         <Authors>ModBros</Authors>
         <Company>ModBros OG</Company>
         <Product>MoBro</Product>
-        <Copyright>(C) ModBros OG 2023</Copyright>
+        <Copyright>(C) ModBros KG 2024</Copyright>
         <IsPackable>false</IsPackable>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
 </Project>

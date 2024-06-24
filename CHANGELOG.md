@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Expose function publicly to set additional detail in PluginException
+* Updated to .NET 8
 
 ## 0.3.0 - 2023-07-27
 
