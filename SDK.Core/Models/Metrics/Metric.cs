@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Models.Categories;
@@ -35,30 +36,42 @@ public sealed class Metric : IMoBroItem
   /// <summary>
   /// The textual name of the metric
   /// </summary>
+  [Required]
+  [Length(1, 32)]
   public string Label { get; set; }
 
   /// <summary>
   /// The type of this metric (id of a registered <see cref="MetricType"/>)
   /// </summary>
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string TypeId { get; set; }
 
   /// <summary>
   /// The category this metric is assigned to (id of a registered <see cref="Category"/>)
   /// </summary>
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string CategoryId { get; set; }
 
   /// <summary>
   /// Whether this metric is static or not. (static = the value is fixed and will not change)
   /// </summary>
+  [Required]
   public bool IsStatic { get; set; }
 
   /// <summary>
   /// An optional textual description
   /// </summary>
+  [MaxLength(256)]
   public string? Description { get; set; }
 
   /// <summary>
   /// An optional group this metric is part of (id of a registered <see cref="Group"/>)
   /// </summary>
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string? GroupId { get; set; }
 }

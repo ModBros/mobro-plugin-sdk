@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoBro.Plugin.SDK.Models.Categories;
 
@@ -29,20 +30,25 @@ public sealed class Category : IMoBroItem
   /// <summary>
   /// The visible category label
   /// </summary>
+  [Required]
+  [Length(1, 32)]
   public string Label { get; set; }
 
   /// <summary>
   /// An optional further description
   /// </summary>
+  [MaxLength(256)]
   public string? Description { get; set; }
 
   /// <summary>
   /// An optional icon id
   /// </summary>
+  [MaxLength(256)]
   public string? Icon { get; set; }
 
   /// <summary>
   /// Optional sub categories
   /// </summary>
+  [MaxLength(10)]
   public IEnumerable<Category>? SubCategories { get; set; } = new List<Category>();
 }

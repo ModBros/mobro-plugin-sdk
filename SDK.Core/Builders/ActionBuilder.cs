@@ -326,7 +326,7 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <param name="handler">The handler</param>
     /// <returns>The next building stage</returns>
-    public IBuildStage WithHandler(System.Action handler);
+    public IBuildStage WithHandler(Action handler);
 
     /// <summary>
     /// Sets the handler that will be called whenever the action is invoked

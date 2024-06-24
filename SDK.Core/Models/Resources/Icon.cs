@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Resources;

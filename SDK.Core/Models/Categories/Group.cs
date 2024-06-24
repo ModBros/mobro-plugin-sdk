@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoBro.Plugin.SDK.Models.Categories;
 
@@ -9,7 +10,7 @@ namespace MoBro.Plugin.SDK.Models.Categories;
 /// <remarks>
 /// A group may contain items from different categories
 /// </remarks>
-public sealed class Group : IMoBroItem 
+public sealed class Group : IMoBroItem
 {
   /// <summary>
   /// Creates a new group with the given properties
@@ -32,20 +33,26 @@ public sealed class Group : IMoBroItem
   /// <summary>
   /// The visible category label
   /// </summary>
+  [Required]
+  [Length(1, 32)]
   public string Label { get; set; }
 
   /// <summary>
   /// An optional further description
   /// </summary>
+  [MaxLength(256)]
   public string? Description { get; set; }
+
 
   /// <summary>
   /// An optional icon (relative path to the icon file)
   /// </summary>
+  [MaxLength(256)]
   public string? Icon { get; set; }
 
   /// <summary>
   /// Optional sub groups
   /// </summary>
+  [MaxLength(10)]
   public IEnumerable<Group>? SubGroups { get; set; } = new List<Group>();
 }

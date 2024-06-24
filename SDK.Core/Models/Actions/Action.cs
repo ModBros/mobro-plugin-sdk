@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Models.Categories;
@@ -36,21 +37,29 @@ public sealed class Action : IMoBroItem
   /// <summary>
   /// The textual name of the action
   /// </summary>
+  [Required]
+  [Length(1, 32)]
   public string Label { get; set; }
 
   /// <summary>
   /// An optional textual description
   /// </summary>
+  [MaxLength(256)]
   public string? Description { get; set; }
 
   /// <summary>
   /// The category this action is assigned to (id of a registered <see cref="Category"/>)
   /// </summary>
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string CategoryId { get; set; }
 
   /// <summary>
   /// An optional group this action is part of (id of a registered <see cref="Group"/>)
   /// </summary>
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string? GroupId { get; set; }
 
   /// <summary>
@@ -61,10 +70,12 @@ public sealed class Action : IMoBroItem
   /// <summary>
   /// The handler that will be called whenever this action is invoked
   /// </summary>
+  [Required]
   public Func<IMoBroSettings, Task<object?>> Handler { get; set; }
 
   /// <summary>
   /// Settings exposed by this specific action
   /// </summary>
+  [MaxLength(32)]
   public IEnumerable<SettingsFieldBase> Settings { get; set; } = new List<SettingsFieldBase>();
 }

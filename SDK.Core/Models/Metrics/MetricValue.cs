@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
 
@@ -46,11 +47,15 @@ public readonly record struct MetricValue
   /// <summary>
   /// The id of the metric
   /// </summary>
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string Id { get; }
 
   /// <summary>
   /// The date and time the value was recorded or measured at in UTC
   /// </summary>
+  [Required]
   public DateTime Timestamp { get; }
 
   /// <summary>

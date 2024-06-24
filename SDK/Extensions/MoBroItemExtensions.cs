@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,6 +35,16 @@ internal static class MoBroItemExtensions
     if (!IdValidationRegex.IsMatch(item.Id))
     {
       throw new PluginException($"Invalid id '{item.Id}' for MoBroItem");
+    }
+
+    var validationContext = new ValidationContext(item);
+    var validationErrors = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(item, validationContext, validationErrors, true))
+    {
+      if (validationErrors.Count > 0)
+      {
+        throw new PluginException(validationErrors[0].ErrorMessage);
+      }
     }
 
     switch (item)

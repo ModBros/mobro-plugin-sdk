@@ -11,12 +11,14 @@ public sealed class SettingsFieldSelect : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
+  [MaxLength(64)]
   public string? DefaultValue { get; set; }
 
   /// <summary>
   /// The available options for this field
   /// </summary>
   [Required]
+  [Length(1, 128)]
   public IList<SettingsFieldSelectOption> Options { get; set; } = new List<SettingsFieldSelectOption>(0);
 
   /// <summary>
@@ -51,16 +53,14 @@ public class SettingsFieldSelectOption
   /// The visible label of the option
   /// </summary>
   [Required]
-  [MinLength(1)]
-  [MaxLength(128)]
+  [Length(1, 32)]
   public string Label { get; }
 
   /// <summary>
   /// The value of the option
   /// </summary>
   [Required]
-  [MinLength(1)]
-  [MaxLength(128)]
+  [Length(1, 64)]
   [RegularExpression("^[\\w-]+$")]
   public string Value { get; }
 

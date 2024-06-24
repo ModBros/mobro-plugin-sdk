@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MoBro.Plugin.SDK.Models.Resources;
 
 /// <summary>
@@ -28,5 +30,6 @@ public sealed class Image : IResource
   /// <summary>
   /// The relative path to the image file.
   /// </summary>
+  [MaxLength(128)] 
   public string RelativeFilePath { get; }
 }

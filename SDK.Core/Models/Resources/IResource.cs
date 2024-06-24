@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MoBro.Plugin.SDK.Models.Resources;
 
 /// <summary>
@@ -8,5 +10,6 @@ public interface IResource : IMoBroItem
   /// <summary>
   /// An optional alternative text to show if the resource fails to display
   /// </summary>
+  [MaxLength(256)] 
   public string? Alt { get; }
 }

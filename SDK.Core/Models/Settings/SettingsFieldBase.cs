@@ -21,8 +21,7 @@ public abstract class SettingsFieldBase
   /// The name (key) of the field
   /// </summary>
   [Required]
-  [MinLength(1)]
-  [MaxLength(128)]
+  [Length(1, 64)]
   [RegularExpression("^[\\w-]+$")]
   public string Name { get; }
 
@@ -30,19 +29,19 @@ public abstract class SettingsFieldBase
   /// The visible label of the field
   /// </summary>
   [Required]
-  [MinLength(1)]
-  [MaxLength(128)]
+  [Length(1, 32)]
   public string Label { get; }
 
   /// <summary>
   /// An optional description of the field
   /// </summary>
+  [MaxLength(256)]
   public string? Description { get; }
 
   /// <summary>
   /// Whether the field is required
   /// </summary>
-  public bool Required { get; }
+  public bool Required { get; } = false;
 
   private protected SettingsFieldBase(string name, string label, string? description, bool required)
   {

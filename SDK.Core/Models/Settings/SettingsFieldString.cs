@@ -1,4 +1,6 @@
-﻿namespace MoBro.Plugin.SDK.Models.Settings;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MoBro.Plugin.SDK.Models.Settings;
 
 /// <summary>
 /// A textual settings field
@@ -8,11 +10,13 @@ public sealed class SettingsFieldString : SettingsFieldBase
   /// <summary>
   /// The default value of the field
   /// </summary>
+  [MaxLength(128)]
   public string? DefaultValue { get; set; }
 
   /// <summary>
-  /// A optional regex to validate the field
+  /// An optional regex to validate the field
   /// </summary>
+  [MaxLength(128)]
   public string? Regex { get; set; }
 
   /// <summary>
