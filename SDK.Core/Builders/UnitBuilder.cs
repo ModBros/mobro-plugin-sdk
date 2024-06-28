@@ -62,13 +62,14 @@ public sealed class UnitBuilder :
   /// <inheritdoc />
   public Unit Build()
   {
-    return new Unit(
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _abbreviation ?? throw new ArgumentNullException(nameof(_abbreviation)),
-      _description,
-      _fromBaseFormula ?? throw new ArgumentNullException(nameof(_fromBaseFormula)),
-      _toBaseFormula ?? throw new ArgumentNullException(nameof(_toBaseFormula))
-    );
+    return new Unit
+    {
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      Abbreviation = _abbreviation ?? throw new ArgumentNullException(nameof(_abbreviation)),
+      Description = _description,
+      FromBaseFormula = _fromBaseFormula ?? throw new ArgumentNullException(nameof(_fromBaseFormula)),
+      ToBaseFormula = _toBaseFormula ?? throw new ArgumentNullException(nameof(_toBaseFormula))
+    };
   }
 
   /// <summary>

@@ -62,13 +62,12 @@ public sealed class CategoryBuilder :
   /// <inheritdoc />
   public Category Build()
   {
-    return new Category(
-      _id ?? throw new ArgumentNullException(nameof(_id)),
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _description,
-      _icon
-    )
+    return new Category
     {
+      Id = _id ?? throw new ArgumentNullException(nameof(_id)),
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      Description = _description,
+      Icon = _icon,
       SubCategories = _subCategories
     };
   }
@@ -111,7 +110,7 @@ public sealed class CategoryBuilder :
     /// <param name="builder">The builder function for the subcategory</param>
     /// <returns>The building stage</returns>
     IBuildStage WithSubCategory(Func<IIdStage, Category> builder);
-    
+
     /// <summary>
     /// Sets the icon of the <see cref="Category"/>
     /// </summary>

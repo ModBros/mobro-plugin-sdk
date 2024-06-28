@@ -81,12 +81,11 @@ public sealed class TypeBuilder :
   /// <inheritdoc cref="IBuildStage.Build" />
   public MetricType Build()
   {
-    return new MetricType(
-      _id ?? throw new ArgumentNullException(nameof(_id)),
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _valueType ?? throw new ArgumentNullException(nameof(_valueType))
-    )
+    return new MetricType
     {
+      Id = _id ?? throw new ArgumentNullException(nameof(_id)),
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      ValueType = _valueType ?? throw new ArgumentNullException(nameof(_valueType)),
       Description = _description,
       Icon = _icon,
       BaseUnit = _baseUnit,

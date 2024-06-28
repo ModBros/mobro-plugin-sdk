@@ -61,13 +61,12 @@ public sealed class GroupBuilder :
   /// <inheritdoc />
   public Group Build()
   {
-    return new Group(
-      _id ?? throw new ArgumentNullException(nameof(_id)),
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _description,
-      _icon
-    )
+    return new Group
     {
+      Id = _id ?? throw new ArgumentNullException(nameof(_id)),
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      Description = _description,
+      Icon = _icon,
       SubGroups = _subGroups
     };
   }

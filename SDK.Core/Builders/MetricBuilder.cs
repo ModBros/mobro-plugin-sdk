@@ -64,7 +64,7 @@ public sealed class MetricBuilder :
     _typeId = coreType.ToString().ToLower();
     return this;
   }
-  
+
   /// <inheritdoc />
   public ICategoryStage OfType(CoreMetricTypeCurrency currency)
   {
@@ -147,13 +147,12 @@ public sealed class MetricBuilder :
   /// <inheritdoc />
   public Metric Build()
   {
-    return new Metric(
-      _id ?? throw new ArgumentNullException(nameof(_id)),
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _typeId ?? throw new ArgumentNullException(nameof(_typeId)),
-      _categoryId ?? throw new ArgumentNullException(nameof(_categoryId))
-    )
+    return new Metric
     {
+      Id = _id ?? throw new ArgumentNullException(nameof(_id)),
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      TypeId = _typeId ?? throw new ArgumentNullException(nameof(_typeId)),
+      CategoryId = _categoryId ?? throw new ArgumentNullException(nameof(_categoryId)),
       Description = _description,
       GroupId = _groupId,
       IsStatic = _static
@@ -205,7 +204,7 @@ public sealed class MetricBuilder :
     /// <param name="coreType">The <see cref="CoreMetricType"/></param>
     /// <returns>The next building stage</returns>
     public ICategoryStage OfType(CoreMetricType coreType);
-    
+
     /// <summary>
     /// Sets the type of the <see cref="Metric"/> to a core currency type
     /// </summary>

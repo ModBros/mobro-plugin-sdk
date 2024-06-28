@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using MoBro.Plugin.SDK.Builders;
 using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Metrics;
@@ -13,29 +11,15 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 /// </summary>
 public sealed class MetricType : IMoBroItem
 {
-  /// <summary>
-  /// Creates a new metric type.
-  /// See also <see cref="MoBroItem"/> for a guided builder.
-  /// </summary>
-  /// <param name="id">The id (must be unique within the scope of the plugin)</param>
-  /// <param name="label">The label</param>
-  /// <param name="valueType">The <see cref="MetricValueType"/></param>
-  public MetricType(string id, string label, MetricValueType valueType)
-  {
-    Id = id ?? throw new ArgumentNullException(nameof(id));
-    Label = label ?? throw new ArgumentNullException(nameof(label));
-    ValueType = valueType;
-  }
-
   /// <inheritdoc />
-  public string Id { get; set; }
+  public required string Id { get; set; }
 
   /// <summary>
   /// The textual name of the type
   /// </summary>
   [Required]
   [Length(1, 32)]
-  public string Label { get; set; }
+  public required string Label { get; set; }
 
   /// <summary>
   /// The <see cref="MetricValueType"/> a value of this type must conform to

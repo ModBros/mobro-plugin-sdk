@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using MoBro.Plugin.SDK.Builders;
+﻿using System.ComponentModel.DataAnnotations;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Models.Categories;
 
@@ -14,31 +12,15 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 /// </summary>
 public sealed class Metric : IMoBroItem
 {
-  /// <summary>
-  /// Creates a new metric.
-  /// See also <see cref="MoBroItem"/> for a guided builder.
-  /// </summary>
-  /// <param name="id">The id (must be unique within the scope of the plugin)</param>
-  /// <param name="label">The label</param>
-  /// <param name="typeId">The id of the <see cref="MetricType"/></param>
-  /// <param name="categoryId">The id of the <see cref="Category"/></param>
-  public Metric(string id, string label, string typeId, string categoryId)
-  {
-    Id = id ?? throw new ArgumentNullException(nameof(id));
-    Label = label ?? throw new ArgumentNullException(nameof(label));
-    TypeId = typeId ?? throw new ArgumentNullException(nameof(typeId));
-    CategoryId = categoryId ?? throw new ArgumentNullException(nameof(categoryId));
-  }
-
   /// <inheritdoc />
-  public string Id { get; set; }
+  public required string Id { get; set; }
 
   /// <summary>
   /// The textual name of the metric
   /// </summary>
   [Required]
   [Length(1, 32)]
-  public string Label { get; set; }
+  public required string Label { get; set; }
 
   /// <summary>
   /// The type of this metric (id of a registered <see cref="MetricType"/>)
@@ -46,7 +28,7 @@ public sealed class Metric : IMoBroItem
   [Required]
   [Length(1, 128)]
   [RegularExpression(@"^[\w\.\-]+$")]
-  public string TypeId { get; set; }
+  public required string TypeId { get; set; }
 
   /// <summary>
   /// The category this metric is assigned to (id of a registered <see cref="Category"/>)
@@ -54,7 +36,7 @@ public sealed class Metric : IMoBroItem
   [Required]
   [Length(1, 128)]
   [RegularExpression(@"^[\w\.\-]+$")]
-  public string CategoryId { get; set; }
+  public required string CategoryId { get; set; }
 
   /// <summary>
   /// Whether this metric is static or not. (static = the value is fixed and will not change)

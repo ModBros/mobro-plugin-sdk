@@ -205,13 +205,12 @@ public sealed class ActionBuilder :
   /// <inheritdoc />
   public Models.Actions.Action Build()
   {
-    return new Models.Actions.Action(
-      _id ?? throw new ArgumentNullException(nameof(_id)),
-      _label ?? throw new ArgumentNullException(nameof(_label)),
-      _categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower(),
-      _handler ?? (_ => Task.FromResult<object?>(null))
-    )
+    return new Models.Actions.Action
     {
+      Id = _id ?? throw new ArgumentNullException(nameof(_id)),
+      Label = _label ?? throw new ArgumentNullException(nameof(_label)),
+      CategoryId = _categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower(),
+      Handler = _handler ?? (_ => Task.FromResult<object?>(null)),
       Description = _description,
       GroupId = _groupId,
       ReturnsResult = _returnsResult,
