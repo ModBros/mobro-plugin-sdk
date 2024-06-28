@@ -26,19 +26,20 @@ internal static class MetricValueExtensions
   /// </summary>
   /// <param name="metricValue">The <see cref="MetricValue"/></param>
   /// <param name="mobroService">The <see cref="IMoBroService"/> instance</param>
-  /// <exception cref="PluginException">In case the value is invalid</exception>
+  /// <exception cref="MetricValueValidationException">In case the value is invalid</exception>
   internal static void Validate(this in MetricValue metricValue, IMoBroService mobroService)
   {
     // check for valid id
     if (!IdValidationRegex.IsMatch(metricValue.Id))
     {
-      throw new PluginException($"Invalid id for metric value: {metricValue.Id}");
+      throw new MetricValueValidationException(metricValue.Id, $"Invalid id for metric value: {metricValue.Id}");
     }
 
     // check whether metric is registered
     if (!mobroService.TryGet(metricValue.Id, out Metric metric))
     {
-      throw new PluginException($"Unexpected metric value. Metric with id {metricValue.Id} not registered");
+      throw new MetricValueValidationException(metricValue.Id,
+        $"Unexpected metric value. Metric with id {metricValue.Id} not registered");
     }
 
     // get ValueType of metric
@@ -57,7 +58,8 @@ internal static class MetricValueExtensions
     }
     else
     {
-      throw new PluginException($"Unknown type '{metric.TypeId}' for metric {metricValue.Id}");
+      throw new MetricValueValidationException(metricValue.Id,
+        $"Unknown type '{metric.TypeId}' for metric {metricValue.Id}");
     }
 
     // no additional validation for null values
@@ -92,13 +94,15 @@ internal static class MetricValueExtensions
         ValidateResource(metricValue, mobroService);
         break;
       default:
-        throw new PluginException($"Unknown metric value type '{valueType}' for metric '{metricValue.Id}'");
+        throw new MetricValueValidationException(metricValue.Id,
+          $"Unknown metric value type '{valueType}' for metric '{metricValue.Id}'");
     }
   }
 
   private static void ValidateCustom(MetricValue metricValue)
   {
-    throw new PluginException($"Metric values of type '{MetricValueType.Custom}' currently not supported");
+    throw new MetricValueValidationException(metricValue.Id,
+      $"Metric values of type '{MetricValueType.Custom}' currently not supported");
   }
 
   private static void ValidateString(MetricValue metricValue)
@@ -126,7 +130,8 @@ internal static class MetricValueExtensions
       case string str:
         if (!Iso8601DurationRegex.IsMatch(str))
         {
-          throw new PluginException($"Duration value for metric '{metricValue.Id}' does not conform to ISO8601");
+          throw new MetricValueValidationException(metricValue.Id,
+            $"Duration value for metric '{metricValue.Id}' does not conform to ISO8601");
         }
 
         break;
@@ -146,7 +151,7 @@ internal static class MetricValueExtensions
       case string str:
         if (!DateTimeOffset.TryParse(str, out _))
         {
-          throw new PluginException(
+          throw new MetricValueValidationException(metricValue.Id,
             $"Value of metric '{metricValue.Id}' can not be parsed to DateTimeOffset: {str}");
         }
 
@@ -166,7 +171,8 @@ internal static class MetricValueExtensions
       case string str:
         if (!DateOnly.TryParse(str, out _))
         {
-          throw new PluginException($"Value of metric '{metricValue.Id}' can not be parsed to DateOnly: {str}");
+          throw new MetricValueValidationException(metricValue.Id,
+            $"Value of metric '{metricValue.Id}' can not be parsed to DateOnly: {str}");
         }
 
         break;
@@ -184,7 +190,8 @@ internal static class MetricValueExtensions
       case string str:
         if (!TimeOnly.TryParse(str, out _))
         {
-          throw new PluginException($"Value of metric '{metricValue.Id}' can not be parsed to TimeOnly: {str}");
+          throw new MetricValueValidationException(metricValue.Id,
+            $"Value of metric '{metricValue.Id}' can not be parsed to TimeOnly: {str}");
         }
 
         break;
@@ -202,7 +209,7 @@ internal static class MetricValueExtensions
 
     if (!moBroService.TryGet<IResource>(stringVal, out _))
     {
-      throw new PluginException(
+      throw new MetricValueValidationException(metricValue.Id,
         $"Invalid value for metric '{metricValue.Id}': Resource with id '{stringVal}' not registered");
     }
   }
@@ -224,8 +231,8 @@ internal static class MetricValueExtensions
       or decimal
   };
 
-  private static PluginException InvalidType(MetricValueType type, MetricValue metricValue)
-  {
-    return new($"Invalid value for metric '{metricValue.Id}' of ValueType '{type}': {metricValue.Value}");
-  }
+  private static MetricValueValidationException InvalidType(MetricValueType type, MetricValue metricValue) => new(
+    metricValue.Id,
+    $"Invalid value for metric '{metricValue.Id}' of ValueType '{type}': {metricValue.Value}"
+  );
 }
