@@ -29,7 +29,7 @@ public abstract class SettingsFieldBase
   /// The visible label of the field
   /// </summary>
   [Required]
-  [Length(1, 32)]
+  [Length(1, 64)]
   public string Label { get; }
 
   /// <summary>

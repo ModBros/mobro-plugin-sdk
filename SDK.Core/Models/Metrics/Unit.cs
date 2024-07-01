@@ -12,14 +12,14 @@ public sealed class Unit
   /// The name of the unit
   /// </summary>
   [Required]
-  [Length(1, 32)]
+  [Length(1, 64)]
   public required string Label { get; set; }
 
   /// <summary>
   /// The units abbreviation
   /// </summary>
   [Required]
-  [Length(1, 8)]
+  [Length(1, 64)]
   public required string Abbreviation { get; set; }
 
   /// <summary>

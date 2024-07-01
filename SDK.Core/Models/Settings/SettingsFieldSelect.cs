@@ -53,7 +53,7 @@ public class SettingsFieldSelectOption
   /// The visible label of the option
   /// </summary>
   [Required]
-  [Length(1, 32)]
+  [Length(1, 64)]
   public string Label { get; }
 
   /// <summary>

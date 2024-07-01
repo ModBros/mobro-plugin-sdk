@@ -19,7 +19,7 @@ public sealed class Metric : IMoBroItem
   /// The textual name of the metric
   /// </summary>
   [Required]
-  [Length(1, 32)]
+  [Length(1, 64)]
   public required string Label { get; set; }
 
   /// <summary>

@@ -18,7 +18,7 @@ public sealed class MetricType : IMoBroItem
   /// The textual name of the type
   /// </summary>
   [Required]
-  [Length(1, 32)]
+  [Length(1, 64)]
   public required string Label { get; set; }
 
   /// <summary>
