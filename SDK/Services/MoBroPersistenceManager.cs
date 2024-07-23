@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
@@ -17,8 +16,8 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   private readonly string _indexFile;
   private readonly string _storagePath;
 
-  private readonly IDictionary<string, string> _index;
-  private readonly IDictionary<string, object?> _dataCache;
+  private readonly Dictionary<string, string> _index;
+  private readonly Dictionary<string, object?> _dataCache;
 
   public MoBroPersistenceManager(string storagePath, ILogger logger)
   {
@@ -88,7 +87,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     {
       var entry = JsonSerializer.Deserialize<StorageEntry>(File.ReadAllText(DataFilePath(fileName)));
       if (entry == null) return default;
-      if (entry.GetType() == typeof(T))
+      if (entry.Type.Equals(typeof(T).FullName))
       {
         var data = JsonSerializer.Deserialize<T>(entry.Data);
         _dataCache[key] = data;
@@ -97,7 +96,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 
       _logger.LogWarning(
         "Can not deserialize stored data of type {StoredType} to {RequestedType} for key: {Key}",
-        entry.GetType(), typeof(T), key
+        entry.Type, typeof(T).FullName, key
       );
       return default;
     }
@@ -130,7 +129,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   {
     _dataCache.Clear();
 
-    if (!_index.Any()) return;
+    if (_index.Count == 0) return;
 
     lock (_indexFile)
     {
@@ -151,7 +150,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 
   private void Cleanup()
   {
-    if (!_index.Any()) return;
+    if (_index.Count == 0) return;
 
     // remove from index if file no longer exists
     foreach (var (key, value) in new Dictionary<string, string>(_index))
@@ -171,7 +170,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     }
   }
 
-  private IDictionary<string, string> IndexFromFile()
+  private Dictionary<string, string> IndexFromFile()
   {
     if (!File.Exists(_indexFile))
     {
@@ -201,7 +200,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     {
       return new StorageEntry(
         Key: key,
-        Type: data.GetType().FullName,
+        Type: data.GetType().FullName ?? throw new PluginException("Failed to determine type of data to persist"),
         Ts: DateTimeOffset.UtcNow,
         Data: JsonSerializer.Serialize(data)
       );
@@ -229,4 +228,4 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   private string DataFilePath(string fileName) => Path.Join(_storagePath, fileName);
 }
 
-internal sealed record StorageEntry(string Key, string? Type, DateTimeOffset Ts, string Data);
+internal sealed record StorageEntry(string Key, string Type, DateTimeOffset Ts, string Data);
