@@ -14,8 +14,8 @@ namespace MoBro.Plugin.SDK.Services;
 internal sealed class MoBroService : IMoBroService
 {
   private readonly ILogger _logger;
-  private readonly IDictionary<string, IMoBroItem> _items;
-  private readonly IDictionary<string, MetricValue> _metricValues;
+  private readonly Dictionary<string, IMoBroItem> _items;
+  private readonly Dictionary<string, MetricValue> _metricValues;
 
   public MoBroService(ILogger logger)
   {

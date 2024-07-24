@@ -5,16 +5,14 @@ namespace MoBro.Plugin.SDK.Services;
 
 internal sealed class MoBroFileManager : IMoBroFileManager
 {
-  private const string FileDirectory = "files";
-
   private readonly ILogger _logger;
   private readonly string _storagePath;
 
-  public MoBroFileManager(string storageDirectory, ILogger logger)
+  public MoBroFileManager(string storagePath, ILogger logger)
   {
-    Directory.CreateDirectory(storageDirectory);
     _logger = logger;
-    _storagePath = Path.Combine(storageDirectory, FileDirectory);
+    _storagePath = storagePath;
+    Directory.CreateDirectory(_storagePath);
   }
 
   public bool Exists(string fileName) => File.Exists(AbsPath(fileName));
