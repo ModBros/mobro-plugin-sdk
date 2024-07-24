@@ -34,6 +34,21 @@ public class MoBroPersistenceManagerTests : IDisposable
   }
 
   [Fact]
+  public void TestPutAndGetRecord()
+  {
+    const string key = "test";
+    var metricValue = new MetricValue("testId", 42);
+
+    Assert.False(_manager.Exists(key));
+    _manager.Put(key, metricValue);
+    Assert.True(_manager.Exists(key));
+    var readContent = _manager.Get<MetricValue>(key);
+    Assert.Equal(metricValue, readContent);
+    Assert.Equal(metricValue.Id, readContent.Id);
+    Assert.Equal(metricValue.Value, readContent.Value);
+  }
+
+  [Fact]
   public void TestPutAndGetMetric()
   {
     const string key = "test";

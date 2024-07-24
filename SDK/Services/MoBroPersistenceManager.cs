@@ -30,7 +30,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     Cleanup();
   }
 
-  public void Put<T>(string key, T data) where T : class
+  public void Put<T>(string key, T data)
   {
     Guard.Against.Null(data);
     Guard.Against.NullOrEmpty(key);
@@ -65,7 +65,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     _logger.LogDebug("Persisted data for key: {Key}", key);
   }
 
-  public T? Get<T>(string key) where T : class
+  public T? Get<T>(string key)
   {
     if (!_index.TryGetValue(key, out var fileName)) return default;
 

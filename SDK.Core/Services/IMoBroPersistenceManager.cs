@@ -12,7 +12,7 @@ public interface IMoBroPersistenceManager
   /// <typeparam name="T">The type of data to store.</typeparam>
   /// <param name="key">The unique key to identify the data.</param>
   /// <param name="data">The data to be stored.</param>
-  void Put<T>(string key, T data) where T : class;
+  void Put<T>(string key, T data);
 
   /// <summary>
   /// Retrieves data associated with the specified key.
@@ -20,7 +20,7 @@ public interface IMoBroPersistenceManager
   /// <typeparam name="T">The type of data to retrieve.</typeparam>
   /// <param name="key">The key to identify the data.</param>
   /// <returns>The stored data, or default(T) if the key is not found or the object is not of type T.</returns>
-  T? Get<T>(string key) where T : class;
+  T? Get<T>(string key);
 
   /// <summary>
   /// Removes data associated with the specified key.
