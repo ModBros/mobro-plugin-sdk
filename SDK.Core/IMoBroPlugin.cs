@@ -24,6 +24,19 @@ public interface IMoBroPlugin
   public Task InitAsync() => Task.CompletedTask;
 
   /// <summary>
+  /// Called once to signal the plugin that it is about to be shut down. Any cleanup code or action that should
+  /// be run before the plugin is shut down should be placed here.
+  /// </summary>
+  void Shutdown()
+  {
+  }
+
+  /// <summary>
+  /// Same as <see cref="Shutdown"/>, just async.
+  /// </summary>
+  Task ShutdownAsync() => Task.CompletedTask;
+
+  /// <summary>
   /// Called to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>
   /// This function is mostly called due to the MoBro data service switching into 'idle mode' as no client has requested data
   /// for a prolonged time.<br/>

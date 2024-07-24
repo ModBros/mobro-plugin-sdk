@@ -189,6 +189,8 @@ public sealed class MoBroPluginWrapper : IDisposable
   /// <inheritdoc />
   public void Dispose()
   {
+    _plugin?.Shutdown();
+    _plugin?.ShutdownAsync().GetAwaiter().GetResult();
     (_plugin as IDisposable)?.Dispose();
   }
 }

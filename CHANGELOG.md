@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added IMoBroPersistenceManager service
 * Added IMoBroFileManager
 * Additional validation on item registration
+* Added Shutdown function to IMoBroPlugin
 
 ### Changed
 
