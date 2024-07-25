@@ -34,7 +34,7 @@ public class MoBroPersistenceManagerTests : IDisposable
   }
 
   [Fact]
-  public void TestPutAndGetRecord()
+  public void TestPutAndGetStruct()
   {
     const string key = "test";
     var metricValue = new MetricValue("testId", 42);

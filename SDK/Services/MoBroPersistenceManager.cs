@@ -5,6 +5,7 @@ using System.Text.Json;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Exceptions;
+using MoBro.Plugin.SDK.Json;
 
 namespace MoBro.Plugin.SDK.Services;
 
@@ -15,6 +16,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   private readonly ILogger _logger;
   private readonly string _indexFile;
   private readonly string _storagePath;
+  private readonly JsonSerializerOptions _serializerOptions;
 
   private readonly Dictionary<string, string> _index;
   private readonly Dictionary<string, object?> _dataCache;
@@ -27,6 +29,10 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     _indexFile = Path.Combine(storagePath, IndexFileName);
     _index = IndexFromFile();
     _dataCache = new Dictionary<string, object?>();
+    _serializerOptions = new JsonSerializerOptions
+    {
+      Converters = { new MetricValueConverter() }
+    };
     Cleanup();
   }
 
@@ -48,7 +54,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 
     try
     {
-      File.WriteAllText(DataFilePath(fileName), JsonSerializer.Serialize(entry));
+      File.WriteAllText(DataFilePath(fileName), JsonSerializer.Serialize(entry, _serializerOptions));
       _dataCache[key] = data;
     }
     catch (Exception)
@@ -85,11 +91,12 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 
     try
     {
-      var entry = JsonSerializer.Deserialize<StorageEntry>(File.ReadAllText(DataFilePath(fileName)));
+      var entry = JsonSerializer.Deserialize<StorageEntry>(File.ReadAllText(DataFilePath(fileName)),
+        _serializerOptions);
       if (entry == null) return default;
       if (entry.Type.Equals(typeof(T).FullName))
       {
-        var data = JsonSerializer.Deserialize<T>(entry.Data);
+        var data = JsonSerializer.Deserialize<T>(entry.Data, _serializerOptions);
         _dataCache[key] = data;
         return data;
       }
@@ -144,7 +151,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   {
     lock (_indexFile)
     {
-      File.WriteAllText(_indexFile, JsonSerializer.Serialize(_index));
+      File.WriteAllText(_indexFile, JsonSerializer.Serialize(_index, _serializerOptions));
     }
   }
 
@@ -185,7 +192,8 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
         return new Dictionary<string, string>();
       }
 
-      return JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData) ?? new Dictionary<string, string>();
+      return JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData, _serializerOptions) ??
+             new Dictionary<string, string>();
     }
     catch (Exception e)
     {
@@ -202,7 +210,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
         Key: key,
         Type: data.GetType().FullName ?? throw new PluginException("Failed to determine type of data to persist"),
         Ts: DateTimeOffset.UtcNow,
-        Data: JsonSerializer.Serialize(data)
+        Data: JsonSerializer.Serialize(data, _serializerOptions)
       );
     }
     catch (Exception e)
@@ -218,7 +226,7 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   {
     for (var i = 0; i < 10; i++)
     {
-      var fileName = $"{Guid.NewGuid()}.json";
+      var fileName = $"{Path.GetRandomFileName()}.json";
       if (!File.Exists(DataFilePath(fileName))) return fileName;
     }
 
