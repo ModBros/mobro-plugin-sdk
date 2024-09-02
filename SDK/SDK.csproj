@@ -30,8 +30,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-        <PackageReference Include="Ardalis.GuardClauses" Version="4.5.0" />
-        <PackageReference Include="Quartz" Version="3.9.0" />
+        <PackageReference Include="Ardalis.GuardClauses" Version="4.6.0" />
+        <PackageReference Include="Quartz" Version="3.13.0" />
         <PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
