@@ -54,15 +54,10 @@ public sealed class Action : IMoBroItem
   public string? MetricId { get; set; }
 
   /// <summary>
-  /// Whether the actions returns a result or not
-  /// </summary>
-  public bool ReturnsResult { get; set; }
-
-  /// <summary>
   /// The handler that will be called whenever this action is invoked
   /// </summary>
   [Required]
-  public required Func<IMoBroSettings, Task<object?>> Handler { get; set; }
+  public required Func<IMoBroSettings, Task> Handler { get; set; }
 
   /// <summary>
   /// Settings exposed by this specific action

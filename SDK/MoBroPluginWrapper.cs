@@ -93,7 +93,7 @@ public sealed class MoBroPluginWrapper : IDisposable
     }
 
     _logger.LogDebug("Invoking action: {ActionId}", action.Id);
-    action.Handler.Invoke(new MoBroSettings(settings));
+    action.Handler.Invoke(new MoBroSettings(settings)).GetAwaiter().GetResult();
   }
 
   private void Init()

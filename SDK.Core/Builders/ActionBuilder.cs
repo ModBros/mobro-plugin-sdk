@@ -6,7 +6,6 @@ using MoBro.Plugin.SDK.Models.Categories;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Settings;
 using MoBro.Plugin.SDK.Services;
-using Action = System.Action;
 
 namespace MoBro.Plugin.SDK.Builders;
 
@@ -28,8 +27,7 @@ public sealed class ActionBuilder :
   private string? _categoryId;
   private string? _groupId;
   private string? _metricId;
-  private Func<IMoBroSettings, Task<object?>>? _handler;
-  private bool _returnsResult;
+  private Func<IMoBroSettings, Task>? _handler;
   private readonly List<SettingsFieldBase> _settings = new();
 
   private ActionBuilder()
@@ -135,55 +133,10 @@ public sealed class ActionBuilder :
   public IBuildStage WithHandler(Action<IMoBroSettings> handler)
   {
     ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = false;
     _handler = p =>
     {
       handler.Invoke(p);
-      return Task.FromResult<object?>(null);
-    };
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithHandler(Action handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = false;
-    _handler = _ =>
-    {
-      handler.Invoke();
-      return Task.FromResult<object?>(null);
-    };
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithHandler(Func<IMoBroSettings, object?> handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = true;
-    _handler = p => Task.FromResult(handler.Invoke(p));
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithHandler(Func<object?> handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = true;
-    _handler = _ => Task.FromResult(handler.Invoke());
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithAsyncHandler(Func<Task> handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = false;
-    _handler = async _ =>
-    {
-      await handler.Invoke();
-      return Task.FromResult<object?>(null);
+      return Task.CompletedTask;
     };
     return this;
   }
@@ -192,29 +145,6 @@ public sealed class ActionBuilder :
   public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task> handler)
   {
     ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = false;
-    _handler = async p =>
-    {
-      await handler.Invoke(p);
-      return Task.FromResult<object?>(null);
-    };
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithAsyncHandler(Func<Task<object?>> handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = true;
-    _handler = _ => handler.Invoke();
-    return this;
-  }
-
-  /// <inheritdoc />
-  public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task<object?>> handler)
-  {
-    ArgumentNullException.ThrowIfNull(handler);
-    _returnsResult = true;
     _handler = handler;
     return this;
   }
@@ -235,11 +165,10 @@ public sealed class ActionBuilder :
       Id = _id ?? throw new ArgumentNullException(nameof(_id)),
       Label = _label ?? throw new ArgumentNullException(nameof(_label)),
       CategoryId = _categoryId ?? CoreCategory.Miscellaneous.ToString().ToLower(),
-      Handler = _handler ?? (_ => Task.FromResult<object?>(null)),
+      Handler = _handler ?? (_ => Task.CompletedTask),
       Description = _description,
       GroupId = _groupId,
       MetricId = _metricId,
-      ReturnsResult = _returnsResult,
       Settings = _settings
     };
   }
@@ -379,49 +308,7 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <param name="handler">The handler</param>
     /// <returns>The next building stage</returns>
-    public IBuildStage WithHandler(Action handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithHandler(Func<IMoBroSettings, object?> handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithHandler(Func<object?> handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithAsyncHandler(Func<Task> handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
     public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task> handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithAsyncHandler(Func<Task<object?>> handler);
-
-    /// <summary>
-    /// Sets the handler that will be called whenever the action is invoked
-    /// </summary>
-    /// <param name="handler">The handler</param>
-    /// <returns>The next building stage</returns>
-    public IBuildStage WithAsyncHandler(Func<IMoBroSettings, Task<object?>> handler);
   }
 
   /// <summary>

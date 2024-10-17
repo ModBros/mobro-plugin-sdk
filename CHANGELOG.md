@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Moved 'Resume' and 'Pause' functionality from plugin interface to scheduler
 * Updated dependencies
+* Removed possibility for actions to return results
 
 ## 0.4.0 - 2024-09-03
 
