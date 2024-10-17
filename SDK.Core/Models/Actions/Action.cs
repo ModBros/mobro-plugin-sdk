@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Models.Categories;
+using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Settings;
 using MoBro.Plugin.SDK.Services;
 
@@ -44,6 +45,13 @@ public sealed class Action : IMoBroItem
   [Length(1, 128)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string? GroupId { get; set; }
+
+  /// <summary>
+  /// An optional metric that represents the value this action adjusts or influences <see cref="Metric"/>)
+  /// </summary>
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
+  public string? MetricId { get; set; }
 
   /// <summary>
   /// Whether the actions returns a result or not

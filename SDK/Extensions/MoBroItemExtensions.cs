@@ -293,6 +293,21 @@ internal static class MoBroItemExtensions
       }
     }
 
+    if (action.MetricId != null)
+    {
+      if (!IdValidationRegex.IsMatch(action.MetricId))
+      {
+        throw new MoBroItemValidationException(action.Id,
+          $"Action '{action.Id}' references invalid metric id '{action.MetricId}'");
+      }
+
+      if (!itemRegister.TryGet<Metric>(action.MetricId, out _))
+      {
+        throw new MoBroItemValidationException(action.Id,
+          $"Action '{action.Id}' references not registered metric '{action.MetricId}'");
+      }
+    }
+
     if (action.Handler is null)
     {
       throw new MoBroItemValidationException(action.Id, $"Action '{action.Id}' has no registered handler");

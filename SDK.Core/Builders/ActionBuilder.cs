@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Models.Categories;
+using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Settings;
 using MoBro.Plugin.SDK.Services;
 using Action = System.Action;
@@ -17,6 +18,7 @@ public sealed class ActionBuilder :
   ActionBuilder.ILabelStage,
   ActionBuilder.ICategoryStage,
   ActionBuilder.IGroupStage,
+  ActionBuilder.IMetricStage,
   ActionBuilder.IHandlerStage,
   ActionBuilder.IBuildStage
 {
@@ -25,6 +27,7 @@ public sealed class ActionBuilder :
   private string? _description;
   private string? _categoryId;
   private string? _groupId;
+  private string? _metricId;
   private Func<IMoBroSettings, Task<object?>>? _handler;
   private bool _returnsResult;
   private readonly List<SettingsFieldBase> _settings = new();
@@ -103,6 +106,28 @@ public sealed class ActionBuilder :
   public IHandlerStage OfNoGroup()
   {
     _groupId = null;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IHandlerStage WithMetric(string? metricId)
+  {
+    _metricId = metricId;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IHandlerStage WithMetric(Metric metric)
+  {
+    ArgumentNullException.ThrowIfNull(metric);
+    _metricId = metric.Id;
+    return this;
+  }
+
+  /// <inheritdoc />
+  public IHandlerStage WithNoMetric()
+  {
+    _metricId = null;
     return this;
   }
 
@@ -213,6 +238,7 @@ public sealed class ActionBuilder :
       Handler = _handler ?? (_ => Task.FromResult<object?>(null)),
       Description = _description,
       GroupId = _groupId,
+      MetricId = _metricId,
       ReturnsResult = _returnsResult,
       Settings = _settings
     };
@@ -306,6 +332,34 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <returns>The next building stage</returns>
     public IHandlerStage OfNoGroup();
+  }
+
+  /// <summary>
+  /// Building stage of the <see cref="ActionBuilder"/>
+  /// </summary>
+  public interface IMetricStage
+  {
+    /// <summary>
+    /// Sets the <see cref="Metric"/> representing the value this <see cref="Models.Actions.Action"/> adjusts or
+    /// influences. A null value indicates 'no metric' and is the same as calling <see cref="WithNoMetric()"/>
+    /// </summary>
+    /// <param name="metricId">The id of the <see cref="Metric"/></param>
+    /// <returns>The next building stage</returns>
+    public IHandlerStage WithMetric(string? metricId);
+
+    /// <summary>
+    /// Sets the <see cref="Metric"/> representing the value this <see cref="Models.Actions.Action"/> adjusts or
+    /// influences.
+    /// </summary>
+    /// <param name="metric">The <see cref="Metric"/></param>
+    /// <returns>The next building stage</returns>
+    public IHandlerStage WithMetric(Metric metric);
+
+    /// <summary>
+    /// Builds the <see cref="Models.Actions.Action"/> without a <see cref="Metric"/>
+    /// </summary>
+    /// <returns>The next building stage</returns>
+    public IHandlerStage WithNoMetric();
   }
 
   /// <summary>
