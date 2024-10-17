@@ -26,7 +26,6 @@ public sealed class MoBroPluginWrapper : IDisposable
   private readonly string _storageDir;
   private IDictionary<string, string> _settings;
   private IMoBroPlugin? _plugin;
-  private bool _paused;
 
   internal MoBroPluginWrapper(Type pluginType, IDictionary<string, string> settings, string storageDir, ILogger logger)
   {
@@ -36,7 +35,6 @@ public sealed class MoBroPluginWrapper : IDisposable
     _logger = logger;
     _moBroService = new MoBroService(_logger);
     _moBroScheduler = new Lazy<MoBroScheduler>(() => new MoBroScheduler(_logger, _moBroService.Error));
-    _paused = false;
 
     Init();
   }
@@ -46,34 +44,6 @@ public sealed class MoBroPluginWrapper : IDisposable
   /// </summary>
   /// <returns>The <see cref="IMoBroPlugin"/> instance</returns>
   public IMoBroPlugin? GetPlugin() => _plugin;
-
-  /// <summary>
-  /// Pause the plugin. This will invoke <see cref="IMoBroPlugin.Pause"/> on the plugin as well as pause the
-  /// <see cref="IMoBroScheduler"/> provided its used by the plugin.
-  /// </summary>
-  public void Pause()
-  {
-    if (_paused) return;
-
-    _paused = true;
-    _logger.LogDebug("'Pause' called");
-    if (_moBroScheduler.IsValueCreated) _moBroScheduler.Value.Pause();
-    _plugin?.Pause();
-  }
-
-  /// <summary>
-  /// Resume the plugin. This will invoke <see cref="IMoBroPlugin.Resume"/> on the plugin as well as resume the
-  /// <see cref="IMoBroScheduler"/> provided its used by the plugin.
-  /// </summary>
-  public void Resume()
-  {
-    if (!_paused) return;
-
-    _paused = false;
-    _logger.LogDebug("'Resume' called");
-    if (_moBroScheduler.IsValueCreated) _moBroScheduler.Value.Resume();
-    _plugin?.Resume();
-  }
 
   /// <summary>
   /// Applies new setting to the plugin. Causes the plugin to be re-created (same effect as if user settings would

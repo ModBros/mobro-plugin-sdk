@@ -35,23 +35,4 @@ public interface IMoBroPlugin
   /// Same as <see cref="Shutdown"/>, just async.
   /// </summary>
   Task ShutdownAsync() => Task.CompletedTask;
-
-  /// <summary>
-  /// Called to signal the plugin that it should pause monitoring and stop sending metric value updates, etc.<br/>
-  /// This function is mostly called due to the MoBro data service switching into 'idle mode' as no client has requested data
-  /// for a prolonged time.<br/>
-  /// Pausing sensor monitoring, etc. during times when the values are not requested can help to reduce overall system load. 
-  /// </summary>
-  /// <remarks>Any data sent while the plugin is 'paused' may be ignored by the service.</remarks>
-  public void Pause()
-  {
-  }
-
-  /// <summary>
-  /// Called to signal the plugin to resume monitoring and again start sending metric value updates, etc.<br/>
-  /// Will only be called if the plugin has been paused previously by a call to <see cref="Pause"/>.
-  /// </summary>
-  public void Resume()
-  {
-  }
 }

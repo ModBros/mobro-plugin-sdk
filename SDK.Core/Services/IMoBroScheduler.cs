@@ -3,9 +3,7 @@ using System;
 namespace MoBro.Plugin.SDK.Services;
 
 /// <summary>
-/// Scheduler that can be used for recurring tasks (e.g. polling sensor values).<br/>
-/// Tasks will be put on halt whenever <see cref="IMoBroPlugin.Pause"/> is invoked on the plugin and automatically resumed
-/// once <see cref="IMoBroPlugin.Resume"/> is invoked.
+/// Scheduler that can be used for recurring tasks (e.g. polling sensor values).
 /// </summary>
 public interface IMoBroScheduler
 {
@@ -33,4 +31,19 @@ public interface IMoBroScheduler
   /// <param name="timeZone">The timezone</param>
   /// <param name="delay">The delay before the cron task is activated</param>
   void Cron(Action action, string cron, TimeZoneInfo timeZone, TimeSpan delay);
+
+  /// <summary>
+  /// Temporarily pauses all scheduled tasks.
+  /// </summary>
+  public void Pause();
+
+  /// <summary>
+  /// Resumes all previously paused scheduled tasks.
+  /// </summary>
+  public void Resume();
+
+  /// <summary>
+  /// Clears all currently scheduled tasks from the scheduler.
+  /// </summary>
+  public void Clear();
 }
