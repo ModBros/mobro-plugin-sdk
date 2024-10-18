@@ -19,14 +19,14 @@ internal sealed class MoBroSettings : IMoBroSettings
   public T GetValue<T>(string key)
   {
     Guard.Against.NullOrEmpty(key);
-    if (_settings.TryGetValue(key, out var val)) return ParseValue<T>(val);
+    if (_settings.TryGetValue(key, out var val)) return ParseValue<T>(key, val);
     throw new PluginSettingsException(key, $"Missing setting: {key}", null);
   }
 
   public T GetValue<T>(string key, T defaultValue)
   {
     Guard.Against.NullOrEmpty(key);
-    return _settings.TryGetValue(key, out var val) ? ParseValue<T>(val) : defaultValue;
+    return _settings.TryGetValue(key, out var val) ? ParseValue<T>(key, val) : defaultValue;
   }
 
   public bool TryGetValue<T>(string key, out T? value)
@@ -38,19 +38,19 @@ internal sealed class MoBroSettings : IMoBroSettings
       return false;
     }
 
-    value = ParseValue<T>(val);
+    value = ParseValue<T>(key, val);
     return value != null;
   }
 
-  private static T ParseValue<T>(string value)
+  private static T ParseValue<T>(string key, string value)
   {
     var t = typeof(T);
     if (t == typeof(string)) return (T)Convert.ChangeType(value, t);
     if (t == typeof(int)) return (T)Convert.ChangeType(int.Parse(value), t);
+    if (t == typeof(bool)) return (T)Convert.ChangeType(bool.Parse(value), t);
     if (t == typeof(double))
       return (T)Convert.ChangeType(double.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture), t);
-    if (t == typeof(bool)) return (T)Convert.ChangeType(bool.Parse(value), t);
 
-    throw new PluginException($"Unsupported settings type '{t}'");
+    throw new PluginSettingsException(key, $"Unsupported settings type '{t}'", null);
   }
 }
