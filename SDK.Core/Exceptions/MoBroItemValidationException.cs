@@ -24,10 +24,23 @@ public sealed class MoBroItemValidationException : PluginException
   /// <param name="mobroItemId">The id of the <see cref="IMoBroItem"/></param>
   /// <param name="message">The message</param>
   /// <param name="innerException">The inner exception</param>
-  public MoBroItemValidationException(string mobroItemId, string message, Exception? innerException = null) : base(
-    message,
-    innerException)
+  public MoBroItemValidationException(string mobroItemId, string message, Exception? innerException = null)
+    : base(message, innerException)
   {
     AddDetail("itemId", mobroItemId);
+  }
+
+  /// <summary>
+  /// Creates a new MoBroItemValidationException
+  /// </summary>
+  /// <param name="mobroItemId">The id of the <see cref="IMoBroItem"/></param>
+  /// <param name="field">The name of the invalid field</param>
+  /// <param name="message">The message</param>
+  /// <param name="innerException">The inner exception</param>
+  public MoBroItemValidationException(string mobroItemId, string field, string message, Exception? innerException = null)
+    : base(message, innerException)
+  {
+    AddDetail("itemId", mobroItemId);
+    AddDetail("field", field);
   }
 }

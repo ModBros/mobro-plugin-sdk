@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
 
@@ -16,6 +17,7 @@ public interface IMoBroService
   /// </summary>
   /// <param name="items">The items to register.</param>
   /// <exception cref="System.ArgumentNullException">The items are null.</exception>
+  /// <exception cref="MoBroItemValidationException">One of the items is invalid</exception>
   void Register(IEnumerable<IMoBroItem> items);
 
   /// <summary>
@@ -23,6 +25,7 @@ public interface IMoBroService
   /// </summary>
   /// <param name="item">The item to register.</param>
   /// <exception cref="System.ArgumentNullException">The item is null.</exception>
+  /// <exception cref="MoBroItemValidationException">The item invalid</exception>
   void Register(IMoBroItem item);
 
   /// <summary>
@@ -71,12 +74,16 @@ public interface IMoBroService
   /// Push a new value for one or more registered <see cref="Metric"/>s
   /// </summary>
   /// <param name="values">The <see cref="MetricValue"/>s</param>
+  /// <exception cref="System.ArgumentNullException">The collection is null.</exception>
+  /// <exception cref="MetricValueValidationException">One of the metric values are invalid</exception>
   void UpdateMetricValues(IEnumerable<MetricValue> values);
 
   /// <summary>
   /// Push a new value for one registered <see cref="Metric"/>
   /// </summary>
   /// <param name="value">The <see cref="MetricValue"/></param>
+  /// <exception cref="System.ArgumentNullException">The value is null.</exception>
+  /// <exception cref="MetricValueValidationException">The metric values is invalid</exception>
   void UpdateMetricValue(in MetricValue value);
 
   /// <summary>
@@ -85,6 +92,8 @@ public interface IMoBroService
   /// <param name="id">The id of the metric</param>
   /// <param name="value">The new value of the metric</param>
   /// <param name="timestamp">The date and time the value was recorded or measured at (in UTC)</param>
+  /// <exception cref="System.ArgumentNullException">The id is null.</exception>
+  /// <exception cref="MetricValueValidationException">The metric values is invalid</exception>
   void UpdateMetricValue(string id, object? value, DateTime timestamp);
 
   /// <summary>
@@ -92,6 +101,8 @@ public interface IMoBroService
   /// </summary>
   /// <param name="id">The id of the metric</param>
   /// <param name="value">The new value of the metric</param>
+  /// <exception cref="System.ArgumentNullException">The id is null.</exception>
+  /// <exception cref="MetricValueValidationException">The metric values is invalid</exception>
   void UpdateMetricValue(string id, object? value);
 
   /// <summary>

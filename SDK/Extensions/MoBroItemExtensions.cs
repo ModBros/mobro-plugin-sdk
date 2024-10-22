@@ -43,7 +43,7 @@ internal static class MoBroItemExtensions
     {
       if (validationErrors.Count > 0)
       {
-        throw new MoBroItemValidationException(item.Id, validationErrors[0].ErrorMessage);
+        throw new MoBroItemValidationException(item.Id, nameof(item.Id), validationErrors[0].ErrorMessage);
       }
     }
 
@@ -77,22 +77,24 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrEmpty(category.Label))
     {
-      throw new MoBroItemValidationException(category.Id, $"Empty label for category '{category.Id}'");
+      throw new MoBroItemValidationException(category.Id, nameof(category.Label),
+        $"Empty label for category '{category.Id}'");
     }
 
     if (!IdValidationRegex.IsMatch(category.Id))
     {
-      throw new MoBroItemValidationException(category.Id, $"Invalid Id '{category.Id}' for category");
+      throw new MoBroItemValidationException(category.Id, nameof(category.Id), $"Invalid Id '{category.Id}' for category");
     }
 
     if (Enum.TryParse<CoreCategory>(category.Id, true, out _))
     {
-      throw new MoBroItemValidationException(category.Id, $"Cannot overwrite core category '{category.Id}'");
+      throw new MoBroItemValidationException(category.Id, nameof(category.Id),
+        $"Cannot overwrite core category '{category.Id}'");
     }
 
     if (!string.IsNullOrEmpty(category.Icon) && !itemRegister.TryGet<Icon>(category.Icon, out _))
     {
-      throw new MoBroItemValidationException(category.Id,
+      throw new MoBroItemValidationException(category.Id, nameof(category.Icon),
         $"Category '{category.Id}' references not registered Icon '{category.Icon}'");
     }
   }
@@ -101,12 +103,12 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrEmpty(group.Label))
     {
-      throw new MoBroItemValidationException(group.Id, $"Empty label for group '{group.Id}'");
+      throw new MoBroItemValidationException(group.Id, nameof(group.Label), $"Empty label for group '{group.Id}'");
     }
 
     if (!string.IsNullOrEmpty(group.Icon) && !itemRegister.TryGet<Icon>(group.Icon, out _))
     {
-      throw new MoBroItemValidationException(group.Id,
+      throw new MoBroItemValidationException(group.Id, nameof(group.Icon),
         $"Group '{group.Id}' references not registered Icon '{group.Icon}'");
     }
   }
@@ -118,13 +120,14 @@ internal static class MoBroItemExtensions
       case Image image:
         if (string.IsNullOrEmpty(image.RelativeFilePath))
         {
-          throw new MoBroItemValidationException(resource.Id, $"Empty path for Image Resource '{resource.Id}'");
+          throw new MoBroItemValidationException(resource.Id, nameof(image.RelativeFilePath),
+            $"Empty path for Image Resource '{resource.Id}'");
         }
 
         if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), image.RelativeFilePath)))
         {
-          throw new MoBroItemValidationException(resource.Id,
-            $"File path does not existfor Image Resource '{resource.Id}'");
+          throw new MoBroItemValidationException(resource.Id, nameof(image.RelativeFilePath),
+            $"File path does not exist for Image Resource '{resource.Id}'");
         }
 
         break;
@@ -133,18 +136,19 @@ internal static class MoBroItemExtensions
 
         if (icon.RelativeFilePaths == null || !icon.RelativeFilePaths.Any())
         {
-          throw new MoBroItemValidationException(resource.Id, $"No icon paths set for Icon Resource '{resource.Id}'");
+          throw new MoBroItemValidationException(resource.Id, nameof(icon.RelativeFilePaths),
+            $"No icon paths set for Icon Resource '{resource.Id}'");
         }
 
         if (icon.RelativeFilePaths.Any(p => string.IsNullOrWhiteSpace(p.Value)))
         {
-          throw new MoBroItemValidationException(resource.Id,
+          throw new MoBroItemValidationException(resource.Id, nameof(icon.RelativeFilePaths),
             $"One or more empty file paths for Icon Resource '{resource.Id}'");
         }
 
         if (icon.RelativeFilePaths.Any(p => !File.Exists(Path.Combine(Directory.GetCurrentDirectory(), p.Value))))
         {
-          throw new MoBroItemValidationException(resource.Id,
+          throw new MoBroItemValidationException(resource.Id, nameof(icon.RelativeFilePaths),
             $"One or more file paths do not exist for Icon Resource '{resource.Id}'");
         }
 
@@ -160,22 +164,23 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrEmpty(type.Label))
     {
-      throw new MoBroItemValidationException(type.Id, $"Empty label for MetricType '{type.Id}'");
+      throw new MoBroItemValidationException(type.Id, nameof(type.Label), $"Empty label for MetricType '{type.Id}'");
     }
 
     if (Enum.TryParse<CoreMetricType>(type.Id, true, out _))
     {
-      throw new MoBroItemValidationException(type.Id, $"Cannot overwrite core MetricType '{type.Id}'");
+      throw new MoBroItemValidationException(type.Id, nameof(type.Id), $"Cannot overwrite core MetricType '{type.Id}'");
     }
 
     if (type.Id.Length == 3 && Enum.TryParse<CoreMetricTypeCurrency>(type.Id, true, out _))
     {
-      throw new MoBroItemValidationException(type.Id, $"Cannot overwrite core MetricType currency '{type.Id}'");
+      throw new MoBroItemValidationException(type.Id, nameof(type.Id),
+        $"Cannot overwrite core MetricType currency '{type.Id}'");
     }
 
     if (!string.IsNullOrEmpty(type.Icon) && !itemRegister.TryGet<Icon>(type.Icon, out _))
     {
-      throw new MoBroItemValidationException(type.Id,
+      throw new MoBroItemValidationException(type.Id, nameof(type.Icon),
         $"MetricType '{type.Id}' references not registered Icon '{type.Icon}'");
     }
 
@@ -197,22 +202,25 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrWhiteSpace(unit.Label))
     {
-      throw new MoBroItemValidationException(typeId, $"Empty label for Unit of metric type {typeId}");
+      throw new MoBroItemValidationException(typeId, nameof(unit.Label), $"Empty label for Unit of metric type {typeId}");
     }
 
     if (string.IsNullOrWhiteSpace(unit.Abbreviation))
     {
-      throw new MoBroItemValidationException(typeId, $"Empty abbreviation for Unit of metric type {typeId}");
+      throw new MoBroItemValidationException(typeId, nameof(unit.Abbreviation),
+        $"Empty abbreviation for Unit of metric type {typeId}");
     }
 
     if (string.IsNullOrWhiteSpace(unit.FromBaseFormula) || !unit.FromBaseFormula.Contains('x'))
     {
-      throw new MoBroItemValidationException(typeId, $"Invalid 'FromBase' formula for Unit of metric type {typeId}");
+      throw new MoBroItemValidationException(typeId, nameof(unit.FromBaseFormula),
+        $"Invalid 'FromBase' formula for Unit of metric type {typeId}");
     }
 
     if (string.IsNullOrWhiteSpace(unit.ToBaseFormula) || !unit.FromBaseFormula.Contains('x'))
     {
-      throw new MoBroItemValidationException(typeId, $"Invalid 'ToBase' formula for Unit of metric type {typeId}");
+      throw new MoBroItemValidationException(typeId, nameof(unit.ToBaseFormula),
+        $"Invalid 'ToBase' formula for Unit of metric type {typeId}");
     }
   }
 
@@ -220,25 +228,25 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrEmpty(metric.Label))
     {
-      throw new MoBroItemValidationException(metric.Id, $"Empty label for Metric '{metric.Id}'");
+      throw new MoBroItemValidationException(metric.Id, nameof(metric.Label), $"Empty label for Metric '{metric.Id}'");
     }
 
     if (!itemRegister.TryGet<MetricType>(metric.TypeId, out _) && !IsCoreType(metric.TypeId))
     {
-      throw new MoBroItemValidationException(metric.Id,
+      throw new MoBroItemValidationException(metric.Id, nameof(metric.TypeId),
         $"Metric '{metric.Id}' references not registered type '{metric.TypeId}'");
     }
 
     if (string.IsNullOrWhiteSpace(metric.CategoryId) || !IdValidationRegex.IsMatch(metric.CategoryId))
     {
-      throw new MoBroItemValidationException(metric.Id,
+      throw new MoBroItemValidationException(metric.Id, nameof(metric.CategoryId),
         $"Metric '{metric.Id}' references not invalid category id '{metric.CategoryId}'");
     }
 
     if (!itemRegister.TryGet<Category>(metric.CategoryId, out _) &&
         !Enum.TryParse<CoreCategory>(metric.CategoryId, true, out _))
     {
-      throw new MoBroItemValidationException(metric.Id,
+      throw new MoBroItemValidationException(metric.Id, nameof(metric.CategoryId),
         $"Metric '{metric.Id}' references not registered category '{metric.CategoryId}'");
     }
 
@@ -246,13 +254,13 @@ internal static class MoBroItemExtensions
     {
       if (!IdValidationRegex.IsMatch(metric.GroupId))
       {
-        throw new MoBroItemValidationException(metric.Id,
+        throw new MoBroItemValidationException(metric.Id, nameof(metric.GroupId),
           $"Metric '{metric.Id}' references invalid group id '{metric.GroupId}'");
       }
 
       if (!itemRegister.TryGet<Group>(metric.GroupId, out _))
       {
-        throw new MoBroItemValidationException(metric.Id,
+        throw new MoBroItemValidationException(metric.Id, nameof(metric.GroupId),
           $"Metric '{metric.Id}' references not registered group '{metric.GroupId}'");
       }
     }
@@ -262,19 +270,19 @@ internal static class MoBroItemExtensions
   {
     if (string.IsNullOrEmpty(action.Label))
     {
-      throw new MoBroItemValidationException(action.Id, $"Empty label for action '{action.Id}'");
+      throw new MoBroItemValidationException(action.Id, nameof(action.Label), $"Empty label for action '{action.Id}'");
     }
 
     if (string.IsNullOrWhiteSpace(action.CategoryId) || !IdValidationRegex.IsMatch(action.CategoryId))
     {
-      throw new MoBroItemValidationException(action.Id,
+      throw new MoBroItemValidationException(action.Id, nameof(action.CategoryId),
         $"Action '{action.Id}' references not invalid category id '{action.CategoryId}'");
     }
 
     if (!itemRegister.TryGet<Category>(action.CategoryId, out _) &&
         !Enum.TryParse<CoreCategory>(action.CategoryId, true, out _))
     {
-      throw new MoBroItemValidationException(action.Id,
+      throw new MoBroItemValidationException(action.Id, nameof(action.CategoryId),
         $"Action '{action.Id}' references not registered category '{action.CategoryId}'");
     }
 
@@ -282,13 +290,13 @@ internal static class MoBroItemExtensions
     {
       if (!IdValidationRegex.IsMatch(action.GroupId))
       {
-        throw new MoBroItemValidationException(action.Id,
+        throw new MoBroItemValidationException(action.Id, nameof(action.GroupId),
           $"Action '{action.Id}' references invalid group id '{action.GroupId}'");
       }
 
       if (!itemRegister.TryGet<Group>(action.GroupId, out _))
       {
-        throw new MoBroItemValidationException(action.Id,
+        throw new MoBroItemValidationException(action.Id, nameof(action.GroupId),
           $"Action '{action.Id}' references not registered group '{action.GroupId}'");
       }
     }
@@ -297,20 +305,21 @@ internal static class MoBroItemExtensions
     {
       if (!IdValidationRegex.IsMatch(action.MetricId))
       {
-        throw new MoBroItemValidationException(action.Id,
+        throw new MoBroItemValidationException(action.Id, nameof(action.MetricId),
           $"Action '{action.Id}' references invalid metric id '{action.MetricId}'");
       }
 
       if (!itemRegister.TryGet<Metric>(action.MetricId, out _))
       {
-        throw new MoBroItemValidationException(action.Id,
+        throw new MoBroItemValidationException(action.Id, nameof(action.MetricId),
           $"Action '{action.Id}' references not registered metric '{action.MetricId}'");
       }
     }
 
     if (action.Handler is null)
     {
-      throw new MoBroItemValidationException(action.Id, $"Action '{action.Id}' has no registered handler");
+      throw new MoBroItemValidationException(action.Id, nameof(action.Handler),
+        $"Action '{action.Id}' has no registered handler");
     }
   }
 
