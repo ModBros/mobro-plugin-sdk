@@ -1,6 +1,7 @@
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Actions;
 using MoBro.Plugin.SDK.Models.Categories;
+using MoBro.Plugin.SDK.Models.Events;
 using MoBro.Plugin.SDK.Models.Metrics;
 using MoBro.Plugin.SDK.Models.Resources;
 
@@ -46,4 +47,10 @@ public static class MoBroItem
   /// </summary>
   /// <returns>An instance of <see cref="ActionBuilder"/></returns>
   public static ActionBuilder.IIdStage CreateAction() => ActionBuilder.CreateAction();
+
+  /// <summary>
+  /// Builds a new <see cref="EventStream"/>
+  /// </summary>
+  /// <returns>An instance of <see cref="EventStreamBuilder"/></returns>
+  public static EventStreamBuilder.IIdStage CreateEventStream() => EventStreamBuilder.CreateEventStream();
 }

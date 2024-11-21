@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Extensions;
 using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Events;
 using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK.Services;
@@ -117,6 +118,26 @@ internal sealed class MoBroService : IMoBroService
   public MetricValue? GetMetricValue(string id)
   {
     return _metricValues.TryGetValue(Guard.Against.NullOrEmpty(id), out var knownValue) ? knownValue : null;
+  }
+
+  public void PublishEvent(in Event @event)
+  {
+    if (Guard.Against.Null(@event).Validate(this))
+    {
+      _logger.LogDebug("Event published for event stream {EventStreamId}: {Event}", @event.EventStreamId, @event);
+    }
+    else
+    {
+      _logger.LogWarning("Skipped invalid event: {Event}", @event);
+    }
+  }
+
+  public void PublishEvents(IEnumerable<Event> events)
+  {
+    foreach (var e in Guard.Against.Null(events))
+    {
+      PublishEvent(e);
+    }
   }
 
   public void Error(string message)

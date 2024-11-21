@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
+using MoBro.Plugin.SDK.Models.Events;
 using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK.Services;
@@ -118,6 +119,20 @@ public interface IMoBroService
   /// <returns>The <see cref="MetricValue"/> currently assigned to the metric. 'null' if no value has been assigned.</returns>
   /// <exception cref="System.ArgumentNullException">The id is null.</exception>
   MetricValue? GetMetricValue(string id);
+
+  /// <summary>
+  /// Publishes an event to a registered <see cref="EventStream"/>.
+  /// </summary>
+  /// <param name="event">The event to publish.</param>
+  /// <exception cref="System.ArgumentNullException">The event is null.</exception>
+  void PublishEvent(in Event @event);
+
+  /// <summary>
+  /// Publishes a collection of events.
+  /// </summary>
+  /// <param name="events">The collection of events to publish.</param>
+  /// <exception cref="System.ArgumentNullException">The events collection is null.</exception>
+  void PublishEvents(IEnumerable<Event> events);
 
   /// <summary>
   /// Notifies the service that an unrecoverable error has occurred.
