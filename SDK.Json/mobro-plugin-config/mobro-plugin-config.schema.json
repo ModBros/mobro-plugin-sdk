@@ -33,6 +33,15 @@
       "type": "string",
       "description": "The relative path to the folder containing the localization files."
     },
+    "executionMode": {
+      "type": "string",
+      "enum": [
+        "USER_SESSION",
+        "ADMIN_BACKGROUND"
+      ],
+      "default": "USER_SESSION",
+      "description": "The context in which the plugin process will be executed."
+    },
     "settings": {
       "$ref": "mobro-plugin-settings.schema.json",
       "description": "The setting fields for this plugin."
