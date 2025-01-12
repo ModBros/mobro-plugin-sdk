@@ -36,10 +36,10 @@
     "executionMode": {
       "type": "string",
       "enum": [
-        "USER_SESSION",
-        "ADMIN_BACKGROUND"
+        "UserSession",
+        "AdminBackground"
       ],
-      "default": "USER_SESSION",
+      "default": "UserSession",
       "description": "The context in which the plugin process will be executed."
     },
     "settings": {
