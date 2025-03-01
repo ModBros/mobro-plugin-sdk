@@ -6,7 +6,7 @@
         <Authors>ModBros</Authors>
         <Company>ModBros KG</Company>
         <Product>MoBro</Product>
-        <Copyright>(C) ModBros KG 2024</Copyright>
+        <Copyright>(C) ModBros KG 2025</Copyright>
         <IsPackable>true</IsPackable>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12</LangVersion>
