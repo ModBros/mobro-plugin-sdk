@@ -39,7 +39,7 @@
         "UserSession",
         "AdminBackground"
       ],
-      "default": "UserSession",
+      "default": "AdminBackground",
       "description": "The context in which the plugin process will be executed."
     },
     "homepage": {
