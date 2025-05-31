@@ -48,5 +48,10 @@ public enum MetricValueType
   /// <summary>
   /// A numeric value representing a currency amount
   /// </summary>
-  Currency
+  Currency,
+
+  /// <summary>
+  /// A simple boolean value
+  /// </summary>
+  Boolean,
 }

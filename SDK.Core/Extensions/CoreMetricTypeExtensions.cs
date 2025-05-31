@@ -50,6 +50,8 @@ public static class CoreMetricTypeExtensions
       case CoreMetricType.Image:
       case CoreMetricType.Icon:
         return MetricValueType.Resource;
+      case CoreMetricType.Boolean:
+        return MetricValueType.Boolean;
       default:
         return MetricValueType.Custom;
     }

@@ -93,6 +93,9 @@ internal static class MetricValueExtensions
       case MetricValueType.Resource:
         ValidateResource(metricValue, mobroService);
         break;
+      case MetricValueType.Boolean:
+        ValidateBoolean(metricValue);
+        break;
       default:
         throw new MetricValueValidationException(metricValue.Id,
           $"Unknown metric value type '{valueType}' for metric '{metricValue.Id}'");
@@ -211,6 +214,25 @@ internal static class MetricValueExtensions
     {
       throw new MetricValueValidationException(metricValue.Id,
         $"Invalid value for metric '{metricValue.Id}': Resource with id '{stringVal}' not registered");
+    }
+  }
+
+  private static void ValidateBoolean(in MetricValue metricValue)
+  {
+    switch (metricValue.Value)
+    {
+      case bool:
+        break;
+      case string str:
+        if (!bool.TryParse(str, out _))
+        {
+          throw new MetricValueValidationException(metricValue.Id,
+            $"Value of metric '{metricValue.Id}' can not be parsed to boolean: {str}");
+        }
+
+        break;
+      default:
+        throw InvalidType(MetricValueType.Boolean, metricValue);
     }
   }
 

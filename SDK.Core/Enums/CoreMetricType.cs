@@ -141,4 +141,9 @@ public enum CoreMetricType
   /// An angle (degrees) 
   /// </summary> 
   Angle,
+
+  /// <summary>
+  /// Represents a Boolean metric type, used to indicate binary states such as true/false or on/off.
+  /// </summary>
+  Boolean,
 }
