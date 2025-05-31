@@ -42,6 +42,23 @@
       "default": "UserSession",
       "description": "The context in which the plugin process will be executed."
     },
+    "homepage": {
+      "type": "string",
+      "description": "A link to the plugins homepage."
+    },
+    "repository": {
+      "type": "string",
+      "description": "A link to the plugins repository."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 32
+      },
+      "maxItems": 10,
+      "description": "Optional tags for the plugin."
+    },
     "settings": {
       "$ref": "mobro-plugin-settings.schema.json",
       "description": "The setting fields for this plugin."
