@@ -177,4 +177,24 @@ public class BuilderTests
     Assert.Null(metric.GroupId);
     Assert.True(metric.IsStatic);
   }
+
+  [Fact]
+  public void ActionTest()
+  {
+    var action = MoBroItem.CreateAction()
+      .WithId("id1")
+      .WithLabel("label")
+      .OfCategory("category1")
+      .OfGroup("group1")
+      .WithMetric("metric1")
+      .WithHandler(_ => { })
+      .Build();
+
+    Assert.Equal("id1", action.Id);
+    Assert.Equal("label", action.Label);
+    Assert.Null(action.Description);
+    Assert.Equal("category1", action.CategoryId);
+    Assert.Equal("group1", action.GroupId);
+    Assert.Equal("metric1", action.MetricId);
+  }
 }

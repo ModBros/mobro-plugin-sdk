@@ -86,14 +86,14 @@ public sealed class ActionBuilder :
   }
 
   /// <inheritdoc />
-  public IHandlerStage OfGroup(string? groupId)
+  public IMetricStage OfGroup(string? groupId)
   {
     _groupId = groupId;
     return this;
   }
 
   /// <inheritdoc />
-  public IHandlerStage OfGroup(Group group)
+  public IMetricStage OfGroup(Group group)
   {
     ArgumentNullException.ThrowIfNull(group);
     _groupId = group.Id;
@@ -101,7 +101,7 @@ public sealed class ActionBuilder :
   }
 
   /// <inheritdoc />
-  public IHandlerStage OfNoGroup()
+  public IMetricStage OfNoGroup()
   {
     _groupId = null;
     return this;
@@ -245,7 +245,7 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <param name="groupId">The id of the <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
-    public IHandlerStage OfGroup(string? groupId);
+    public IMetricStage OfGroup(string? groupId);
 
     /// <summary>
     /// Sets the <see cref="Group"/>
@@ -253,14 +253,14 @@ public sealed class ActionBuilder :
     /// </summary>
     /// <param name="group">The <see cref="Group"/></param>
     /// <returns>The next building stage</returns>
-    public IHandlerStage OfGroup(Group group);
+    public IMetricStage OfGroup(Group group);
 
     /// <summary>
     /// Builds the  <see cref="Models.Actions.Action"/> without 
     /// a <see cref="Group"/>
     /// </summary>
     /// <returns>The next building stage</returns>
-    public IHandlerStage OfNoGroup();
+    public IMetricStage OfNoGroup();
   }
 
   /// <summary>
