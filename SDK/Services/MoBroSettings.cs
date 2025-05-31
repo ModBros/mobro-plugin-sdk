@@ -7,10 +7,17 @@ using MoBro.Plugin.SDK.Exceptions;
 
 namespace MoBro.Plugin.SDK.Services;
 
-internal sealed class MoBroSettings : IMoBroSettings
+/// <summary>
+/// Implementation of <see cref="IMoBroSettings"/> for local testing.
+/// </summary>
+public sealed class MoBroSettings : IMoBroSettings
 {
   private readonly IDictionary<string, string> _settings;
 
+  /// <summary>
+  /// Instantiates MoBroSettings
+  /// </summary>
+  /// <param name="settings">The settings</param>
   public MoBroSettings(IDictionary<string, string>? settings = null)
   {
     _settings = settings ?? ImmutableDictionary<string, string>.Empty;

@@ -7,7 +7,10 @@ using Quartz.Impl;
 
 namespace MoBro.Plugin.SDK.Services;
 
-internal sealed class MoBroScheduler : IMoBroScheduler
+/// <summary>
+/// Implementation of <see cref="IMoBroScheduler"/> for local testing.
+/// </summary>
+public sealed class MoBroScheduler : IMoBroScheduler
 {
   private const string ActionKey = "action";
   private const string ErrorKey = "error";
@@ -16,6 +19,11 @@ internal sealed class MoBroScheduler : IMoBroScheduler
   private IScheduler? _scheduler;
   private readonly ILogger _logger;
 
+  /// <summary>
+  /// Instantiates a new MoBroScheduler
+  /// </summary>
+  /// <param name="logger">An instance of <see cref="ILogger"/></param>
+  /// <param name="errorHandler">The error handler</param>
   public MoBroScheduler(ILogger logger, Action<Exception> errorHandler)
   {
     _logger = logger;

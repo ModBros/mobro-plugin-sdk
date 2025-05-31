@@ -11,12 +11,19 @@ using MoBro.Plugin.SDK.Models.Metrics;
 
 namespace MoBro.Plugin.SDK.Services;
 
-internal sealed class MoBroService : IMoBroService
+/// <summary>
+/// Implementation of <see cref="IMoBroService"/> for local testing.
+/// </summary>
+public sealed class MoBroService : IMoBroService
 {
   private readonly ILogger _logger;
   private readonly Dictionary<string, IMoBroItem> _items;
   private readonly Dictionary<string, MetricValue> _metricValues;
 
+  /// <summary>
+  /// Instantiates a new MoBroService
+  /// </summary>
+  /// <param name="logger">An instance of <see cref="ILogger"/></param>
   public MoBroService(ILogger logger)
   {
     _logger = logger;

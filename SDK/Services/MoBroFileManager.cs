@@ -3,11 +3,19 @@ using Microsoft.Extensions.Logging;
 
 namespace MoBro.Plugin.SDK.Services;
 
-internal sealed class MoBroFileManager : IMoBroFileManager
+/// <summary>
+/// Implementation of <see cref="IMoBroFileManager"/> for local testing.
+/// </summary>
+public sealed class MoBroFileManager : IMoBroFileManager
 {
   private readonly ILogger _logger;
   private readonly string _storagePath;
 
+  /// <summary>
+  /// Instantiates a new MoBroFileManager
+  /// </summary>
+  /// <param name="storagePath">The path to the storage directory</param>
+  /// <param name="logger">An instance of <see cref="ILogger"/></param>
   public MoBroFileManager(string storagePath, ILogger logger)
   {
     _logger = logger;

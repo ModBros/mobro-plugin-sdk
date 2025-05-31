@@ -9,7 +9,10 @@ using MoBro.Plugin.SDK.Json;
 
 namespace MoBro.Plugin.SDK.Services;
 
-internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
+/// <summary>
+/// Implementation of <see cref="IMoBroPersistenceManager"/> for local testing.
+/// </summary>
+public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 {
   private const string IndexFileName = "index.json";
 
@@ -21,6 +24,11 @@ internal sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   private readonly Dictionary<string, string> _index;
   private readonly Dictionary<string, object?> _dataCache;
 
+  /// <summary>
+  /// Instantiates a new MoBroPersistenceManager
+  /// </summary>
+  /// <param name="storagePath">The path to the storage directory</param>
+  /// <param name="logger">An instance of <see cref="ILogger"/></param>
   public MoBroPersistenceManager(string storagePath, ILogger logger)
   {
     Directory.CreateDirectory(storagePath);
