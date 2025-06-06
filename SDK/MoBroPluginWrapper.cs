@@ -63,7 +63,7 @@ public sealed class MoBroPluginWrapper : IDisposable
   /// <returns>All currently registered items</returns>
   public IEnumerable<IMoBroItem> GetRegisteredItems()
   {
-    return _moBroService.GetItems();
+    return _moBroService.GetAll();
   }
 
   /// <summary>
@@ -73,7 +73,7 @@ public sealed class MoBroPluginWrapper : IDisposable
   /// <returns>All currently registered items of the given type</returns>
   public IEnumerable<T> GetRegisteredItems<T>() where T : IMoBroItem
   {
-    return _moBroService.GetItems<T>();
+    return _moBroService.GetAll<T>();
   }
 
   /// <summary>
@@ -84,7 +84,7 @@ public sealed class MoBroPluginWrapper : IDisposable
   public void InvokeAction(string actionId, IDictionary<string, string>? settings = null)
   {
     var action = _moBroService
-      .GetItems<Action>()
+      .GetAll<Action>()
       .FirstOrDefault(a => a.Id == actionId);
     if (action == null)
     {

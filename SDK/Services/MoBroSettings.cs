@@ -23,6 +23,7 @@ public sealed class MoBroSettings : IMoBroSettings
     _settings = settings ?? ImmutableDictionary<string, string>.Empty;
   }
 
+  /// <inheritdoc />
   public T GetValue<T>(string key)
   {
     Guard.Against.NullOrEmpty(key);
@@ -30,12 +31,14 @@ public sealed class MoBroSettings : IMoBroSettings
     throw new PluginSettingsException(key, $"Missing setting: {key}", null);
   }
 
+  /// <inheritdoc />
   public T GetValue<T>(string key, T defaultValue)
   {
     Guard.Against.NullOrEmpty(key);
     return _settings.TryGetValue(key, out var val) ? ParseValue<T>(key, val) : defaultValue;
   }
 
+  /// <inheritdoc />
   public bool TryGetValue<T>(string key, out T? value)
   {
     Guard.Against.NullOrEmpty(key);

@@ -23,22 +23,27 @@ public sealed class MoBroFileManager : IMoBroFileManager
     Directory.CreateDirectory(_storagePath);
   }
 
+  /// <inheritdoc />
   public bool Exists(string fileName) => File.Exists(AbsPath(fileName));
 
+  /// <inheritdoc />
   public void WriteText(string fileName, string content)
   {
     File.WriteAllText(AbsPath(fileName), content);
     _logger.LogDebug("Wrote {CharCount} chars to file: {File}", content.Length, fileName);
   }
 
+  /// <inheritdoc />
   public void WriteBytes(string fileName, byte[] content)
   {
     File.WriteAllBytes(AbsPath(fileName), content);
     _logger.LogDebug("Wrote {ByteCount} bytes to file: {File}", content.Length, fileName);
   }
 
+  /// <inheritdoc />
   public string ReadText(string fileName) => File.ReadAllText(AbsPath(fileName));
 
+  /// <inheritdoc />
   public byte[] ReadBytes(string fileName) => File.ReadAllBytes(AbsPath(fileName));
 
   private string AbsPath(string file) => Path.Join(_storagePath, file);

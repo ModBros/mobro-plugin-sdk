@@ -44,6 +44,7 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     Cleanup();
   }
 
+  /// <inheritdoc />
   public void Put<T>(string key, T data)
   {
     Guard.Against.Null(data);
@@ -79,6 +80,7 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     _logger.LogDebug("Persisted data for key: {Key}", key);
   }
 
+  /// <inheritdoc />
   public T? Get<T>(string key)
   {
     if (!_index.TryGetValue(key, out var fileName)) return default;
@@ -122,6 +124,7 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     }
   }
 
+  /// <inheritdoc />
   public bool Remove(string key)
   {
     _dataCache.Remove(key);
@@ -138,8 +141,10 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
     return true;
   }
 
+  /// <inheritdoc />
   public bool Exists(string key) => _index.ContainsKey(key);
 
+  /// <inheritdoc />
   public void Clear()
   {
     _dataCache.Clear();

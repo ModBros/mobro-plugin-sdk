@@ -30,6 +30,7 @@ public sealed class MoBroScheduler : IMoBroScheduler
     _errorHandler = errorHandler;
   }
 
+  /// <inheritdoc />
   public void OneOff(Action action, TimeSpan delay)
   {
     Guard.Against.Null(action);
@@ -47,6 +48,7 @@ public sealed class MoBroScheduler : IMoBroScheduler
     _scheduler?.ScheduleJob(job, trigger);
   }
 
+  /// <inheritdoc />
   public void Interval(Action action, TimeSpan interval, TimeSpan delay)
   {
     Guard.Against.Null(action);
@@ -70,6 +72,7 @@ public sealed class MoBroScheduler : IMoBroScheduler
     _scheduler?.ScheduleJob(job, trigger);
   }
 
+  /// <inheritdoc />
   public void Cron(Action action, string cron, TimeZoneInfo timeZone, TimeSpan delay)
   {
     Guard.Against.Null(action);
@@ -93,18 +96,21 @@ public sealed class MoBroScheduler : IMoBroScheduler
     _scheduler?.ScheduleJob(job, trigger);
   }
 
+  /// <inheritdoc />
   public void Pause()
   {
     _logger.LogDebug("Pausing scheduler");
     _scheduler?.PauseAll();
   }
 
+  /// <inheritdoc />
   public void Resume()
   {
     _logger.LogDebug("Resume scheduler");
     _scheduler?.ResumeAll();
   }
 
+  /// <inheritdoc />
   public void Clear()
   {
     _logger.LogDebug("Clearing scheduler");
