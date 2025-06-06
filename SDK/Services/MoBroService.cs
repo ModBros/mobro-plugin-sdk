@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace MoBro.Plugin.SDK.Services;
 public sealed class MoBroService : IMoBroService
 {
   private readonly ILogger _logger;
-  private readonly Dictionary<string, IMoBroItem> _items;
-  private readonly Dictionary<string, MetricValue> _metricValues;
+  private readonly IDictionary<string, IMoBroItem> _items;
+  private readonly IDictionary<string, MetricValue> _metricValues;
 
   /// <summary>
   /// Instantiates a new MoBroService
@@ -27,8 +28,8 @@ public sealed class MoBroService : IMoBroService
   public MoBroService(ILogger logger)
   {
     _logger = logger;
-    _items = new Dictionary<string, IMoBroItem>();
-    _metricValues = new Dictionary<string, MetricValue>();
+    _items = new ConcurrentDictionary<string, IMoBroItem>();
+    _metricValues = new ConcurrentDictionary<string, MetricValue>();
   }
 
   public void Register(IEnumerable<IMoBroItem> items)

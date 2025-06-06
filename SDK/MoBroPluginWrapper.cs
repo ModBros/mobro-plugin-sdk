@@ -19,8 +19,8 @@ namespace MoBro.Plugin.SDK;
 public sealed class MoBroPluginWrapper : IDisposable
 {
   private readonly Type _pluginType;
-  private readonly MoBroService _moBroService;
-  private readonly Lazy<MoBroScheduler> _moBroScheduler;
+  private readonly IMoBroService _moBroService;
+  private readonly Lazy<IMoBroScheduler> _moBroScheduler;
   private readonly ILogger _logger;
 
   private readonly string _storageDir;
@@ -34,7 +34,7 @@ public sealed class MoBroPluginWrapper : IDisposable
     _storageDir = storageDir;
     _logger = logger;
     _moBroService = new MoBroService(_logger);
-    _moBroScheduler = new Lazy<MoBroScheduler>(() => new MoBroScheduler(_logger, _moBroService.Error));
+    _moBroScheduler = new Lazy<IMoBroScheduler>(() => new MoBroScheduler(_logger, _moBroService.Error));
 
     Init();
   }
