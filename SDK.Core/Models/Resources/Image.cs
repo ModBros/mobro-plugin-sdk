@@ -25,15 +25,15 @@ public sealed class Image : IResource
   [Required]
   [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
-  public string Id { get; }
+  public string Id { get; set; }
 
   /// <inheritdoc />
   [MaxLength(256)]
-  public string? Alt { get; }
+  public string? Alt { get; set; }
 
   /// <summary>
   /// The relative path to the image file.
   /// </summary>
-  [MaxLength(128)] 
-  public string RelativeFilePath { get; }
+  [MaxLength(128)]
+  public string RelativeFilePath { get; set; }
 }

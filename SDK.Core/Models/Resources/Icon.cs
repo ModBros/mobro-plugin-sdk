@@ -9,7 +9,7 @@ namespace MoBro.Plugin.SDK.Models.Resources;
 /// In contrast to <see cref="Image"/> an icon can be comprised of multiple files (png, jpeg, ...) for different sizes.
 /// </summary>
 /// <remarks>For the best visual result always provide a single SVG whenever possible.</remarks>
-public sealed class Icon : IResource 
+public sealed class Icon : IResource
 {
   /// <summary>
   /// Creates a new icon
@@ -42,14 +42,14 @@ public sealed class Icon : IResource
   [Required]
   [Length(1, 128)]
   [RegularExpression(@"^[\w\.\-]+$")]
-  public string Id { get; }
+  public string Id { get; set; }
 
   /// <inheritdoc />
   [MaxLength(256)]
-  public string? Alt { get; }
+  public string? Alt { get; set; }
 
   /// <summary>
   /// The relative paths to the files for all supported icon sizes.
   /// </summary>
-  public IDictionary<IconSize, string> RelativeFilePaths { get; }
+  public IDictionary<IconSize, string> RelativeFilePaths { get; set; }
 }

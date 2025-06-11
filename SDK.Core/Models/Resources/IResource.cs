@@ -8,5 +8,5 @@ public interface IResource : IMoBroItem
   /// <summary>
   /// An optional alternative text to show if the resource fails to display
   /// </summary>
-  public string? Alt { get; }
+  public string? Alt { get; set; }
 }
