@@ -63,7 +63,7 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
 
     try
     {
-      File.WriteAllText(DataFilePath(fileName), JsonSerializer.Serialize(entry, _serializerOptions));
+      WriteFile(DataFilePath(fileName), JsonSerializer.Serialize(entry, _serializerOptions));
       _dataCache[key] = data;
     }
     catch (Exception)
@@ -164,7 +164,7 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   {
     lock (_indexFile)
     {
-      File.WriteAllText(_indexFile, JsonSerializer.Serialize(_index, _serializerOptions));
+      WriteFile(_indexFile, JsonSerializer.Serialize(_index, _serializerOptions));
     }
   }
 
@@ -247,6 +247,19 @@ public sealed class MoBroPersistenceManager : IMoBroPersistenceManager
   }
 
   private string DataFilePath(string fileName) => Path.Join(_storagePath, fileName);
+
+  private void WriteFile(string file, string content)
+  {
+    _logger.LogDebug("Writing file {File}", file);
+    var tmpFile = file + ".tmp";
+    if (File.Exists(tmpFile))
+    {
+      File.Delete(tmpFile);
+    }
+
+    File.WriteAllText(tmpFile, content);
+    File.Move(tmpFile, file, true);
+  }
 }
 
 internal sealed record StorageEntry(string Key, string Type, DateTimeOffset Ts, string Data);
