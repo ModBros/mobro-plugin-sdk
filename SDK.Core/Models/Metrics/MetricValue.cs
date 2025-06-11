@@ -40,8 +40,11 @@ public readonly record struct MetricValue
   /// </summary>
   /// <param name="id">The id of the metric this value belongs to</param>
   /// <param name="value">The new value of the metric</param>
-  public MetricValue(string id, object? value) : this(id, DateTime.UtcNow, value)
+  public MetricValue(string id, object? value)
   {
+    Id = id ?? throw new ArgumentNullException(nameof(id));
+    Timestamp = DateTime.UtcNow;
+    Value = value;
   }
 
   /// <summary>
@@ -50,16 +53,16 @@ public readonly record struct MetricValue
   [Required]
   [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
-  public string Id { get; }
+  public string Id { get; init; }
 
   /// <summary>
   /// The date and time the value was recorded or measured at in UTC
   /// </summary>
   [Required]
-  public DateTime Timestamp { get; }
+  public DateTime Timestamp { get; init; } = DateTime.UtcNow;
 
   /// <summary>
   /// The actual value
   /// </summary>
-  public object? Value { get; }
+  public object? Value { get; init; }
 }
