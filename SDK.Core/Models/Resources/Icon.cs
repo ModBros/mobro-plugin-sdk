@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MoBro.Plugin.SDK.Enums;
 
 namespace MoBro.Plugin.SDK.Models.Resources;
@@ -38,9 +39,13 @@ public sealed class Icon : IResource
   }
 
   /// <inheritdoc />
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string Id { get; }
 
   /// <inheritdoc />
+  [MaxLength(256)]
   public string? Alt { get; }
 
   /// <summary>

@@ -9,6 +9,9 @@ namespace MoBro.Plugin.SDK.Models.Categories;
 public sealed class Category : IMoBroItem
 {
   /// <inheritdoc />
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
   /// <summary>
@@ -27,7 +30,8 @@ public sealed class Category : IMoBroItem
   /// <summary>
   /// An optional icon id
   /// </summary>
-  [MaxLength(256)]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string? Icon { get; set; }
 
   /// <summary>

@@ -12,6 +12,9 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 public sealed class MetricType : IMoBroItem
 {
   /// <inheritdoc />
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
   /// <summary>
@@ -37,6 +40,7 @@ public sealed class MetricType : IMoBroItem
   /// An optional icon id
   /// </summary>
   [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string? Icon { get; set; }
 
   /// <summary>

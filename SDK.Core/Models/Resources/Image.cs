@@ -6,7 +6,7 @@ namespace MoBro.Plugin.SDK.Models.Resources;
 /// A larger image or picture.
 /// In contrast to <see cref="Icon"/>, an image is only one single file and hence does not support different sizes.
 /// </summary>
-public sealed class Image : IResource 
+public sealed class Image : IResource
 {
   /// <summary>
   /// Creates a new image
@@ -22,9 +22,13 @@ public sealed class Image : IResource
   }
 
   /// <inheritdoc />
+  [Required]
+  [Length(1, 256)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public string Id { get; }
 
   /// <inheritdoc />
+  [MaxLength(256)]
   public string? Alt { get; }
 
   /// <summary>

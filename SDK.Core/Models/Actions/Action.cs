@@ -16,6 +16,9 @@ namespace MoBro.Plugin.SDK.Models.Actions;
 public sealed class Action : IMoBroItem
 {
   /// <inheritdoc />
+  [Required]
+  [Length(1, 256)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
   /// <summary>

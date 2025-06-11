@@ -13,6 +13,9 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 public sealed class Metric : IMoBroItem
 {
   /// <inheritdoc />
+  [Required]
+  [Length(1, 128)]
+  [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
   /// <summary>
