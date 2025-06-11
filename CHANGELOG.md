@@ -5,11 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.0.3 - Unreleased
+
+### Added
+
+* Write content to a temporary file first in MoBroPersistenceManager
+* Interfaces for categorized and labeled items
 
 ### Changed
 
 * Use concurrent dictionary in MoBroService
+* Increased the max length of Ids to 256 characters
+
+### Fixed
+
+* Moved validation attributes from interface to implementing classes
+* Some missing and incorrect ID validation attributes
 
 ## 1.0.2 - 2025-06-01
 
@@ -25,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* Metric stage was skipped for action builder 
+* Metric stage was skipped for action builder
 * Corrected default value for 'executionMode' in json configuration to 'AdminBackground'
 
 ## 1.0.1 - 2025-03-17
