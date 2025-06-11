@@ -9,7 +9,7 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 /// Defines the <see cref="MetricValueType"/> the metrics value must conform to and the applicable
 /// <see cref="Unit"/>s.
 /// </summary>
-public sealed class MetricType : IMoBroItem
+public sealed class MetricType : IMoBroItem, IMoBroLabeledItem
 {
   /// <inheritdoc />
   [Required]
@@ -28,7 +28,7 @@ public sealed class MetricType : IMoBroItem
   /// The <see cref="MetricValueType"/> a value of this type must conform to
   /// </summary>
   [Required]
-  public MetricValueType ValueType { get; set; }
+  public required MetricValueType ValueType { get; set; }
 
   /// <summary>
   /// An optional textual description

@@ -13,7 +13,7 @@ namespace MoBro.Plugin.SDK.Models.Actions;
 /// An action represents something that is invokable at any time and then performs a certain task.
 /// An action must be assigned to a registered <see cref="Category"/>
 /// </summary>
-public sealed class Action : IMoBroItem
+public sealed class Action : IMoBroItem, IMoBroLabeledItem, IMoBroCategorizedItem
 {
   /// <inheritdoc />
   [Required]

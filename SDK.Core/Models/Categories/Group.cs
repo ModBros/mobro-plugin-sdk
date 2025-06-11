@@ -9,7 +9,7 @@ namespace MoBro.Plugin.SDK.Models.Categories;
 /// <remarks>
 /// A group may contain items from different categories
 /// </remarks>
-public sealed class Group : IMoBroItem
+public sealed class Group : IMoBroItem, IMoBroLabeledItem
 {
   /// <inheritdoc />
   [Required]

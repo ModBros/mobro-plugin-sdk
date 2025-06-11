@@ -10,7 +10,7 @@ namespace MoBro.Plugin.SDK.Models.Metrics;
 /// <see cref="MetricValueType"/> defined in that type.
 /// A metric is always assigned to a <see cref="Category"/>
 /// </summary>
-public sealed class Metric : IMoBroItem
+public sealed class Metric : IMoBroItem, IMoBroLabeledItem, IMoBroCategorizedItem
 {
   /// <inheritdoc />
   [Required]

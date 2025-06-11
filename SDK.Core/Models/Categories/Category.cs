@@ -6,7 +6,7 @@ namespace MoBro.Plugin.SDK.Models.Categories;
 /// <summary>
 /// Categorizes items of the same kind (E.g. all CPU related metrics)
 /// </summary>
-public sealed class Category : IMoBroItem
+public sealed class Category : IMoBroItem, IMoBroLabeledItem
 {
   /// <inheritdoc />
   [Required]
