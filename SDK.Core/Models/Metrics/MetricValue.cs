@@ -48,7 +48,7 @@ public readonly record struct MetricValue
   /// The id of the metric
   /// </summary>
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string Id { get; }
 

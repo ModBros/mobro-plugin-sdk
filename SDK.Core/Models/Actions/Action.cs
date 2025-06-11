@@ -38,21 +38,21 @@ public sealed class Action : IMoBroItem
   /// The category this action is assigned to (id of a registered <see cref="Category"/>)
   /// </summary>
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public required string CategoryId { get; set; }
 
   /// <summary>
   /// An optional group this action is part of (id of a registered <see cref="Group"/>)
   /// </summary>
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string? GroupId { get; set; }
 
   /// <summary>
   /// An optional metric that represents the value this action adjusts or influences <see cref="Metric"/>)
   /// </summary>
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string? MetricId { get; set; }
 

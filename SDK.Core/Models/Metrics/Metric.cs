@@ -14,7 +14,7 @@ public sealed class Metric : IMoBroItem
 {
   /// <inheritdoc />
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
@@ -29,7 +29,7 @@ public sealed class Metric : IMoBroItem
   /// The type of this metric (id of a registered <see cref="MetricType"/>)
   /// </summary>
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public required string TypeId { get; set; }
 
@@ -37,7 +37,7 @@ public sealed class Metric : IMoBroItem
   /// The category this metric is assigned to (id of a registered <see cref="Category"/>)
   /// </summary>
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public required string CategoryId { get; set; }
 
@@ -56,7 +56,7 @@ public sealed class Metric : IMoBroItem
   /// <summary>
   /// An optional group this metric is part of (id of a registered <see cref="Group"/>)
   /// </summary>
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string? GroupId { get; set; }
 }

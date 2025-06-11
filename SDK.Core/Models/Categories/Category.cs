@@ -10,7 +10,7 @@ public sealed class Category : IMoBroItem
 {
   /// <inheritdoc />
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public required string Id { get; set; }
 
@@ -30,7 +30,7 @@ public sealed class Category : IMoBroItem
   /// <summary>
   /// An optional icon id
   /// </summary>
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string? Icon { get; set; }
 

@@ -40,7 +40,7 @@ public sealed class Icon : IResource
 
   /// <inheritdoc />
   [Required]
-  [Length(1, 128)]
+  [Length(1, 256)]
   [RegularExpression(@"^[\w\.\-]+$")]
   public string Id { get; set; }
 
