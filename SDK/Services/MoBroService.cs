@@ -21,6 +21,8 @@ public sealed class MoBroService : IMoBroService
   private readonly IDictionary<string, IMoBroItem> _items;
   private readonly IDictionary<string, MetricValue> _metricValues;
 
+  private const int IdShortenLength = 36;
+
   /// <summary>
   /// Instantiates a new MoBroService
   /// </summary>
@@ -45,7 +47,14 @@ public sealed class MoBroService : IMoBroService
   public void Register(IMoBroItem item)
   {
     _items[item.Id] = Guard.Against.Null(item).Validate(this);
-    _logger.LogDebug("Registered {ItemType}: {ItemId}", item.GetType().Name, item.Id);
+    _logger.LogInformation("Registered {ItemType}: {ItemId}", item.GetType().Name, item.Id);
+    if (item.Id.Length > IdShortenLength)
+    {
+      _logger.LogInformation(
+        "ID '{ItemId}' exceeds length of {ItemIdMaxLength} and will be mapped to a shorter ID for internal use in MoBro",
+        item.Id, IdShortenLength
+      );
+    }
   }
 
   /// <inheritdoc />
@@ -62,7 +71,7 @@ public sealed class MoBroService : IMoBroService
   {
     _items.Remove(Guard.Against.NullOrEmpty(id));
     _metricValues.Remove(id);
-    _logger.LogDebug("Unregistered Item: {ItemId}", id);
+    _logger.LogInformation("Unregistered Item: {ItemId}", id);
   }
 
   /// <inheritdoc />
@@ -97,7 +106,7 @@ public sealed class MoBroService : IMoBroService
   public void ClearRegistration()
   {
     _items.Clear();
-    _logger.LogDebug("Cleared all registrations");
+    _logger.LogInformation("Cleared all registrations");
   }
 
   /// <inheritdoc />
