@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Ardalis.GuardClauses;
 using Microsoft.Extensions.Logging;
+using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Extensions;
 using MoBro.Plugin.SDK.Models;
@@ -164,5 +165,14 @@ public sealed class MoBroService : IMoBroService
     Guard.Against.Null(exception);
     _logger.LogError(exception, "Plugin error: {PluginError}", exception.Message);
     throw new PluginException("An unexpected plugin error occurred", exception);
+  }
+
+  /// <inheritdoc />
+  public void SetDependencyStatus(string dependencyName, DependencyStatus dependencyMet)
+  {
+    Guard.Against.NullOrWhiteSpace(dependencyName);
+    _logger.LogInformation(
+      "Status of dependency '{DependencyName}': {DependencyStatus}", dependencyName, dependencyMet
+    );
   }
 }

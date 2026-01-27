@@ -7,30 +7,35 @@
     "name": {
       "type": "string",
       "minLength": 3,
-      "maxLength": 128,
+      "maxLength": 32,
       "pattern": "^[\\w-]+$",
       "description": "The globally unique name (=id) of the plugin."
     },
     "displayName": {
       "type": "string",
+      "maxLength": 32,
       "description": "Visible human readable name of the plugin. Defaults to 'name' if not set."
     },
     "author": {
       "type": "string",
+      "maxLength": 32,
       "description": "The name of the author of this plugin.",
       "default": "Unknown"
     },
     "description": {
       "type": "string",
+      "maxLength": 512,
       "description": "A short textual description for the plugin."
     },
     "assembly": {
       "type": "string",
+      "maxLength": 128,
       "description": "The .dll file to load.",
       "default": "Plugin.dll"
     },
     "localization": {
       "type": "string",
+      "maxLength": 128,
       "description": "The relative path to the folder containing the localization files."
     },
     "executionMode": {
@@ -44,10 +49,12 @@
     },
     "homepage": {
       "type": "string",
+      "maxLength": 128,
       "description": "A link to the plugins homepage."
     },
     "repository": {
       "type": "string",
+      "maxLength": 128,
       "description": "A link to the plugins repository."
     },
     "tags": {
@@ -62,6 +69,14 @@
     "settings": {
       "$ref": "mobro-plugin-settings.schema.json",
       "description": "The setting fields for this plugin."
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "The external dependencies of this plugin.",
+      "maxLength": 10,
+      "items": {
+        "$ref": "mobro-plugin-dependency.schema.json"
+      }
     }
   },
   "required": [

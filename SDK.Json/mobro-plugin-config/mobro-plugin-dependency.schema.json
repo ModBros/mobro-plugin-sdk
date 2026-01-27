@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "Dependency",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the dependency. Has to be unique for all fields of this array.",
+      "pattern": "^[\\w-]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label for this dependency.",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "description": {
+      "name": "string",
+      "maxLength": 256,
+      "description": "A short textual description for the dependency"
+    },
+    "link": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "A link to the dependencies homepage"
+    },
+    "version": {
+      "type": "string",
+      "maxLength": 16,
+      "description": "The version of the dependency"
+    },
+    "required": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, the dependency is required for the plugin to work"
+    }
+  },
+  "required": [
+    "name",
+    "label"
+  ]
+}
+

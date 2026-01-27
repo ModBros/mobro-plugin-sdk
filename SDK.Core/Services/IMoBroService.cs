@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using MoBro.Plugin.SDK.Enums;
 using MoBro.Plugin.SDK.Exceptions;
 using MoBro.Plugin.SDK.Models;
 using MoBro.Plugin.SDK.Models.Metrics;
@@ -132,4 +133,12 @@ public interface IMoBroService
   /// </summary>
   /// <param name="exception">The occurred exception</param>
   void Error(Exception exception);
+
+  /// <summary>
+  /// Sets the status of a specified dependency.
+  /// </summary>
+  /// <param name="dependencyName">The name of the dependency to update.</param>
+  /// <param name="dependencyStatus">The status of the dependency.</param>
+  /// <exception cref="System.ArgumentNullException">The dependency name is null.</exception>
+  void SetDependencyStatus(string dependencyName, DependencyStatus dependencyStatus);
 }
