@@ -23,54 +23,75 @@ internal static class MoBroItemExtensions
 {
   private static readonly Regex IdValidationRegex = new(@"^[\w\.\-]+$", RegexOptions.Compiled);
 
-  /// <summary>
-  /// Validates an <see cref="IMoBroItem"/>
-  /// </summary>
-  /// <param name="item">The <see cref="IMoBroItem"/></param>
-  /// <param name="mobroService">The <see cref="IMoBroService"/> instance</param>
-  /// <returns>The <see cref="IMoBroItem"/></returns>
-  /// <exception cref="MoBroItemValidationException">In case the item is invalid</exception>
-  internal static IMoBroItem Validate(this IMoBroItem item, IMoBroService mobroService)
+  extension(IMoBroItem item)
   {
-    if (!IdValidationRegex.IsMatch(item.Id))
+    /// <summary>
+    /// Truncates the label and description of an <see cref="IMoBroLabeledItem"/> if the item's type
+    /// has maximum length constraints defined for these properties.
+    /// </summary>
+    /// <returns>The <see cref="IMoBroItem"/> with truncated label and description if applicable; otherwise, the original item.</returns>
+    internal IMoBroItem TruncateLabels()
     {
-      throw new MoBroItemValidationException($"Invalid id '{item.Id}' for MoBroItem");
+      if (item is not IMoBroLabeledItem labeledItem) return item;
+
+      labeledItem.Label = labeledItem.Label
+        .Trim()
+        .Truncate(GetMaxLength(labeledItem.GetType(), nameof(labeledItem.Label)));
+      labeledItem.Description = labeledItem.Description
+        ?.Trim()
+        .Truncate(GetMaxLength(labeledItem.GetType(), nameof(labeledItem.Description)));
+
+      return item;
     }
 
-    var validationContext = new ValidationContext(item);
-    var validationErrors = new List<ValidationResult>();
-    if (!Validator.TryValidateObject(item, validationContext, validationErrors, true))
+    /// <summary>
+    /// Validates an <see cref="IMoBroItem"/>
+    /// </summary>
+    /// <param name="mobroService">The <see cref="IMoBroService"/> instance</param>
+    /// <returns>The <see cref="IMoBroItem"/></returns>
+    /// <exception cref="MoBroItemValidationException">In case the item is invalid</exception>
+    internal IMoBroItem Validate(IMoBroService mobroService)
     {
-      if (validationErrors.Count > 0)
+      if (!IdValidationRegex.IsMatch(item.Id))
       {
-        throw new MoBroItemValidationException(item.Id, nameof(item.Id), validationErrors[0].ErrorMessage);
+        throw new MoBroItemValidationException($"Invalid id '{item.Id}' for MoBroItem");
       }
-    }
 
-    switch (item)
-    {
-      case Category category:
-        ValidateCategory(category, mobroService);
-        break;
-      case Group group:
-        ValidateGroup(group, mobroService);
-        break;
-      case IResource resource:
-        ValidateResource(resource);
-        break;
-      case MetricType type:
-        ValidateMetricType(type, mobroService);
-        break;
-      case Metric metric:
-        ValidateMetric(metric, mobroService);
-        break;
-      case Action action:
-        ValidateAction(action, mobroService);
-        break;
-      default: throw new MoBroItemValidationException("Unknown item type");
-    }
+      var validationContext = new ValidationContext(item);
+      var validationErrors = new List<ValidationResult>();
+      if (!Validator.TryValidateObject(item, validationContext, validationErrors, true))
+      {
+        if (validationErrors.Count > 0)
+        {
+          throw new MoBroItemValidationException(item.Id, nameof(item.Id), validationErrors[0].ErrorMessage);
+        }
+      }
 
-    return item;
+      switch (item)
+      {
+        case Category category:
+          ValidateCategory(category, mobroService);
+          break;
+        case Group group:
+          ValidateGroup(group, mobroService);
+          break;
+        case IResource resource:
+          ValidateResource(resource);
+          break;
+        case MetricType type:
+          ValidateMetricType(type, mobroService);
+          break;
+        case Metric metric:
+          ValidateMetric(metric, mobroService);
+          break;
+        case Action action:
+          ValidateAction(action, mobroService);
+          break;
+        default: throw new MoBroItemValidationException("Unknown item type");
+      }
+
+      return item;
+    }
   }
 
   private static void ValidateCategory(Category category, IMoBroService itemRegister)
@@ -327,5 +348,22 @@ internal static class MoBroItemExtensions
   {
     return Enum.TryParse<CoreMetricType>(id, true, out _) ||
            (id.Length == 3 && Enum.TryParse<CoreMetricTypeCurrency>(id, true, out _));
+  }
+
+  private static int GetMaxLength(Type type, string property)
+  {
+    var maxLengthAttribute = (MaxLengthAttribute?)type
+      .GetProperty(property)
+      ?.GetCustomAttributes(typeof(MaxLengthAttribute), false)
+      .FirstOrDefault();
+
+    if (maxLengthAttribute != null) return maxLengthAttribute.Length;
+
+    var lengthAttribute = (LengthAttribute?)type
+      .GetProperty(property)
+      ?.GetCustomAttributes(typeof(LengthAttribute), false)
+      .FirstOrDefault();
+
+    return lengthAttribute?.MaximumLength ?? int.MaxValue;
   }
 }

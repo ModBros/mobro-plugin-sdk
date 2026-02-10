@@ -47,7 +47,10 @@ public sealed class MoBroService : IMoBroService
   /// <inheritdoc />
   public void Register(IMoBroItem item)
   {
-    _items[item.Id] = Guard.Against.Null(item).Validate(this);
+    _items[item.Id] = Guard.Against.Null(item)
+      .TruncateLabels()
+      .Validate(this);
+
     _logger.LogInformation("Registered {ItemType}: {ItemId}", item.GetType().Name, item.Id);
     if (item.Id.Length > IdShortenLength)
     {
