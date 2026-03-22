@@ -13,17 +13,18 @@
       "description": "Name of the settings field. Has to be unique for all fields of this array.",
       "pattern": "^[\\w-]+$",
       "minLength": 1,
-      "maxLength": 128
+      "maxLength": 64
     },
     "label": {
       "type": "string",
       "description": "Human readable label for this settings field.",
       "minLength": 1,
-      "maxLength": 128
+      "maxLength": 64
     },
     "description": {
       "type": "string",
-      "description": "A hint what this settings field does."
+      "description": "A hint what this settings field does.",
+      "maxLength": 256
     },
     "defaultValue": {
       "description": "The default value of the settings field."

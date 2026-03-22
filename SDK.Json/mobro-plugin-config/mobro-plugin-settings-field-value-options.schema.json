@@ -10,12 +10,12 @@
         "properties": {
           "label": {
             "type": "string",
-            "maxLength": 128
+            "maxLength": 64
           },
           "value": {
             "type": "string",
             "pattern": "^[\\w-]+$",
-            "maxLength": 128
+            "maxLength": 64
           }
         },
         "required": [
